@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:gh-pages": "next build && cp CNAME out/ && cp .nojekyll out/",
     "start": "npx serve@latest out -s",
     "preview": "npx serve@latest out -s",
     "lint": "eslint . --ext .ts,.tsx --fix && npx tsc --noEmit",
