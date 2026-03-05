@@ -29,9 +29,9 @@ export default function AboutSection() {
             <div className={styles.icon}>📚</div>
             <h3>Edukacja</h3>
             <p>
-              Warsztaty kompetencyjne, panele dyskusyjne i spotkania sieciujące – praktyczna wiedza
-              o organizacji wydarzeń, współpracy wykonawca–miejsce, standardach jakości i
-              bezpieczeństwie.
+              Warsztaty dla organizatorów wydarzeń, twórców i menedżerów kultury. Nauczysz się jak
+              organizować koncerty i eventy, współpracować z klubami i artystami oraz zadbać o
+              bezpieczeństwo i jakość wydarzeń. Spotkania sieciujące i wymiana doświadczeń.
             </p>
           </div>
 
