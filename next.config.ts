@@ -1,15 +1,10 @@
 import type { NextConfig } from 'next';
 import path from 'path';
 
-const isProd = process.env.NODE_ENV === 'production';
-const isGitHubPages = process.env.GITHUB_PAGES === 'true';
-
-const basePath = isProd && isGitHubPages ? '/tujesthouse' : '';
-
 const nextConfig: NextConfig = {
   output: 'export',
-  basePath,
-  assetPrefix: basePath,
+  // No basePath needed when using custom domain (tujesthouse.pl)
+  // basePath is only for username.github.io/repository-name URLs
   outputFileTracingRoot: path.join(__dirname),
   images: {
     unoptimized: true,

@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:gh-pages": "GITHUB_PAGES=true next build",
     "start": "npx serve@latest out -s",
     "preview": "npx serve@latest out -s",
     "lint": "eslint . --ext .ts,.tsx --fix && npx tsc --noEmit",
