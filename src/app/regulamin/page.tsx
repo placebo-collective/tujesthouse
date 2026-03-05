@@ -1,10 +1,24 @@
 import type { Metadata } from 'next';
 import styles from './regulamin.module.scss';
-import { GDPR_EMAIL } from '../../lib/constants';
+import { GDPR_EMAIL, BASE_URL, SITE_NAME } from '../../lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Regulamin | Tu Jest House',
-  description: 'Regulamin serwisu internetowego Tu Jest House',
+  title: 'Regulamin',
+  description:
+    'Regulamin serwisu internetowego Tu Jest House. Zapoznaj się z zasadami korzystania z naszego serwisu i uczestnictwa w wydarzeniach.',
+  openGraph: {
+    title: `Regulamin | ${SITE_NAME}`,
+    description: 'Regulamin serwisu internetowego Tu Jest House',
+    url: `${BASE_URL}/regulamin`,
+    type: 'website',
+  },
+  alternates: {
+    canonical: `${BASE_URL}/regulamin`,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RegulaminPage() {

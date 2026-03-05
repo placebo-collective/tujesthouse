@@ -1,10 +1,24 @@
 import type { Metadata } from 'next';
 import styles from './polityka-prywatnosci.module.scss';
-import { GDPR_EMAIL } from '../../lib/constants';
+import { GDPR_EMAIL, BASE_URL, SITE_NAME } from '../../lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Polityka Prywatności | Tu Jest House',
-  description: 'Polityka prywatności i ochrony danych osobowych serwisu Tu Jest House',
+  title: 'Polityka Prywatności',
+  description:
+    'Polityka prywatności i ochrony danych osobowych serwisu Tu Jest House. Dowiedz się, jak przetwarzamy i chronimy Twoje dane osobowe.',
+  openGraph: {
+    title: `Polityka Prywatności | ${SITE_NAME}`,
+    description: 'Polityka prywatności i ochrony danych osobowych serwisu Tu Jest House',
+    url: `${BASE_URL}/polityka-prywatnosci`,
+    type: 'website',
+  },
+  alternates: {
+    canonical: `${BASE_URL}/polityka-prywatnosci`,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function PolitykaPrywatnosciPage() {
