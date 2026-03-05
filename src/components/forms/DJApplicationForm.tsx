@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import styles from './DJApplicationForm.module.scss';
-import { CITIES } from '../../lib/constants';
+import { CITIES, FORMSPREE_DJ_FORM } from '../../lib/constants';
 
 export default function DJApplicationForm() {
   const [formData, setFormData] = useState({
@@ -35,24 +35,39 @@ export default function DJApplicationForm() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // Simulate form submission (replace with actual API call)
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        artistName: '',
-        city: '',
-        city2: '',
-        soundcloudLink: '',
-        description: '',
-        experience: '',
-        agreement: false,
+    try {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_DJ_FORM}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-    }, 1500);
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          artistName: '',
+          city: '',
+          city2: '',
+          soundcloudLink: '',
+          description: '',
+          experience: '',
+          agreement: false,
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import styles from './WorkshopRegistrationForm.module.scss';
-import { CITIES } from '../../lib/constants';
+import { CITIES, FORMSPREE_WORKSHOP_FORM } from '../../lib/constants';
 
 export default function WorkshopRegistrationForm() {
   const [formData, setFormData] = useState({
@@ -33,22 +33,37 @@ export default function WorkshopRegistrationForm() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // Simulate form submission (replace with actual API call)
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        city: '',
-        role: '',
-        experience: '',
-        motivation: '',
-        agreement: false,
+    try {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_WORKSHOP_FORM}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-    }, 1500);
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          city: '',
+          role: '',
+          experience: '',
+          motivation: '',
+          agreement: false,
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

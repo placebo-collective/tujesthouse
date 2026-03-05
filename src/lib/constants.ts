@@ -10,4 +10,8 @@ export const CITIES = [
   { name: 'Toruń', month: 'Wrzesień 2026', venue: 'Do potwierdzenia' },
 ];
 
-export const CONTACT_EMAIL = 'kontakt@tujesthouse.pl';
+export const CONTACT_EMAIL = 'placebo.warsaw@gmail.com';
+
+// Formspree Form IDs
+export const FORMSPREE_DJ_FORM = 'maqpwaag';
+export const FORMSPREE_WORKSHOP_FORM = 'xlgprazr';
