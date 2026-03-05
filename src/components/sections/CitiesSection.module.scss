@@ -6,7 +6,7 @@
 .title {
   text-align: center;
   font-size: 2.5rem;
-  color: var(--secondary-color);
+  color: var(--primary-color);
   margin-bottom: 15px;
   font-weight: 700;
 }
@@ -41,7 +41,7 @@
 
   &:hover {
     transform: translateX(10px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(230, 57, 70, 0.2);
   }
 
   &::before {
@@ -51,7 +51,7 @@
     top: 0;
     bottom: 0;
     width: 5px;
-    background: var(--primary-color);
+    background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
     border-radius: 15px 0 0 15px;
   }
 }
@@ -76,7 +76,7 @@
 
 .cityName {
   font-size: 1.8rem;
-  color: var(--secondary-color);
+  color: var(--primary-color);
   margin-bottom: 5px;
   font-weight: 700;
 }

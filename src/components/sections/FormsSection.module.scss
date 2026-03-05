@@ -6,7 +6,7 @@
 .title {
   text-align: center;
   font-size: 2.5rem;
-  color: var(--secondary-color);
+  color: var(--primary-color);
   margin-bottom: 15px;
   font-weight: 700;
 }
@@ -46,7 +46,7 @@
   &.active {
     border-color: var(--primary-color);
     background: white;
-    box-shadow: 0 5px 20px rgba(255, 107, 53, 0.2);
+    box-shadow: 0 5px 20px rgba(230, 57, 70, 0.2);
   }
 }
 
@@ -63,7 +63,7 @@
   strong {
     display: block;
     font-size: 1.1rem;
-    color: var(--secondary-color);
+    color: var(--primary-color);
     margin-bottom: 3px;
   }
 

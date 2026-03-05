@@ -1,8 +1,24 @@
 .footer {
-  background: var(--dark-bg);
+  background: #1a1a1a;
   color: var(--text-light);
   padding: 60px 0 30px;
   margin-top: 80px;
+  border-top: 3px solid var(--primary-color);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+      var(--primary-color) 0%, 
+      var(--accent-gold) 50%, 
+      var(--primary-color) 100%
+    );
+  }
 }
 
 .content {

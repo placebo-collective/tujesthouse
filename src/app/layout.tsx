@@ -10,7 +10,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: '#ff6b35',
+  themeColor: '#DC143C',
 };
 
 export const metadata: Metadata = {
@@ -125,7 +125,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl">
+    <html lang="pl" data-theme="polish">
       <head>
         <StructuredData />
       </head>
