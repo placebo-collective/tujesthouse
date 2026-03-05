@@ -46,7 +46,7 @@ export default function ProgramSection() {
                   <h4>Panel dyskusyjny</h4>
                   <p>
                     Równość szans i przejrzyste zasady doboru programu. Dobre praktyki 
-                    selekcji i współpracy. Panel moderowany przez Sebastian Swent i 
+                    selekcji i współpracy. Panel moderowany przez Sebastiana Swenta i 
                     Tomasza Bursztyńskiego, z udziałem ekspertów z branży.
                   </p>
                 </div>

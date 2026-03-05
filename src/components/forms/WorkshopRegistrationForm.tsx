@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import styles from './WorkshopRegistrationForm.module.scss';
-import { CITIES, FORMSPREE_WORKSHOP_FORM } from '../../lib/constants';
+import { CITIES, FORMSPREE_WORKSHOP_FORM, GDPR_EMAIL } from '../../lib/constants';
 
 export default function WorkshopRegistrationForm() {
   const [formData, setFormData] = useState({
@@ -188,10 +189,20 @@ export default function WorkshopRegistrationForm() {
           />
           <span>
             Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji rejestracji 
-            na wydarzenie oraz na kontakt w sprawach organizacyjnych. Rozumiem, że wstęp 
-            na wydarzenie jest bezpłatny, a miejsca są ograniczone. *
+            na wydarzenie oraz na kontakt w sprawach organizacyjnych zgodnie z{' '}
+            <Link href="/polityka-prywatnosci" target="_blank">polityką prywatności</Link>. 
+            Rozumiem, że wstęp na wydarzenie jest bezpłatny, a miejsca są ograniczone. *
           </span>
         </label>
+      </div>
+
+      <div className={styles.gdprInfo}>
+        <p>
+          <strong>Informacja RODO:</strong> Administratorem Twoich danych osobowych jest Tomasz Bursztyński Software Development. 
+          Masz prawo dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, 
+          przenoszenia oraz wniesienia sprzeciwu. Możesz również wycofać zgodę w dowolnym momencie. 
+          W celu realizacji swoich praw lub zgłoszenia usunięcia danych skontaktuj się z nami: <a href={`mailto:${GDPR_EMAIL}`}>{GDPR_EMAIL}</a>
+        </p>
       </div>
 
       {submitStatus === 'success' && (
@@ -213,14 +224,6 @@ export default function WorkshopRegistrationForm() {
       >
         {isSubmitting ? 'Wysyłanie...' : 'Zapisz się na warsztaty'}
       </button>
-
-      <div className={styles.info}>
-        <p>
-          <strong>Uwaga:</strong> Po wysłaniu formularza otrzymasz email z potwierdzeniem rejestracji 
-          oraz szczegółowymi informacjami organizacyjnymi. W przypadku przekroczenia limitu miejsc 
-          zostaniesz umieszczony/a na liście rezerwowej.
-        </p>
-      </div>
     </form>
   );
 }

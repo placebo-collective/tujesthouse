@@ -75,8 +75,8 @@ export default function AboutSection() {
 
         <div className={styles.funding}>
           <p>
-            Projekt dofinansowany ze środków <strong>Narodowego Centrum Kultury</strong> w ramach 
-            programu <strong>„Kultura – Interwencje 2026"</strong>.
+            Projekt aplikuje o dofinansowanie w ramach programu <strong>„Kultura – Interwencje 2026"</strong>{' '}
+            <strong>Narodowego Centrum Kultury</strong>.
           </p>
         </div>
       </div>

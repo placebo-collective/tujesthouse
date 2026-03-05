@@ -77,6 +77,48 @@
   span {
     line-height: 1.6;
     font-size: 0.9rem;
+
+    a {
+      color: var(--primary-color);
+      text-decoration: underline;
+      font-weight: 600;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+.gdprInfo {
+  background: rgba(0, 78, 137, 0.05);
+  border-left: 4px solid var(--secondary-color);
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+  }
+
+  strong {
+    color: var(--secondary-color);
+    font-weight: 600;
+  }
+
+  a {
+    color: var(--primary-color);
+    text-decoration: underline;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 }
 

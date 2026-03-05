@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import styles from './DJApplicationForm.module.scss';
-import { CITIES, FORMSPREE_DJ_FORM } from '../../lib/constants';
+import { CITIES, FORMSPREE_DJ_FORM, GDPR_EMAIL } from '../../lib/constants';
 
 export default function DJApplicationForm() {
   const [formData, setFormData] = useState({
@@ -218,10 +219,20 @@ export default function DJApplicationForm() {
           />
           <span>
             Oświadczam, że posiadam prawa do wykorzystanych materiałów w nagraniu zgłoszeniowym 
-            oraz akceptuję regulamin naboru. Wyrażam zgodę na przetwarzanie moich danych osobowych 
-            w celu realizacji naboru. *
+            oraz akceptuję <Link href="/regulamin" target="_blank">regulamin</Link>. 
+            Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji naboru 
+            zgodnie z <Link href="/polityka-prywatnosci" target="_blank">polityką prywatności</Link>. *
           </span>
         </label>
+      </div>
+
+      <div className={styles.gdprInfo}>
+        <p>
+          <strong>Informacja RODO:</strong> Administratorem Twoich danych osobowych jest Tomasz Bursztyński Software Development. 
+          Masz prawo dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, 
+          przenoszenia oraz wniesienia sprzeciwu. Możesz również wycofać zgodę w dowolnym momencie. 
+          W celu realizacji swoich praw lub zgłoszenia usunięcia danych skontaktuj się z nami: <a href={`mailto:${GDPR_EMAIL}`}>{GDPR_EMAIL}</a>
+        </p>
       </div>
 
       {submitStatus === 'success' && (

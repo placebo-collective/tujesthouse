@@ -42,6 +42,43 @@
   }
 }
 
+.description {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.gdprContact {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  margin-top: 5px;
+
+  a {
+    color: var(--primary-color);
+    font-weight: 500;
+  }
+}
+
+.links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    margin-bottom: 8px;
+
+    a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: var(--primary-color);
+      }
+    }
+  }
+}
+
 .bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 20px;

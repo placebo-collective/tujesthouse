@@ -4,7 +4,7 @@ import { useState } from 'react';
 import styles from './FormsSection.module.scss';
 import DJApplicationForm from '../forms/DJApplicationForm';
 import WorkshopRegistrationForm from '../forms/WorkshopRegistrationForm';
-import { CONTACT_EMAIL } from '../../lib/constants';
+import { CONTACT_EMAIL, GDPR_EMAIL } from '../../lib/constants';
 
 export default function FormsSection() {
   const [activeTab, setActiveTab] = useState<'dj' | 'workshop'>('dj');

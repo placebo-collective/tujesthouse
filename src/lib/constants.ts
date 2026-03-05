@@ -11,6 +11,7 @@ export const CITIES = [
 ];
 
 export const CONTACT_EMAIL = 'placebo.warsaw@gmail.com';
+export const GDPR_EMAIL = 'bursztynski.tomasz@gmail.com';
 
 // Formspree Form IDs
 export const FORMSPREE_DJ_FORM = 'maqpwaag';
