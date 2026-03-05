@@ -1,0 +1,40 @@
+.checkboxWrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start;
+  gap: 16px;
+  cursor: pointer;
+  font-weight: normal !important;
+  width: 100%;
+  margin-bottom: 0 !important;
+}
+
+.checkboxInput {
+  margin-top: 2px;
+  min-width: 20px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+  accent-color: var(--secondary-color);
+}
+
+.checkboxLabel {
+  flex: 1;
+  line-height: 1.7;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  word-wrap: break-word;
+  font-weight: normal !important;
+
+  a {
+    color: var(--secondary-color);
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+}

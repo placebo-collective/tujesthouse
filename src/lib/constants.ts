@@ -6,9 +6,9 @@ export const SITE_DESCRIPTION =
 export const CITIES = [
   { name: 'Warszawa', month: 'Maj 2026', venue: 'Karma Bar / Chmury' },
   { name: 'Wrocław', month: 'Czerwiec 2026', venue: 'Klub Transformator' },
-  { name: 'Poznań', month: 'Lipiec 2026', venue: 'Do potwierdzenia' },
-  { name: 'Kraków', month: 'Sierpień 2026', venue: 'Do potwierdzenia' },
-  { name: 'Toruń', month: 'Wrzesień 2026', venue: 'Do potwierdzenia' },
+  { name: 'Poznań', month: 'Lipiec 2026', venue: 'House Szkolna' },
+  { name: 'Kraków', month: 'Sierpień 2026', venue: 'NOCE KRK' },
+  { name: 'Toruń', month: 'Wrzesień 2026', venue: 'Klub NRD' },
 ];
 
 export const CONTACT_EMAIL = 'placebo.warsaw@gmail.com';

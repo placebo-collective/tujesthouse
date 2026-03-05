@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import styles from './WorkshopRegistrationForm.module.scss';
+import Checkbox from './Checkbox';
 import { CITIES, FORMSPREE_WORKSHOP_FORM, GDPR_EMAIL } from '../../lib/constants';
 
 export default function WorkshopRegistrationForm() {
@@ -252,23 +253,19 @@ export default function WorkshopRegistrationForm() {
       </div>
 
       <div className={styles.formGroup}>
-        <label className={styles.checkbox}>
-          <input
-            type="checkbox"
-            name="agreement"
-            checked={formData.agreement}
-            onChange={handleChange}
-            required
-          />
-          <span>
-            Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji rejestracji na
-            wydarzenie oraz na kontakt w sprawach organizacyjnych zgodnie z{' '}
-            <Link href="/polityka-prywatnosci" target="_blank">
-              polityką prywatności
-            </Link>
-            . Rozumiem, że wstęp na wydarzenie jest bezpłatny, a miejsca są ograniczone. *
-          </span>
-        </label>
+        <Checkbox
+          name="agreement"
+          checked={formData.agreement}
+          onChange={handleChange}
+          required
+        >
+          Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji rejestracji na
+          wydarzenie oraz na kontakt w sprawach organizacyjnych zgodnie z{' '}
+          <Link href="/polityka-prywatnosci" target="_blank">
+            polityką prywatności
+          </Link>
+          . Rozumiem, że wstęp na wydarzenie jest bezpłatny, a miejsca są ograniczone. *
+        </Checkbox>
       </div>
 
       <div className={styles.gdprInfo}>
