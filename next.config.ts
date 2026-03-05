@@ -4,7 +4,7 @@ import path from 'path';
 const isProd = process.env.NODE_ENV === 'production';
 const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 
-const basePath = isProd && isGitHubPages ? '/tujesthouse-app' : '';
+const basePath = isProd && isGitHubPages ? '/tujesthouse' : '';
 
 const nextConfig: NextConfig = {
   output: 'export',
