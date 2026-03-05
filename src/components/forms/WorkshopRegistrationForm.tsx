@@ -253,12 +253,7 @@ export default function WorkshopRegistrationForm() {
       </div>
 
       <div className={styles.formGroup}>
-        <Checkbox
-          name="agreement"
-          checked={formData.agreement}
-          onChange={handleChange}
-          required
-        >
+        <Checkbox name="agreement" checked={formData.agreement} onChange={handleChange} required>
           Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji rejestracji na
           wydarzenie oraz na kontakt w sprawach organizacyjnych zgodnie z{' '}
           <Link href="/polityka-prywatnosci" target="_blank">

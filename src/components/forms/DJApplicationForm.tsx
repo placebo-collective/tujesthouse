@@ -201,19 +201,13 @@ export default function DJApplicationForm() {
       </div>
 
       <div className={styles.formGroup}>
-        <Checkbox
-          name="agreement"
-          checked={formData.agreement}
-          onChange={handleChange}
-          required
-        >
+        <Checkbox name="agreement" checked={formData.agreement} onChange={handleChange} required>
           Oświadczam, że posiadam prawa do wykorzystanych materiałów w nagraniu zgłoszeniowym oraz
           akceptuję{' '}
           <Link href="/regulamin" target="_blank">
             regulamin
           </Link>
-          . Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji naboru zgodnie
-          z{' '}
+          . Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji naboru zgodnie z{' '}
           <Link href="/polityka-prywatnosci" target="_blank">
             polityką prywatności
           </Link>
