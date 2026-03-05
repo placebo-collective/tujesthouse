@@ -108,8 +108,39 @@
 }
 
 @media (max-width: 768px) {
+  .footer {
+    padding: 40px 0 20px;
+    margin-top: 60px;
+  }
+
   .content {
     grid-template-columns: 1fr;
     gap: 30px;
+  }
+
+  .section {
+    h3 {
+      font-size: 1.3rem;
+    }
+
+    h4 {
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
+
+  .links {
+    li {
+      margin-bottom: 8px;
+    }
+  }
+
+  .bottom {
+    p {
+      font-size: 0.85rem;
+    }
   }
 }

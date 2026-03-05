@@ -145,19 +145,60 @@
 }
 
 @media (max-width: 768px) {
+  .about {
+    padding: 60px 0;
+  }
+
   .title {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+
+  .intro {
+    font-size: 1rem;
+    margin-bottom: 40px;
+    padding: 0 10px;
   }
 
   .grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .card {
+    padding: 25px 20px;
   }
 
   .highlights {
     gap: 30px;
+    padding: 30px 0;
   }
 
   .highlight .number {
     font-size: 2.5rem;
+  }
+
+  .highlight .label {
+    font-size: 0.9rem;
+  }
+
+  .funding {
+    padding: 20px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .highlights {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .highlight .number {
+    font-size: 2.2rem;
   }
 }
