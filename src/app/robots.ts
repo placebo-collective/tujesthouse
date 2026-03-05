@@ -6,6 +6,14 @@ export default function robots() {
   return {
     rules: [
       {
+        userAgent: 'facebookexternalhit',
+        allow: '/',
+      },
+      {
+        userAgent: 'Twitterbot',
+        allow: '/',
+      },
+      {
         userAgent: '*',
         allow: '/',
         disallow: ['/api/', '/_next/', '/out/'],

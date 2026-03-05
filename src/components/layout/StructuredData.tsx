@@ -17,6 +17,10 @@ export default function StructuredData() {
     ],
     address: {
       '@type': 'PostalAddress',
+      streetAddress: 'Polna 10/14 m.23',
+      addressLocality: 'Warszawa',
+      addressRegion: 'Śródmieście',
+      postalCode: '00-625',
       addressCountry: 'PL',
     },
   };
