@@ -143,7 +143,7 @@
 
 @media (max-width: 768px) {
   .form {
-    padding: 25px;
+    padding: 25px 20px;
   }
 
   .formRow {
@@ -153,5 +153,33 @@
 
   .formTitle {
     font-size: 1.5rem;
+  }
+
+  .formGroup {
+    label {
+      font-size: 0.95rem;
+    }
+
+    input,
+    textarea,
+    select {
+      font-size: 1rem;
+      padding: 12px;
+    }
+  }
+
+  .submitButton {
+    font-size: 1rem;
+    padding: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form {
+    padding: 20px 15px;
+  }
+
+  .formTitle {
+    font-size: 1.3rem;
   }
 }

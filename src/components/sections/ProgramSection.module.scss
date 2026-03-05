@@ -141,24 +141,91 @@
 }
 
 @media (max-width: 768px) {
+  .program {
+    padding: 60px 0;
+  }
+
   .title {
-    font-size: 2rem;
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  .parts {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .part {
+    min-width: 0;
+  }
+
+  .partHeader {
+    padding: 25px 20px;
+
+    h3 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .partContent {
+    padding: 20px;
+  }
+
+  .item {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    h4 {
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
+
+  .targetGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .target {
+    padding: 30px 20px;
+
+    h3 {
+      font-size: 1.6rem;
+      margin-bottom: 30px;
+    }
+  }
+
+  .targetItem {
+    padding: 20px;
+
+    strong {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.6rem;
   }
 
   .parts {
     grid-template-columns: 1fr;
   }
 
-  .targetGrid {
-    grid-template-columns: 1fr;
-  }
-
   .target {
-    padding: 30px 20px;
-  }
+    padding: 25px 15px;
 
-  .item {
-    flex-direction: column;
-    gap: 10px;
+    h3 {
+      font-size: 1.4rem;
+    }
   }
 }
