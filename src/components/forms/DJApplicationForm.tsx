@@ -22,12 +22,14 @@ export default function DJApplicationForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -73,10 +75,10 @@ export default function DJApplicationForm() {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <h3 className={styles.formTitle}>Zgłoszenie DJ / Producent</h3>
+      <h3 className={styles.formTitle}>Zgłoszenie artysty</h3>
       <p className={styles.formDesc}>
-        Wypełnij formularz, aby wziąć udział w otwartym naborze wykonawców. 
-        W każdym mieście wybierzemy 4–6 DJ-ów do prezentacji artystycznej.
+        Wypełnij formularz, aby wziąć udział w otwartym naborze wykonawców. W każdym mieście
+        wybierzemy 4–6 artystów do prezentacji artystycznej.
       </p>
 
       <div className={styles.formGroup}>
@@ -132,15 +134,9 @@ export default function DJApplicationForm() {
       <div className={styles.formRow}>
         <div className={styles.formGroup}>
           <label htmlFor="city">Preferowane miasto (1. wybór) *</label>
-          <select
-            id="city"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-            required
-          >
+          <select id="city" name="city" value={formData.city} onChange={handleChange} required>
             <option value="">Wybierz miasto</option>
-            {CITIES.map(city => (
+            {CITIES.map((city) => (
               <option key={city.name} value={city.name}>
                 {city.name} - {city.month}
               </option>
@@ -150,14 +146,9 @@ export default function DJApplicationForm() {
 
         <div className={styles.formGroup}>
           <label htmlFor="city2">Preferowane miasto (2. wybór)</label>
-          <select
-            id="city2"
-            name="city2"
-            value={formData.city2}
-            onChange={handleChange}
-          >
+          <select id="city2" name="city2" value={formData.city2} onChange={handleChange}>
             <option value="">Wybierz miasto (opcjonalnie)</option>
-            {CITIES.map(city => (
+            {CITIES.map((city) => (
               <option key={city.name} value={city.name}>
                 {city.name} - {city.month}
               </option>
@@ -188,7 +179,7 @@ export default function DJApplicationForm() {
           value={formData.experience}
           onChange={handleChange}
           rows={4}
-          placeholder="Opisz swoje dotychczasowe doświadczenie jako DJ/producent..."
+          placeholder="Opisz swoje dotychczasowe doświadczenie jako artysta..."
           required
         />
       </div>
@@ -218,20 +209,28 @@ export default function DJApplicationForm() {
             required
           />
           <span>
-            Oświadczam, że posiadam prawa do wykorzystanych materiałów w nagraniu zgłoszeniowym 
-            oraz akceptuję <Link href="/regulamin" target="_blank">regulamin</Link>. 
-            Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji naboru 
-            zgodnie z <Link href="/polityka-prywatnosci" target="_blank">polityką prywatności</Link>. *
+            Oświadczam, że posiadam prawa do wykorzystanych materiałów w nagraniu zgłoszeniowym oraz
+            akceptuję{' '}
+            <Link href="/regulamin" target="_blank">
+              regulamin
+            </Link>
+            . Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji naboru zgodnie
+            z{' '}
+            <Link href="/polityka-prywatnosci" target="_blank">
+              polityką prywatności
+            </Link>
+            . *
           </span>
         </label>
       </div>
 
       <div className={styles.gdprInfo}>
         <p>
-          <strong>Informacja RODO:</strong> Administratorem Twoich danych osobowych jest Tomasz Bursztyński Software Development. 
-          Masz prawo dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, 
-          przenoszenia oraz wniesienia sprzeciwu. Możesz również wycofać zgodę w dowolnym momencie. 
-          W celu realizacji swoich praw lub zgłoszenia usunięcia danych skontaktuj się z nami: <a href={`mailto:${GDPR_EMAIL}`}>{GDPR_EMAIL}</a>
+          <strong>Informacja RODO:</strong> Administratorem Twoich danych osobowych jest Tomasz
+          Bursztyński Software Development. Masz prawo dostępu do swoich danych, ich sprostowania,
+          usunięcia, ograniczenia przetwarzania, przenoszenia oraz wniesienia sprzeciwu. Możesz
+          również wycofać zgodę w dowolnym momencie. W celu realizacji swoich praw lub zgłoszenia
+          usunięcia danych skontaktuj się z nami: <a href={`mailto:${GDPR_EMAIL}`}>{GDPR_EMAIL}</a>
         </p>
       </div>
 
@@ -247,11 +246,7 @@ export default function DJApplicationForm() {
         </div>
       )}
 
-      <button
-        type="submit"
-        className={styles.submitBtn}
-        disabled={isSubmitting}
-      >
+      <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
         {isSubmitting ? 'Wysyłanie...' : 'Wyślij zgłoszenie'}
       </button>
     </form>

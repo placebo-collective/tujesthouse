@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     'house music',
     'kultura klubowa',
     'muzyka elektroniczna',
-    'DJ',
+    'artyści',
     'warsztaty',
     'edukacja kulturalna',
     'wydarzenia kulturalne',

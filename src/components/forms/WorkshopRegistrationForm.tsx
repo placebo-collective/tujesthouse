@@ -11,7 +11,7 @@ export default function WorkshopRegistrationForm() {
     email: '',
     phone: '',
     city: '',
-    role: '',
+    role: [] as string[],
     experience: '',
     motivation: '',
     agreement: false,
@@ -19,13 +19,50 @@ export default function WorkshopRegistrationForm() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [roleSearchTerm, setRoleSearchTerm] = useState('');
+  const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const roleOptions = [
+    { value: 'dj', label: 'DJ' },
+    { value: 'producent', label: 'Producent muzyczny' },
+    { value: 'organizator', label: 'Organizator wydarzeń' },
+    { value: 'technik', label: 'Realizator / Technik' },
+    { value: 'promotor', label: 'Komunikacja / Promocja' },
+    { value: 'kurator', label: 'Kurator / Manager' },
+    { value: 'entuzjasta', label: 'Miłośnik kultury klubowej' },
+    { value: 'student', label: 'Student / Osoba ucząca się' },
+    { value: 'inne', label: 'Inne' },
+  ];
+
+  const filteredRoleOptions = roleOptions.filter((option) =>
+    option.label.toLowerCase().includes(roleSearchTerm.toLowerCase())
+  );
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+  const handleRoleChange = (roleValue: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      role: prev.role.includes(roleValue)
+        ? prev.role.filter((r) => r !== roleValue)
+        : [...prev.role, roleValue],
+    }));
+    setRoleSearchTerm('');
+  };
+
+  const removeRole = (roleValue: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      role: prev.role.filter((r) => r !== roleValue),
     }));
   };
 
@@ -51,7 +88,7 @@ export default function WorkshopRegistrationForm() {
           email: '',
           phone: '',
           city: '',
-          role: '',
+          role: [],
           experience: '',
           motivation: '',
           agreement: false,
@@ -71,8 +108,8 @@ export default function WorkshopRegistrationForm() {
     <form className={styles.form} onSubmit={handleSubmit}>
       <h3 className={styles.formTitle}>Rejestracja na warsztaty</h3>
       <p className={styles.formDesc}>
-        Zapisz się na część dzienną wydarzenia - warsztaty kompetencyjne, panel dyskusyjny 
-        i spotkanie sieciujące. Miejsca ograniczone!
+        Zapisz się na część dzienną wydarzenia - warsztaty kompetencyjne, panel dyskusyjny i
+        spotkanie sieciujące. Miejsca ograniczone!
       </p>
 
       <div className={styles.formGroup}>
@@ -115,41 +152,77 @@ export default function WorkshopRegistrationForm() {
 
       <div className={styles.formGroup}>
         <label htmlFor="city">Miasto wydarzenia *</label>
-        <select
-          id="city"
-          name="city"
-          value={formData.city}
-          onChange={handleChange}
-          required
-        >
+        <select id="city" name="city" value={formData.city} onChange={handleChange} required>
           <option value="">Wybierz miasto</option>
-          {CITIES.map(city => (
+          {CITIES.map((city) => (
             <option key={city.name} value={city.name}>
-              {city.name} - {city.month}
+              {city.name}
             </option>
           ))}
         </select>
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="role">Kim jesteś w branży kulturalnej? *</label>
-        <select
-          id="role"
-          name="role"
-          value={formData.role}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Wybierz</option>
-          <option value="dj">DJ / Producent muzyczny</option>
-          <option value="organizer">Organizator wydarzeń</option>
-          <option value="technician">Realizator / Technik</option>
-          <option value="promoter">Komunikacja / Promocja</option>
-          <option value="curator">Kurator / Manager</option>
-          <option value="enthusiast">Miłośnik kultury klubowej</option>
-          <option value="student">Student / Osoba ucząca się</option>
-          <option value="other">Inne</option>
-        </select>
+        <label>Kim jesteś w branży kulturalnej? (możesz wybrać kilka opcji) *</label>
+
+        {/* Selected roles as tags */}
+        {formData.role.length > 0 && (
+          <div className={styles.selectedRoles}>
+            {formData.role.map((roleValue) => {
+              const roleOption = roleOptions.find((opt) => opt.value === roleValue);
+              return (
+                <span key={roleValue} className={styles.roleTag}>
+                  {roleOption?.label}
+                  <button
+                    type="button"
+                    onClick={() => removeRole(roleValue)}
+                    className={styles.removeTag}
+                    aria-label={`Usuń ${roleOption?.label}`}
+                  >
+                    ×
+                  </button>
+                </span>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Search input */}
+        <div className={styles.multiSelectWrapper}>
+          <input
+            type="text"
+            className={styles.searchInput}
+            placeholder="Wyszukaj i wybierz role..."
+            value={roleSearchTerm}
+            onChange={(e) => setRoleSearchTerm(e.target.value)}
+            onFocus={() => setIsRoleDropdownOpen(true)}
+            onBlur={() => setTimeout(() => setIsRoleDropdownOpen(false), 200)}
+          />
+
+          {/* Dropdown with options */}
+          {isRoleDropdownOpen && filteredRoleOptions.length > 0 && (
+            <div className={styles.optionsDropdown}>
+              {filteredRoleOptions.map((option) => (
+                <div
+                  key={option.value}
+                  className={`${styles.dropdownOption} ${
+                    formData.role.includes(option.value) ? styles.selected : ''
+                  }`}
+                  onClick={() => handleRoleChange(option.value)}
+                >
+                  <span className={styles.optionLabel}>{option.label}</span>
+                  {formData.role.includes(option.value) && (
+                    <span className={styles.checkmark}>✓</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {formData.role.length === 0 && (
+          <small style={{ color: '#999' }}>Wybierz przynajmniej jedną opcję</small>
+        )}
       </div>
 
       <div className={styles.formGroup}>
@@ -188,20 +261,23 @@ export default function WorkshopRegistrationForm() {
             required
           />
           <span>
-            Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji rejestracji 
-            na wydarzenie oraz na kontakt w sprawach organizacyjnych zgodnie z{' '}
-            <Link href="/polityka-prywatnosci" target="_blank">polityką prywatności</Link>. 
-            Rozumiem, że wstęp na wydarzenie jest bezpłatny, a miejsca są ograniczone. *
+            Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji rejestracji na
+            wydarzenie oraz na kontakt w sprawach organizacyjnych zgodnie z{' '}
+            <Link href="/polityka-prywatnosci" target="_blank">
+              polityką prywatności
+            </Link>
+            . Rozumiem, że wstęp na wydarzenie jest bezpłatny, a miejsca są ograniczone. *
           </span>
         </label>
       </div>
 
       <div className={styles.gdprInfo}>
         <p>
-          <strong>Informacja RODO:</strong> Administratorem Twoich danych osobowych jest Tomasz Bursztyński Software Development. 
-          Masz prawo dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, 
-          przenoszenia oraz wniesienia sprzeciwu. Możesz również wycofać zgodę w dowolnym momencie. 
-          W celu realizacji swoich praw lub zgłoszenia usunięcia danych skontaktuj się z nami: <a href={`mailto:${GDPR_EMAIL}`}>{GDPR_EMAIL}</a>
+          <strong>Informacja RODO:</strong> Administratorem Twoich danych osobowych jest Tomasz
+          Bursztyński Software Development. Masz prawo dostępu do swoich danych, ich sprostowania,
+          usunięcia, ograniczenia przetwarzania, przenoszenia oraz wniesienia sprzeciwu. Możesz
+          również wycofać zgodę w dowolnym momencie. W celu realizacji swoich praw lub zgłoszenia
+          usunięcia danych skontaktuj się z nami: <a href={`mailto:${GDPR_EMAIL}`}>{GDPR_EMAIL}</a>
         </p>
       </div>
 
@@ -220,7 +296,7 @@ export default function WorkshopRegistrationForm() {
       <button
         type="submit"
         className={styles.submitBtn}
-        disabled={isSubmitting}
+        disabled={isSubmitting || formData.role.length === 0}
       >
         {isSubmitting ? 'Wysyłanie...' : 'Zapisz się na warsztaty'}
       </button>

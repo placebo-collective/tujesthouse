@@ -45,7 +45,7 @@
       color: var(--text-dark);
 
       &:before {
-        content: counters(item, ".") ". ";
+        content: counters(item, '.') '. ';
         counter-increment: item;
         color: var(--primary-color);
         font-weight: 600;
@@ -63,7 +63,7 @@
       line-height: 1.8;
       list-style-type: disc;
       color: var(--text-dark);
-      
+
       &::marker {
         color: var(--primary-color);
       }

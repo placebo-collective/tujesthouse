@@ -13,9 +13,7 @@ export default function FormsSection() {
     <section id="formularze" className={styles.forms}>
       <div className="container">
         <h2 className={styles.title}>Dołącz do nas!</h2>
-        <p className={styles.subtitle}>
-          Wybierz odpowiedni formularz i weź udział w projekcie
-        </p>
+        <p className={styles.subtitle}>Wybierz odpowiedni formularz i weź udział w projekcie</p>
 
         <div className={styles.tabs}>
           <button
@@ -24,7 +22,7 @@ export default function FormsSection() {
           >
             <span className={styles.tabIcon}>🎧</span>
             <span className={styles.tabText}>
-              <strong>Dla DJ-ów</strong>
+              <strong>Dla artystów</strong>
               <small>Zgłoś się do open call</small>
             </span>
           </button>

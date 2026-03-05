@@ -12,7 +12,7 @@ export default function HeroSection() {
           <p className={styles.dates}>Maj – Wrzesień 2026 | 5 miast w Polsce</p>
           <div className={styles.cta}>
             <a href="#formularze" className={styles.btnPrimary}>
-              Zgłoś się jako DJ
+              Zgłoś się jako artysta
             </a>
             <a href="#formularze" className={styles.btnSecondary}>
               Zapisz się na warsztaty

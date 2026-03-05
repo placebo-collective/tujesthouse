@@ -13,10 +13,18 @@ export default function Header() {
             </Link>
           </div>
           <ul className={styles.menu}>
-            <li><a href="/#o-projekcie">O projekcie</a></li>
-            <li><a href="/#program">Program</a></li>
-            <li><a href="/#miasta">Miasta</a></li>
-            <li><a href="/#formularze">Dołącz do nas</a></li>
+            <li>
+              <a href="/#o-projekcie">O projekcie</a>
+            </li>
+            <li>
+              <a href="/#program">Program</a>
+            </li>
+            <li>
+              <a href="/#miasta">Miasta</a>
+            </li>
+            <li>
+              <a href="/#formularze">Dołącz do nas</a>
+            </li>
           </ul>
         </nav>
       </div>

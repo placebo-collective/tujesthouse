@@ -12,17 +12,21 @@ export default function Footer() {
           <div className={styles.section}>
             <h3>{SITE_NAME}</h3>
             <p className={styles.description}>
-              Cykl wydarzeń kulturowych łączących edukację, muzykę elektroniczną 
-              i rozwój sceny klubowej w Polsce.
+              Cykl wydarzeń kulturowych łączących edukację, muzykę elektroniczną i rozwój sceny
+              klubowej w Polsce.
             </p>
           </div>
           <div className={styles.section}>
             <h4>Organizatorzy</h4>
-            <p><strong>Tomasz Bursztyński Software Development</strong></p>
+            <p>
+              <strong>Tomasz Bursztyński Software Development</strong>
+            </p>
             <p>Polna 10/14 m.23, 00-625 Warszawa</p>
             <p>NIP: 7011072260</p>
             <br />
-            <p>Partner: <strong>Instytut Dźwięku Karol Murawski</strong></p>
+            <p>
+              Partner: <strong>Instytut Dźwięku Karol Murawski</strong>
+            </p>
             <p>ul. Krótka 7, 05-230 Kobyłka</p>
             <p>NIP: 7221567281</p>
           </div>
@@ -32,7 +36,8 @@ export default function Footer() {
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </p>
             <p className={styles.gdprContact}>
-              Sprawy RODO i ochrony danych osobowych:<br />
+              Sprawy RODO i ochrony danych osobowych:
+              <br />
               <a href={`mailto:${GDPR_EMAIL}`}>{GDPR_EMAIL}</a>
             </p>
           </div>
@@ -49,7 +54,9 @@ export default function Footer() {
           </div>
         </div>
         <div className={styles.bottom}>
-          <p>&copy; {currentYear} {SITE_NAME}. Wszystkie prawa zastrzeżone.</p>
+          <p>
+            &copy; {currentYear} {SITE_NAME}. Wszystkie prawa zastrzeżone.
+          </p>
           <p>Materiały na licencji CC BY-NC-SA 4.0</p>
           <p>
             Projekt aplikuje o dofinansowanie w ramach programu „Kultura – Interwencje 2026”{' '}
