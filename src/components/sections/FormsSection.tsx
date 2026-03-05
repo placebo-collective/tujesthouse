@@ -4,6 +4,7 @@ import { useState } from 'react';
 import styles from './FormsSection.module.scss';
 import DJApplicationForm from '../forms/DJApplicationForm';
 import WorkshopRegistrationForm from '../forms/WorkshopRegistrationForm';
+import { CONTACT_EMAIL } from '../../lib/constants';
 
 export default function FormsSection() {
   const [activeTab, setActiveTab] = useState<'dj' | 'workshop'>('dj');
@@ -47,7 +48,7 @@ export default function FormsSection() {
         <div className={styles.contact}>
           <h3>Masz pytania?</h3>
           <p>
-            Skontaktuj się z nami: <a href="mailto:kontakt@tujesthouse.pl">kontakt@tujesthouse.pl</a>
+            Skontaktuj się z nami: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           </p>
         </div>
       </div>
