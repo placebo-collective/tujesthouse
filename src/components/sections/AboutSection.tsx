@@ -10,21 +10,13 @@ export default function AboutSection() {
           <p>
             <strong>Tu Jest House</strong> to cykl pięciu wydarzeń kulturowych łączących edukację,
             muzykę elektroniczną i rozwój kompetencji w obszarze kultury klubowej. Projekt
-            realizowany jest w pięciu miastach Polski w okresie maj–wrzesień 2026.
+            realizowany w pięciu miastach Polski (maj–wrzesień 2026) zwiększa uczestnictwo w
+            kulturze, wspiera młodych twórców sceny muzycznej i buduje współpracę między miastami
+            poprzez podnoszenie kompetencji osób realizujących wydarzenia kulturalne.
           </p>
         </div>
 
         <div className={styles.grid}>
-          <div className={styles.card}>
-            <div className={styles.icon}>🎯</div>
-            <h3>Cel projektu</h3>
-            <p>
-              Zwiększenie uczestnictwa w kulturze oraz podniesienie kompetencji osób tworzących i
-              realizujących wydarzenia kulturalne. Wsparcie młodych twórców sceny muzycznej i
-              budowanie współpracy między miastami.
-            </p>
-          </div>
-
           <div className={styles.card}>
             <div className={styles.icon}>📚</div>
             <h3>Edukacja</h3>
