@@ -109,8 +109,8 @@ export default function WorkshopRegistrationForm() {
     <form className={styles.form} onSubmit={handleSubmit}>
       <h3 className={styles.formTitle}>Rejestracja na warsztaty</h3>
       <p className={styles.formDesc}>
-        Zapisz się na część dzienną wydarzenia - warsztaty kompetencyjne, panel dyskusyjny i
-        spotkanie sieciujące. Miejsca ograniczone!
+        Zapisz się na część dzienną wydarzenia - dwa warsztaty kompetencyjne, panel dyskusyjny i
+        spotkanie sieciujące. Bezpłatny udział na podstawie rejestracji. Miejsca ograniczone!
       </p>
 
       <div className={styles.formGroup}>

@@ -26,8 +26,8 @@ export default function CitiesSection() {
             <div className={styles.infoIcon}>📍</div>
             <h4>Dostępność</h4>
             <p>
-              Wszystkie wydarzenia odbywają się w centralnych lokalizacjach łatwo dostępnych
-              komunikacją publiczną
+              Wszystkie wydarzenia odbywają się w lokalach łatwo dostępnych komunikacją publiczną.
+              Dokładne informacje o dostępności każdego obiektu będą podane przed wydarzeniem.
             </p>
           </div>
           <div className={styles.infoCard}>
@@ -42,8 +42,8 @@ export default function CitiesSection() {
             <div className={styles.infoIcon}>♿</div>
             <h4>Dostępność dla wszystkich</h4>
             <p>
-              Dbamy o bezpieczeństwo i dostępność wydarzeń zgodnie z kodeksem bezpieczeństwa
-              uczestników
+              Wszystkie wydarzenia odbywają się w dostępnych lokalach. Dbamy o bezpieczeństwo,
+              komfort i inkluzywność uczestników.
             </p>
           </div>
         </div>

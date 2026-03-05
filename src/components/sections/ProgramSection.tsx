@@ -19,23 +19,12 @@ export default function ProgramSection() {
               <div className={styles.item}>
                 <div className={styles.itemIcon}>🎓</div>
                 <div>
-                  <h4>Warsztat 1 - Współpraca w sektorze kultury</h4>
+                  <h4>Warsztaty kompetencyjne</h4>
                   <p>
-                    Standardy komunikacji, umowy i budowanie relacji bez pośredników. Praktyczne
-                    narzędzia: lista kontrolna kontaktu z miejscem/organizatorem oraz podstawowy
-                    zestaw dokumentów współpracy.
-                  </p>
-                </div>
-              </div>
-
-              <div className={styles.item}>
-                <div className={styles.itemIcon}>📜</div>
-                <div>
-                  <h4>Warsztat 2 - Prawa autorskie i publikacja</h4>
-                  <p>
-                    Legalne upowszechnianie nagrań setów i materiałów edukacyjnych. Lista kontrolna
-                    zgód (wykonawca, wizerunek, publikacja) oraz podstawowy model licencji do
-                    publikacji.
+                    Dwa warsztaty w każdym mieście prowadzone przez ekspertów branżowych. Poruszamy
+                    tematy współpracy w sektorze kultury, standardów jakości, praw autorskich i budowania
+                    programów kulturalnych. Każdy uczestnik otrzymuje konkretne narzędzia do wykorzystania:
+                    listy kontrolne, wzory dokumentów, standardy współpracy.
                   </p>
                 </div>
               </div>
@@ -45,9 +34,10 @@ export default function ProgramSection() {
                 <div>
                   <h4>Panel dyskusyjny</h4>
                   <p>
-                    Równość szans i przejrzyste zasady doboru programu. Dobre praktyki selekcji i
-                    współpracy. Panel moderowany przez Sebastiana Swenta i Tomasza Bursztyńskiego, z
-                    udziałem ekspertów z branży.
+                    Moderowana dyskusja z udziałem ekspertów branżowych i przedstawicieli lokalnej sceny.
+                    Rozmawiamy o równości szans, przejrzystych zasadach doboru programu oraz dobrych
+                    praktykach w selekcji i współpracy. Każdy panel moderowany przez Sebastianę Swenta i
+                    Tomasza Bursztyńskiego.
                   </p>
                 </div>
               </div>
@@ -57,8 +47,8 @@ export default function ProgramSection() {
                 <div>
                   <h4>Spotkanie sieciujące</h4>
                   <p>
-                    Ustrukturyzowana wymiana doświadczeń i kontaktów zawodowych między uczestnikami.
-                    Budowanie sieci współpracy między miastami.
+                    Ustrukturyzowana wymiana doświadczeń i kontaktów zawodowych między uczestnikami z
+                    różnych miast. Budowanie trwałej sieci współpracy międzymiastowej i lokalnej.
                   </p>
                 </div>
               </div>
@@ -76,9 +66,9 @@ export default function ProgramSection() {
                 <div>
                   <h4>Showcase artystów</h4>
                   <p>
-                    Publiczna prezentacja dorobku artystycznego 4–6 wykonawców wyłonionych w
-                    otwartym naborze. Każdy artysta prezentuje swój autorski set w profesjonalnych
-                    warunkach technicznych.
+                    Występy 4–6 wykonawców wyłonionych w otwartym, transparentnym naborze. Każdy
+                    artysta prezentuje swój autorski set w profesjonalnych warunkach technicznych.
+                    Okazja do odkrywania nowych talentów lokalnej sceny muzyki elektronicznej.
                   </p>
                 </div>
               </div>
@@ -88,8 +78,9 @@ export default function ProgramSection() {
                 <div>
                   <h4>Dokumentacja audio-wideo</h4>
                   <p>
-                    Pełna rejestracja wydarzeń w celach dokumentacyjnych i edukacyjnych. Materiały
-                    udostępniane bezpłatnie na licencji Creative Commons (CC BY-NC-SA 4.0).
+                    Wszystkie występy są profesjonalnie rejestrowane. Materiały udostępniane
+                    bezpłatnie na licencji Creative Commons (CC BY-NC-SA 4.0) w celach
+                    dokumentacyjnych i edukacyjnych.
                   </p>
                 </div>
               </div>
@@ -97,10 +88,10 @@ export default function ProgramSection() {
               <div className={styles.item}>
                 <div className={styles.itemIcon}>🎪</div>
                 <div>
-                  <h4>Wstęp bezpłatny</h4>
+                  <h4>Wstęp wolny</h4>
                   <p>
-                    Udział w wydarzeniu na podstawie rejestracji. Limit miejsc zależny od pojemności
-                    obiektu. Priorytet dla grup docelowych projektu.
+                    Bezpłatny wstęp dla wszystkich zainteresowanych muzyki elektronicznej. Udział na
+                    podstawie rejestracji, limit miejsc zależny od pojemności obiektu.
                   </p>
                 </div>
               </div>

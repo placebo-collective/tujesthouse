@@ -29,9 +29,10 @@ export default function AboutSection() {
             <div className={styles.icon}>📚</div>
             <h3>Edukacja</h3>
             <p>
-              Warsztaty dla organizatorów wydarzeń, twórców i menedżerów kultury. Nauczysz się jak
-              organizować koncerty i eventy, współpracować z klubami i artystami oraz zadbać o
-              bezpieczeństwo i jakość wydarzeń. Spotkania sieciujące i wymiana doświadczeń.
+              Warsztaty kompetencyjne dla organizatorów wydarzeń, twórców i menedżerów kultury.
+              Praktyczna wiedza o współpracy, standardach jakości i prawach autorskich. Każdy warsztat
+              dostarcza konkretne narzędzia do wykorzystania w pracy. Panel dyskusyjny i spotkania
+              sieciujące.
             </p>
           </div>
 
@@ -39,8 +40,9 @@ export default function AboutSection() {
             <div className={styles.icon}>🎵</div>
             <h3>Muzyka</h3>
             <p>
-              Publiczna prezentacja dorobku artystycznego młodych artystów wyłonionych w otwartym
-              naborze. Showcase 4–6 wykonawców w każdym mieście z pełną dokumentacją audio-wideo.
+              Publiczna prezentacja młodych artystów wyłonionych w transparentnym, otwartym naborze.
+              W każdym mieście wystąpi 4–6 wykonawców. Wszystkie występy są profesjonalnie
+              rejestrowane i udostępniane na wolnej licencji.
             </p>
           </div>
 

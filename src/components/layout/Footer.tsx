@@ -57,11 +57,10 @@ export default function Footer() {
           <p>
             &copy; {currentYear} {SITE_NAME}. Wszystkie prawa zastrzeżone.
           </p>
-          <p>Materiały na licencji CC BY-NC-SA 4.0</p>
           <p>
             Projekt aplikuje o dofinansowanie w ramach programu „Kultura – Interwencje 2026”{' '}
             Narodowego Centrum Kultury
-          </p>
+          </p>{' '}
         </div>
       </div>
     </footer>

@@ -78,8 +78,9 @@ export default function DJApplicationForm() {
     <form className={styles.form} onSubmit={handleSubmit}>
       <h3 className={styles.formTitle}>Zgłoszenie artysty</h3>
       <p className={styles.formDesc}>
-        Wypełnij formularz, aby wziąć udział w otwartym naborze wykonawców. W każdym mieście
-        wybierzemy 4–6 artystów do prezentacji artystycznej.
+        Wypełnij formularz, aby wziąć udział w otwartym naborze wykonawców. Wybierzemy 4–6
+        artystów w każdym mieście do prezentacji artystycznej. Nabory są transparentne i oparte o
+        jasne kryteria.
       </p>
 
       <div className={styles.formGroup}>
