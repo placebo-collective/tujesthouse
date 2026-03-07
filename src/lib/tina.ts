@@ -6,7 +6,7 @@ import type {
   FormsContent,
   FooterContent,
   HeaderContent,
-  DJFormContent,
+  ArtistFormContent,
   WorkshopFormContent,
 } from './content-types';
 import { loadContent } from './utils/content-loader';
@@ -52,8 +52,8 @@ export async function getHeaderContent(): Promise<HeaderContent | null> {
   return loadContent<HeaderContent>('layout/header.json');
 }
 
-export async function getDJFormContent(): Promise<DJFormContent | null> {
-  return loadContent<DJFormContent>('forms/dj-application.json');
+export async function getArtistFormContent(): Promise<ArtistFormContent | null> {
+  return loadContent<ArtistFormContent>('forms/artist-application.json');
 }
 
 export async function getWorkshopFormContent(): Promise<WorkshopFormContent | null> {

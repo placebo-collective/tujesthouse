@@ -156,7 +156,7 @@ export interface FormMessages {
   submit: string;
 }
 
-export interface DJFormContent {
+export interface ArtistFormContent {
   title: string;
   description: string;
   fields: {

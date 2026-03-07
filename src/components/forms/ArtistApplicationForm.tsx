@@ -2,19 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import styles from './DJApplicationForm.module.scss';
+import styles from './ArtistApplicationForm.module.scss';
 import Checkbox from './Checkbox';
-import { FORMSPREE_DJ_FORM, GDPR_EMAIL } from '../../lib/constants';
-import type { DJFormContent, City } from '@/lib/content-types';
+import { FORMSPREE_ARTIST_FORM, GDPR_EMAIL } from '../../lib/constants';
+import type { ArtistFormContent, City } from '@/lib/content-types';
 import { useFormSubmit } from '@/hooks/useFormSubmit';
 import { marked } from 'marked';
 
-interface DJApplicationFormProps {
-  content: DJFormContent;
+interface ArtistApplicationFormProps {
+  content: ArtistFormContent;
   cities: City[];
 }
 
-type DJFormData = {
+type ArtistFormData = {
   name: string;
   email: string;
   phone: string;
@@ -27,7 +27,7 @@ type DJFormData = {
   agreement: boolean;
 };
 
-const initialFormData: DJFormData = {
+const initialFormData: ArtistFormData = {
   name: '',
   email: '',
   phone: '',
@@ -40,16 +40,16 @@ const initialFormData: DJFormData = {
   agreement: false,
 };
 
-export default function DJApplicationForm({ content, cities }: DJApplicationFormProps) {
-  const [formData, setFormData] = useState<DJFormData>(initialFormData);
+export default function ArtistApplicationForm({ content, cities }: ArtistApplicationFormProps) {
+  const [formData, setFormData] = useState<ArtistFormData>(initialFormData);
   const [descriptionHtml, setDescriptionHtml] = useState('');
 
   useEffect(() => {
     marked.parse(content.description || '', { async: true }).then(setDescriptionHtml);
   }, [content.description]);
 
-  const { submitStatus, isSubmitting, submitForm } = useFormSubmit<DJFormData>({
-    formspreeId: FORMSPREE_DJ_FORM,
+  const { submitStatus, isSubmitting, submitForm } = useFormSubmit<ArtistFormData>({
+    formspreeId: FORMSPREE_ARTIST_FORM,
     onSuccess: () => setFormData(initialFormData),
   });
 

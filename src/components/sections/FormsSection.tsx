@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import styles from './FormsSection.module.scss';
-import DJApplicationForm from '../forms/DJApplicationForm';
+import ArtistApplicationForm from '../forms/ArtistApplicationForm';
 import WorkshopRegistrationForm from '../forms/WorkshopRegistrationForm';
 import { CONTACT_EMAIL } from '../../lib/constants';
-import type { FormTab, DJFormContent, WorkshopFormContent, City } from '@/lib/content-types';
+import type { FormTab, ArtistFormContent, WorkshopFormContent, City } from '@/lib/content-types';
 
 interface FormsSectionProps {
   title: string;
@@ -15,7 +15,7 @@ interface FormsSectionProps {
     title: string;
     text: string;
   };
-  djFormContent: DJFormContent;
+  artistFormContent: ArtistFormContent;
   workshopFormContent: WorkshopFormContent;
   cities: City[];
 }
@@ -25,11 +25,11 @@ export default function FormsSection({
   subtitle,
   tabs,
   contact,
-  djFormContent,
+  artistFormContent,
   workshopFormContent,
   cities,
 }: FormsSectionProps) {
-  const [activeTab, setActiveTab] = useState<'dj' | 'workshop'>('dj');
+  const [activeTab, setActiveTab] = useState<'artist' | 'workshop'>('artist');
 
   return (
     <section id="formularze" className={styles.forms}>
@@ -42,7 +42,7 @@ export default function FormsSection({
             <button
               key={tab.id}
               className={`${styles.tab} ${activeTab === tab.id ? styles.active : ''}`}
-              onClick={() => setActiveTab(tab.id as 'dj' | 'workshop')}
+              onClick={() => setActiveTab(tab.id as 'artist' | 'workshop')}
             >
               <span className={styles.tabIcon}>{tab.icon}</span>
               <span className={styles.tabText}>
@@ -54,7 +54,9 @@ export default function FormsSection({
         </div>
 
         <div className={styles.formContainer}>
-          {activeTab === 'dj' && <DJApplicationForm content={djFormContent} cities={cities} />}
+          {activeTab === 'artist' && (
+            <ArtistApplicationForm content={artistFormContent} cities={cities} />
+          )}
           {activeTab === 'workshop' && (
             <WorkshopRegistrationForm content={workshopFormContent} cities={cities} />
           )}

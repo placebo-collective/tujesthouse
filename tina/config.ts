@@ -635,7 +635,7 @@ export default defineConfig({
         ],
       },
       {
-        name: 'djApplication',
+        name: 'artistApplication',
         label: 'Formularz zgłoszeniowy artysty',
         path: 'content/forms',
         format: 'json',
@@ -646,7 +646,7 @@ export default defineConfig({
           },
         },
         match: {
-          include: 'dj-application',
+          include: 'artist-application',
         },
         fields: [
           {
@@ -799,7 +799,7 @@ export default defineConfig({
           {
             type: 'object',
             name: 'gdprInfo',
-            label: 'Informacja RODO (DJ)',
+            label: 'Informacja RODO (artysta)',
             fields: [
               {
                 type: 'string',
@@ -817,7 +817,7 @@ export default defineConfig({
           {
             type: 'object',
             name: 'messages',
-            label: 'Komunikaty formularza (DJ)',
+            label: 'Komunikaty formularza (artysta)',
             fields: [
               {
                 type: 'string',
