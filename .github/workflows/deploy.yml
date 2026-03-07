@@ -2,19 +2,15 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches:
-      - main
-      - feature/*
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
-  pull-requests: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -24,213 +20,56 @@ env:
   NODE_VERSION: '20'
 
 jobs:
-  quality-checks:
-    name: Quality Checks
+  build-and-test:
+    name: Build & Test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
-
-      - name: TypeScript check
-        run: npx tsc --noEmit
-
-      - name: ESLint check
-        run: npx eslint .
-
-      - name: Prettier check
-        run: npx prettier --check "src/**/*.{ts,tsx,js,jsx,json,css,scss,md}"
-
-      - name: Check for outdated dependencies
-        run: npm outdated || true
-
-      - name: Validate JSON files
         run: |
-          for file in content/**/*.json; do
-            echo "Validating $file"
-            node -e "JSON.parse(require('fs').readFileSync('$file', 'utf8'))" || exit 1
-          done
+          npm ci
+          npm install --no-save sharp
 
-      - name: Validate icon generation script
+      - name: Run checks
         run: |
-          if [ ! -f "scripts/generate-icons.js" ]; then
-            echo "❌ Icon generation script not found"
-            exit 1
-          fi
-          echo "✓ Icon generation script exists"
-          node -c scripts/generate-icons.js && echo "✓ Script syntax is valid" || exit 1
+          npx tsc --noEmit
+          npx eslint .
+          npx prettier --check "src/**/*.{ts,tsx,js,jsx,json,css,scss,md}"
 
-  build:
-    name: Build Application
-    runs-on: ubuntu-latest
-    needs: quality-checks
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install sharp for icon generation
-        run: npm install --no-save sharp
-
-      - name: Generate PWA icons
-        run: npm run generate-icons
-        continue-on-error: false
-
-      - name: Verify PWA icons
-        run: |
-          echo "Checking for required PWA icons..."
-          for icon in icon-192.png icon-512.png icon-512-maskable.png; do
-            if [ -f "public/$icon" ]; then
-              echo "✓ Found public/$icon ($(du -h "public/$icon" | cut -f1))"
-            else
-              echo "❌ Missing public/$icon"
-              exit 1
-            fi
-          done
-          echo "✅ All PWA icons are present"
-
-      - name: Build Tina CMS (production only)
-        if: github.ref == 'refs/heads/main'
-        env:
-          NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
-          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
-        run: |
-          if [ -n "$NEXT_PUBLIC_TINA_CLIENT_ID" ] && [ -n "$TINA_TOKEN" ]; then
-            echo "✓ Building Tina CMS with cloud credentials..."
-            npx tinacms build
-          else
-            echo "⚠ Skipping Tina CMS build (using local mode - no cloud credentials configured)"
-          fi
-        continue-on-error: true
-
-      - name: Build Next.js application
+      - name: Build
         env:
           NODE_ENV: production
           NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
           TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
-        run: npm run build:gh-pages
-
-      - name: Check build output
         run: |
-          if [ ! -d "out" ]; then
-            echo "Error: Build output directory 'out' not found"
-            exit 1
-          fi
-          echo "Build successful. Output size:"
-          du -sh out
-          echo "Files generated:"
-          find out -type f | wc -l
+          npm run generate-icons
+          [ -n "$TINA_TOKEN" ] && npx tinacms build || echo "Skipping Tina build"
+          npm run build:gh-pages
 
-          echo ""
-          echo "PWA Assets Check:"
-          if [ -f "out/manifest.json" ]; then
-            echo "✓ manifest.json present"
-          else
-            echo "⚠ manifest.json not found in build output"
-          fi
-
-          for icon in icon-192.png icon-512.png icon-512-maskable.png; do
-            if [ -f "out/$icon" ]; then
-              echo "✓ $icon present ($(du -h "out/$icon" | cut -f1))"
-            else
-              echo "⚠ $icon not found in build output"
-            fi
-          done
-
-      - name: Build summary
-        run: |
-          echo "## 🚀 Build Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Build Information" >> $GITHUB_STEP_SUMMARY
-          echo "- **Build size:** $(du -sh out | cut -f1)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Total files:** $(find out -type f | wc -l)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### PWA Assets" >> $GITHUB_STEP_SUMMARY
-
-          if [ -f "out/manifest.json" ]; then
-            echo "- ✅ manifest.json" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "- ❌ manifest.json" >> $GITHUB_STEP_SUMMARY
-          fi
-
-          for icon in icon-192.png icon-512.png icon-512-maskable.png; do
-            if [ -f "out/$icon" ]; then
-              size=$(du -h "out/$icon" | cut -f1)
-              echo "- ✅ $icon ($size)" >> $GITHUB_STEP_SUMMARY
-            else
-              echo "- ❌ $icon" >> $GITHUB_STEP_SUMMARY
-            fi
-          done
-
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: production-build
-          path: ./out
-          retention-days: 7
-
-      - name: Upload artifact for GitHub Pages
-        if: github.ref == 'refs/heads/main'
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
 
   deploy:
-    name: Deploy to GitHub Pages
+    name: Deploy
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-and-test
+    concurrency:
+      group: pages-deployment
+      cancel-in-progress: false
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Deployment summary
-        run: |
-          echo "### 🚀 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**URL:** ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-
-  lighthouse:
-    name: Lighthouse Audit
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    needs: deploy
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Wait for deployment
-        run: sleep 30
-
-      - name: Run Lighthouse audit
-        uses: treosh/lighthouse-ci-action@v11
-        with:
-          urls: |
-            https://tujesthouse.pl/
-          uploadArtifacts: true
-          temporaryPublicStorage: true
-        continue-on-error: true

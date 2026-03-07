@@ -10,7 +10,7 @@
     "start": "npx serve@latest out -s",
     "preview": "npx serve@latest out -s",
     "lint": "eslint . --fix && npx tsc --noEmit",
-    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
+    "format": "prettier --write .",
     "prepush": "npx tsc && npm run lint && npm run format",
     "generate-icons": "node scripts/generate-icons.js",
     "check-updates": "npm outdated",

@@ -1080,7 +1080,8 @@ export default defineConfig({
             type: 'image',
             name: 'logo',
             label: 'Logo strony',
-            description: 'Graficzne logo wyświetlane w nagłówku (PNG/SVG, zalecana wysokość 40-60px)',
+            description:
+              'Graficzne logo wyświetlane w nagłówku (PNG/SVG, zalecana wysokość 40-60px)',
           },
           {
             type: 'image',
@@ -1229,7 +1230,8 @@ export default defineConfig({
             name: 'content',
             label: 'Treść polityki prywatności',
             required: true,
-            description: 'Pełna treść polityki prywatności (wspiera formatowanie Markdown). Uwaga: używaj zwykłych cudzysłowów ("), nie polskich („")',
+            description:
+              'Pełna treść polityki prywatności (wspiera formatowanie Markdown). Uwaga: używaj zwykłych cudzysłowów ("), nie polskich („")',
             isBody: true,
           },
         ],
@@ -1275,7 +1277,8 @@ export default defineConfig({
             name: 'content',
             label: 'Treść regulaminu',
             required: true,
-            description: 'Pełna treść regulaminu (wspiera formatowanie Markdown). Uwaga: używaj zwykłych cudzysłowów ("), nie polskich („")',
+            description:
+              'Pełna treść regulaminu (wspiera formatowanie Markdown). Uwaga: używaj zwykłych cudzysłowów ("), nie polskich („")',
             isBody: true,
           },
         ],

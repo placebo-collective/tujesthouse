@@ -35,7 +35,7 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
-  
+
   event.respondWith(
     caches.match(event.request).then((response) => {
       if (response) {
@@ -50,8 +50,10 @@ self.addEventListener('fetch', (event) => {
         const responseToCache = response.clone();
         const url = event.request.url;
 
-        if (url.includes('_next/static/') || 
-            url.match(/\.(js|css|png|jpg|jpeg|svg|gif|webp|woff|woff2|ico)$/)) {
+        if (
+          url.includes('_next/static/') ||
+          url.match(/\.(js|css|png|jpg|jpeg|svg|gif|webp|woff|woff2|ico)$/)
+        ) {
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(event.request, responseToCache);
           });
