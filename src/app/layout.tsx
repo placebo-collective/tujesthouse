@@ -4,6 +4,7 @@ import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import StructuredData from '../components/layout/StructuredData';
 import ThemeProvider from '../components/ThemeProvider';
+import ServiceWorkerRegister from '../components/ServiceWorkerRegister';
 import { BASE_URL, SITE_NAME, SITE_DESCRIPTION } from '../lib/constants';
 import { getSiteSettings } from '../lib/tina';
 
@@ -146,6 +147,7 @@ export default async function RootLayout({
         <StructuredData />
       </head>
       <body>
+        <ServiceWorkerRegister />
         <ThemeProvider theme={settings.theme} />
         <Header />
         <main>{children}</main>
