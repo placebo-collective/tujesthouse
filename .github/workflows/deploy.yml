@@ -48,6 +48,7 @@ jobs:
           NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
           TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
           NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
+          NEXT_PUBLIC_APPS_SCRIPT_URL: ${{ secrets.NEXT_PUBLIC_APPS_SCRIPT_URL }}
         run: |
           npm run generate-icons
           [ -n "$TINA_TOKEN" ] && npx tinacms build || echo "Skipping Tina build"

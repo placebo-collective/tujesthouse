@@ -8,7 +8,7 @@ import FormField from './FormField';
 import FormTextArea from './FormTextArea';
 import FormSelect from './FormSelect';
 import FormRow from './FormRow';
-import { FORMSPREE_WORKSHOP_FORM, GDPR_EMAIL } from '../../lib/constants';
+import { GDPR_EMAIL } from '../../lib/constants';
 import type { WorkshopFormContent, City } from '@/lib/content-types';
 import { useFormSubmit } from '@/hooks/useFormSubmit';
 import { parseMarkdown } from '@/lib/utils/markdown';
@@ -54,7 +54,7 @@ export default function WorkshopRegistrationForm({
   }, [content.description]);
 
   const { submitStatus, isSubmitting, submitForm } = useFormSubmit<WorkshopFormData>({
-    formspreeId: FORMSPREE_WORKSHOP_FORM,
+    formType: 'workshop',
     onSuccess: () => setFormData(initialFormData),
   });
 
