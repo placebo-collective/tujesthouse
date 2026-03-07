@@ -4,10 +4,14 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from './ArtistApplicationForm.module.scss';
 import Checkbox from './Checkbox';
+import FormField from './FormField';
+import FormTextArea from './FormTextArea';
+import FormSelect from './FormSelect';
+import FormRow from './FormRow';
 import { FORMSPREE_ARTIST_FORM, GDPR_EMAIL } from '../../lib/constants';
 import type { ArtistFormContent, City } from '@/lib/content-types';
 import { useFormSubmit } from '@/hooks/useFormSubmit';
-import { marked } from 'marked';
+import { parseMarkdown } from '@/lib/utils/markdown';
 
 interface ArtistApplicationFormProps {
   content: ArtistFormContent;
@@ -45,7 +49,7 @@ export default function ArtistApplicationForm({ content, cities }: ArtistApplica
   const [descriptionHtml, setDescriptionHtml] = useState('');
 
   useEffect(() => {
-    marked.parse(content.description || '', { async: true }).then(setDescriptionHtml);
+    parseMarkdown(content.description).then(setDescriptionHtml);
   }, [content.description]);
 
   const { submitStatus, isSubmitting, submitForm } = useFormSubmit<ArtistFormData>({
@@ -74,149 +78,110 @@ export default function ArtistApplicationForm({ content, cities }: ArtistApplica
       <h3 className={styles.formTitle}>{content.title}</h3>
       <p className={styles.formDesc} dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
 
-      <div className={styles.formGroup}>
-        <label htmlFor="name">
-          {content.fields.name.label} {content.fields.name.required && '*'}
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
+      <FormField
+        id="name"
+        name="name"
+        label={content.fields.name.label}
+        value={formData.name}
+        onChange={handleChange}
+        required={content.fields.name.required}
+      />
+
+      <FormField
+        id="artistName"
+        name="artistName"
+        label={content.fields.artistName.label}
+        value={formData.artistName}
+        onChange={handleChange}
+        required={content.fields.artistName.required}
+      />
+
+      <FormRow>
+        <FormField
+          id="email"
+          name="email"
+          label={content.fields.email.label}
+          type="email"
+          value={formData.email}
           onChange={handleChange}
-          required={content.fields.name.required}
+          required={content.fields.email.required}
         />
-      </div>
 
-      <div className={styles.formGroup}>
-        <label htmlFor="artistName">
-          {content.fields.artistName.label} {content.fields.artistName.required && '*'}
-        </label>
-        <input
-          type="text"
-          id="artistName"
-          name="artistName"
-          value={formData.artistName}
+        <FormField
+          id="phone"
+          name="phone"
+          label={content.fields.phone.label}
+          type="tel"
+          value={formData.phone}
           onChange={handleChange}
-          required={content.fields.artistName.required}
+          required={content.fields.phone.required}
         />
-      </div>
+      </FormRow>
 
-      <div className={styles.formRow}>
-        <div className={styles.formGroup}>
-          <label htmlFor="email">
-            {content.fields.email.label} {content.fields.email.required && '*'}
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required={content.fields.email.required}
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="phone">
-            {content.fields.phone.label} {content.fields.phone.required && '*'}
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required={content.fields.phone.required}
-          />
-        </div>
-      </div>
-
-      <div className={styles.formRow}>
-        <div className={styles.formGroup}>
-          <label htmlFor="city">
-            {content.fields.city.label} {content.fields.city.required && '*'}
-          </label>
-          <select
-            id="city"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-            required={content.fields.city.required}
-          >
-            <option value="">{content.fields.city.placeholder}</option>
-            {cities.map((city) => (
-              <option key={city.name} value={city.name}>
-                {city.name} - {city.month}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="city2">
-            {content.fields.city2.label} {content.fields.city2.required && '*'}
-          </label>
-          <select id="city2" name="city2" value={formData.city2} onChange={handleChange}>
-            <option value="">{content.fields.city2.placeholder}</option>
-            {cities.map((city) => (
-              <option key={city.name} value={city.name}>
-                {city.name} - {city.month}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      <div className={styles.formGroup}>
-        <label htmlFor="soundcloudLink">
-          {content.fields.soundcloudLink.label} {content.fields.soundcloudLink.required && '*'}
-        </label>
-        <input
-          type="url"
-          id="soundcloudLink"
-          name="soundcloudLink"
-          value={formData.soundcloudLink}
+      <FormRow>
+        <FormSelect
+          id="city"
+          name="city"
+          label={content.fields.city.label}
+          value={formData.city}
           onChange={handleChange}
-          placeholder={content.fields.soundcloudLink.placeholder}
-          required={content.fields.soundcloudLink.required}
+          options={cities.map((city) => ({
+            label: `${city.name} - ${city.month}`,
+            value: city.name,
+          }))}
+          required={content.fields.city.required}
+          placeholder={content.fields.city.placeholder}
         />
-        <small>{content.fields.soundcloudLink.hint}</small>
-      </div>
 
-      <div className={styles.formGroup}>
-        <label htmlFor="experience">
-          {content.fields.experience.label} {content.fields.experience.required && '*'}
-        </label>
-        <textarea
-          id="experience"
-          name="experience"
-          value={formData.experience}
+        <FormSelect
+          id="city2"
+          name="city2"
+          label={content.fields.city2.label}
+          value={formData.city2}
           onChange={handleChange}
-          rows={content.fields.experience.rows}
-          placeholder={content.fields.experience.placeholder}
-          required={content.fields.experience.required}
+          options={cities.map((city) => ({
+            label: `${city.name} - ${city.month}`,
+            value: city.name,
+          }))}
+          placeholder={content.fields.city2.placeholder}
         />
-      </div>
+      </FormRow>
 
-      <div className={styles.formGroup}>
-        <label htmlFor="description">
-          {content.fields.description.label} {content.fields.description.required && '*'}
-        </label>
-        <textarea
-          id="description"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          rows={content.fields.description.rows}
-          maxLength={content.fields.description.maxLength}
-          placeholder={content.fields.description.placeholder}
-          required={content.fields.description.required}
-        />
-        <small>
-          {formData.description.length}/{content.fields.description.maxLength} znaków
-        </small>
-      </div>
+      <FormField
+        id="soundcloudLink"
+        name="soundcloudLink"
+        label={content.fields.soundcloudLink.label}
+        type="url"
+        value={formData.soundcloudLink}
+        onChange={handleChange}
+        placeholder={content.fields.soundcloudLink.placeholder}
+        required={content.fields.soundcloudLink.required}
+        hint={content.fields.soundcloudLink.hint}
+      />
+
+      <FormTextArea
+        id="experience"
+        name="experience"
+        label={content.fields.experience.label}
+        value={formData.experience}
+        onChange={handleChange}
+        rows={content.fields.experience.rows}
+        placeholder={content.fields.experience.placeholder}
+        required={content.fields.experience.required}
+      />
+
+      <FormTextArea
+        id="description"
+        name="description"
+        label={content.fields.description.label}
+        value={formData.description}
+        onChange={handleChange}
+        rows={content.fields.description.rows}
+        maxLength={content.fields.description.maxLength}
+        placeholder={content.fields.description.placeholder}
+        required={content.fields.description.required}
+        showCharCount
+      />
 
       <div className={styles.formGroup}>
         <Checkbox name="agreement" checked={formData.agreement} onChange={handleChange} required>

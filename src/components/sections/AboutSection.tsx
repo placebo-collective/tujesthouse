@@ -1,15 +1,15 @@
 import styles from './AboutSection.module.scss';
 import { getAboutContent } from '@/lib/tina';
 import type { AboutCard, AboutHighlight } from '@/lib/content-types';
-import { marked } from 'marked';
+import { parseMarkdown } from '@/lib/utils/markdown';
 
 export default async function AboutSection() {
   const content = await getAboutContent();
 
   if (!content) return null;
 
-  const introHtml = await marked.parse(content.intro || '', { async: true });
-  const fundingHtml = await marked.parse(content.funding || '', { async: true });
+  const introHtml = await parseMarkdown(content.intro);
+  const fundingHtml = await parseMarkdown(content.funding);
 
   return (
     <section id="o-projekcie" className={styles.about}>

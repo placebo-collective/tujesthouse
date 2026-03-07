@@ -59,6 +59,15 @@ jobs:
             node -e "JSON.parse(require('fs').readFileSync('$file', 'utf8'))" || exit 1
           done
 
+      - name: Validate icon generation script
+        run: |
+          if [ ! -f "scripts/generate-icons.js" ]; then
+            echo "❌ Icon generation script not found"
+            exit 1
+          fi
+          echo "✓ Icon generation script exists"
+          node -c scripts/generate-icons.js && echo "✓ Script syntax is valid" || exit 1
+
   build:
     name: Build Application
     runs-on: ubuntu-latest
@@ -75,6 +84,26 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Install sharp for icon generation
+        run: npm install --no-save sharp
+
+      - name: Generate PWA icons
+        run: npm run generate-icons
+        continue-on-error: false
+
+      - name: Verify PWA icons
+        run: |
+          echo "Checking for required PWA icons..."
+          for icon in icon-192.png icon-512.png icon-512-maskable.png; do
+            if [ -f "public/$icon" ]; then
+              echo "✓ Found public/$icon ($(du -h "public/$icon" | cut -f1))"
+            else
+              echo "❌ Missing public/$icon"
+              exit 1
+            fi
+          done
+          echo "✅ All PWA icons are present"
 
       - name: Build Tina CMS (production only)
         if: github.ref == 'refs/heads/main'
@@ -107,6 +136,49 @@ jobs:
           du -sh out
           echo "Files generated:"
           find out -type f | wc -l
+
+          echo ""
+          echo "PWA Assets Check:"
+          if [ -f "out/manifest.json" ]; then
+            echo "✓ manifest.json present"
+          else
+            echo "⚠ manifest.json not found in build output"
+          fi
+
+          for icon in icon-192.png icon-512.png icon-512-maskable.png; do
+            if [ -f "out/$icon" ]; then
+              echo "✓ $icon present ($(du -h "out/$icon" | cut -f1))"
+            else
+              echo "⚠ $icon not found in build output"
+            fi
+          done
+
+      - name: Build summary
+        run: |
+          echo "## 🚀 Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Build Information" >> $GITHUB_STEP_SUMMARY
+          echo "- **Build size:** $(du -sh out | cut -f1)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Total files:** $(find out -type f | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### PWA Assets" >> $GITHUB_STEP_SUMMARY
+
+          if [ -f "out/manifest.json" ]; then
+            echo "- ✅ manifest.json" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ❌ manifest.json" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          for icon in icon-192.png icon-512.png icon-512-maskable.png; do
+            if [ -f "out/$icon" ]; then
+              size=$(du -h "out/$icon" | cut -f1)
+              echo "- ✅ $icon ($size)" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "- ❌ $icon" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -158,7 +230,7 @@ jobs:
         uses: treosh/lighthouse-ci-action@v11
         with:
           urls: |
-            https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+            https://tujesthouse.pl/
           uploadArtifacts: true
           temporaryPublicStorage: true
         continue-on-error: true

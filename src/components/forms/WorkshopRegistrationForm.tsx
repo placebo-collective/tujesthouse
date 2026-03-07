@@ -4,10 +4,14 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from './WorkshopRegistrationForm.module.scss';
 import Checkbox from './Checkbox';
+import FormField from './FormField';
+import FormTextArea from './FormTextArea';
+import FormSelect from './FormSelect';
+import FormRow from './FormRow';
 import { FORMSPREE_WORKSHOP_FORM, GDPR_EMAIL } from '../../lib/constants';
 import type { WorkshopFormContent, City } from '@/lib/content-types';
 import { useFormSubmit } from '@/hooks/useFormSubmit';
-import { marked } from 'marked';
+import { parseMarkdown } from '@/lib/utils/markdown';
 
 interface WorkshopRegistrationFormProps {
   content: WorkshopFormContent;
@@ -46,7 +50,7 @@ export default function WorkshopRegistrationForm({
   const [descriptionHtml, setDescriptionHtml] = useState('');
 
   useEffect(() => {
-    marked.parse(content.description || '', { async: true }).then(setDescriptionHtml);
+    parseMarkdown(content.description).then(setDescriptionHtml);
   }, [content.description]);
 
   const { submitStatus, isSubmitting, submitForm } = useFormSubmit<WorkshopFormData>({
@@ -96,69 +100,50 @@ export default function WorkshopRegistrationForm({
       <h3 className={styles.formTitle}>{content.title}</h3>
       <p className={styles.formDesc} dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
 
-      <div className={styles.formGroup}>
-        <label htmlFor="name">
-          {content.fields.name.label} {content.fields.name.required && '*'}
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
+      <FormField
+        id="name"
+        name="name"
+        label={content.fields.name.label}
+        value={formData.name}
+        onChange={handleChange}
+        required={content.fields.name.required}
+      />
+
+      <FormRow>
+        <FormField
+          id="email"
+          name="email"
+          label={content.fields.email.label}
+          type="email"
+          value={formData.email}
           onChange={handleChange}
-          required={content.fields.name.required}
+          required={content.fields.email.required}
         />
-      </div>
 
-      <div className={styles.formRow}>
-        <div className={styles.formGroup}>
-          <label htmlFor="email">
-            {content.fields.email.label} {content.fields.email.required && '*'}
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required={content.fields.email.required}
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="phone">
-            {content.fields.phone.label} {content.fields.phone.required && '*'}
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required={content.fields.phone.required}
-          />
-        </div>
-      </div>
-
-      <div className={styles.formGroup}>
-        <label htmlFor="city">
-          {content.fields.city.label} {content.fields.city.required && '*'}
-        </label>
-        <select
-          id="city"
-          name="city"
-          value={formData.city}
+        <FormField
+          id="phone"
+          name="phone"
+          label={content.fields.phone.label}
+          type="tel"
+          value={formData.phone}
           onChange={handleChange}
-          required={content.fields.city.required}
-        >
-          <option value="">{content.fields.city.placeholder}</option>
-          {cities.map((city) => (
-            <option key={city.name} value={city.name}>
-              {city.name}
-            </option>
-          ))}
-        </select>
-      </div>
+          required={content.fields.phone.required}
+        />
+      </FormRow>
+
+      <FormSelect
+        id="city"
+        name="city"
+        label={content.fields.city.label}
+        value={formData.city}
+        onChange={handleChange}
+        options={cities.map((city) => ({
+          label: city.name,
+          value: city.name,
+        }))}
+        required={content.fields.city.required}
+        placeholder={content.fields.city.placeholder}
+      />
 
       <div className={styles.formGroup}>
         <label>
@@ -224,35 +209,27 @@ export default function WorkshopRegistrationForm({
         )}
       </div>
 
-      <div className={styles.formGroup}>
-        <label htmlFor="experience">
-          {content.fields.experience.label} {content.fields.experience.required && '*'}
-        </label>
-        <textarea
-          id="experience"
-          name="experience"
-          value={formData.experience}
-          onChange={handleChange}
-          rows={content.fields.experience.rows}
-          placeholder={content.fields.experience.placeholder}
-          required={content.fields.experience.required}
-        />
-      </div>
+      <FormTextArea
+        id="experience"
+        name="experience"
+        label={content.fields.experience.label}
+        value={formData.experience}
+        onChange={handleChange}
+        rows={content.fields.experience.rows}
+        placeholder={content.fields.experience.placeholder}
+        required={content.fields.experience.required}
+      />
 
-      <div className={styles.formGroup}>
-        <label htmlFor="motivation">
-          {content.fields.motivation.label} {content.fields.motivation.required && '*'}
-        </label>
-        <textarea
-          id="motivation"
-          name="motivation"
-          value={formData.motivation}
-          onChange={handleChange}
-          rows={content.fields.motivation.rows}
-          placeholder={content.fields.motivation.placeholder}
-          required={content.fields.motivation.required}
-        />
-      </div>
+      <FormTextArea
+        id="motivation"
+        name="motivation"
+        label={content.fields.motivation.label}
+        value={formData.motivation}
+        onChange={handleChange}
+        rows={content.fields.motivation.rows}
+        placeholder={content.fields.motivation.placeholder}
+        required={content.fields.motivation.required}
+      />
 
       <div className={styles.formGroup}>
         <Checkbox name="agreement" checked={formData.agreement} onChange={handleChange} required>
