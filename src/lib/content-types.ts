@@ -194,3 +194,25 @@ export interface WorkshopFormContent {
   };
   messages: FormMessages;
 }
+
+export interface ThemeColors {
+  primaryColor: string;
+  secondaryColor: string;
+  accentGold: string;
+  darkBg: string;
+  darkBg2: string;
+  lightBg: string;
+  textDark: string;
+  textLight: string;
+  borderColor: string;
+  navBgStart: string;
+  navBgEnd: string;
+}
+
+export interface SiteSettings {
+  siteName: string;
+  useLogo: boolean;
+  logo: string;
+  favicon: string;
+  theme: ThemeColors;
+}

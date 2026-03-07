@@ -1042,6 +1042,146 @@ export default defineConfig({
           },
         ],
       },
+      {
+        name: 'siteSettings',
+        label: 'Ustawienia strony',
+        path: 'content/layout',
+        format: 'json',
+        ui: {
+          allowedActions: {
+            create: false,
+            delete: false,
+          },
+        },
+        match: {
+          include: 'settings',
+        },
+        fields: [
+          {
+            type: 'string',
+            name: 'siteName',
+            label: 'Nazwa strony',
+            required: true,
+            description: 'Nazwa wyświetlana w nagłówku (gdy logo jest wyłączone) i meta tagach',
+          },
+          {
+            type: 'boolean',
+            name: 'useLogo',
+            label: 'Użyj logo zamiast tekstu',
+            description: 'Włącz, aby wyświetlać logo graficzne zamiast tekstu w nagłówku',
+          },
+          {
+            type: 'image',
+            name: 'logo',
+            label: 'Logo strony',
+            description: 'Graficzne logo wyświetlane w nagłówku (PNG/SVG, zalecana wysokość 40-60px)',
+          },
+          {
+            type: 'image',
+            name: 'favicon',
+            label: 'Ikona strony (favicon)',
+            description: 'Ikona wyświetlana w zakładce przeglądarki (ICO/PNG, 32x32px)',
+          },
+          {
+            type: 'object',
+            name: 'theme',
+            label: 'Motyw kolorystyczny',
+            description: 'Kolory używane na stronie',
+            fields: [
+              {
+                type: 'string',
+                name: 'primaryColor',
+                label: 'Kolor główny',
+                description: 'Główny kolor akcentowy (hex, np. #e63946)',
+                ui: {
+                  component: 'color',
+                },
+              },
+              {
+                type: 'string',
+                name: 'secondaryColor',
+                label: 'Kolor drugorzędny',
+                description: 'Drugorzędny kolor akcentowy (hex, np. #a41623)',
+                ui: {
+                  component: 'color',
+                },
+              },
+              {
+                type: 'string',
+                name: 'accentGold',
+                label: 'Kolor złoty (akcent)',
+                description: 'Kolor złoty używany do akcentów (hex, np. #ffd700)',
+                ui: {
+                  component: 'color',
+                },
+              },
+              {
+                type: 'string',
+                name: 'darkBg',
+                label: 'Ciemne tło',
+                description: 'Główne ciemne tło (hex, np. #1a1a1a)',
+                ui: {
+                  component: 'color',
+                },
+              },
+              {
+                type: 'string',
+                name: 'darkBg2',
+                label: 'Ciemne tło 2',
+                description: 'Drugorzędne ciemne tło (hex, np. #2d2d2d)',
+                ui: {
+                  component: 'color',
+                },
+              },
+              {
+                type: 'string',
+                name: 'lightBg',
+                label: 'Jasne tło',
+                description: 'Jasne tło (hex, np. #f5f5f5)',
+                ui: {
+                  component: 'color',
+                },
+              },
+              {
+                type: 'string',
+                name: 'textDark',
+                label: 'Ciemny tekst',
+                description: 'Kolor ciemnego tekstu (hex, np. #2d2d2d)',
+                ui: {
+                  component: 'color',
+                },
+              },
+              {
+                type: 'string',
+                name: 'textLight',
+                label: 'Jasny tekst',
+                description: 'Kolor jasnego tekstu (hex, np. #ffffff)',
+                ui: {
+                  component: 'color',
+                },
+              },
+              {
+                type: 'string',
+                name: 'borderColor',
+                label: 'Kolor obramowania',
+                description: 'Kolor obramowań (rgba, np. rgba(230, 57, 70, 0.2))',
+              },
+              {
+                type: 'string',
+                name: 'navBgStart',
+                label: 'Tło nawigacji - początek',
+                description: 'Początkowy kolor gradientu tła nawigacji (rgba)',
+              },
+              {
+                type: 'string',
+                name: 'navBgEnd',
+                label: 'Tło nawigacji - koniec',
+                description: 'Końcowy kolor gradientu tła nawigacji (rgba)',
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
 });
