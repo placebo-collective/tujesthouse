@@ -1,43 +1,53 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from './WorkshopRegistrationForm.module.scss';
 import Checkbox from './Checkbox';
-import { CITIES, FORMSPREE_WORKSHOP_FORM, GDPR_EMAIL } from '../../lib/constants';
-import type { WorkshopFormContent } from '@/lib/content-types';
+import { FORMSPREE_WORKSHOP_FORM, GDPR_EMAIL } from '../../lib/constants';
+import type { WorkshopFormContent, City } from '@/lib/content-types';
 import { useFormSubmit } from '@/hooks/useFormSubmit';
+import { marked } from 'marked';
 
 interface WorkshopRegistrationFormProps {
   content: WorkshopFormContent;
+  cities: City[];
 }
 
-type WorkshopFormData = {
-  name: string;
-  email: string;
-  phone: string;
-  city: string;
-  role: string[];
-  experience: string;
-  motivation: string;
-  agreement: boolean;
-};
+export default function WorkshopRegistrationForm({
+  content,
+  cities,
+}: WorkshopRegistrationFormProps) {
+  type WorkshopFormData = {
+    name: string;
+    email: string;
+    phone: string;
+    city: string;
+    role: string[];
+    experience: string;
+    motivation: string;
+    agreement: boolean;
+  };
 
-const initialFormData: WorkshopFormData = {
-  name: '',
-  email: '',
-  phone: '',
-  city: '',
-  role: [],
-  experience: '',
-  motivation: '',
-  agreement: false,
-};
+  const initialFormData: WorkshopFormData = {
+    name: '',
+    email: '',
+    phone: '',
+    city: '',
+    role: [],
+    experience: '',
+    motivation: '',
+    agreement: false,
+  };
 
-export default function WorkshopRegistrationForm({ content }: WorkshopRegistrationFormProps) {
   const [formData, setFormData] = useState<WorkshopFormData>(initialFormData);
   const [roleSearchTerm, setRoleSearchTerm] = useState('');
   const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
+  const [descriptionHtml, setDescriptionHtml] = useState('');
+
+  useEffect(() => {
+    marked.parse(content.description || '', { async: true }).then(setDescriptionHtml);
+  }, [content.description]);
 
   const { submitStatus, isSubmitting, submitForm } = useFormSubmit<WorkshopFormData>({
     formspreeId: FORMSPREE_WORKSHOP_FORM,
@@ -84,7 +94,7 @@ export default function WorkshopRegistrationForm({ content }: WorkshopRegistrati
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <h3 className={styles.formTitle}>{content.title}</h3>
-      <p className={styles.formDesc}>{content.description}</p>
+      <p className={styles.formDesc} dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
 
       <div className={styles.formGroup}>
         <label htmlFor="name">
@@ -142,7 +152,7 @@ export default function WorkshopRegistrationForm({ content }: WorkshopRegistrati
           required={content.fields.city.required}
         >
           <option value="">{content.fields.city.placeholder}</option>
-          {CITIES.map((city) => (
+          {cities.map((city) => (
             <option key={city.name} value={city.name}>
               {city.name}
             </option>

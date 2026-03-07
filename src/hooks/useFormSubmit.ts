@@ -15,11 +15,6 @@ interface UseFormSubmitReturn<T> {
   resetStatus: () => void;
 }
 
-/**
- * Custom hook for handling form submissions to Formspree
- * @param options - Configuration options including formspreeId and callbacks
- * @returns Object containing submission state and submit function
- */
 export function useFormSubmit<T = Record<string, unknown>>(
   options: UseFormSubmitOptions<T>
 ): UseFormSubmitReturn<T> {

@@ -1,15 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from './DJApplicationForm.module.scss';
 import Checkbox from './Checkbox';
-import { CITIES, FORMSPREE_DJ_FORM, GDPR_EMAIL } from '../../lib/constants';
-import type { DJFormContent } from '@/lib/content-types';
+import { FORMSPREE_DJ_FORM, GDPR_EMAIL } from '../../lib/constants';
+import type { DJFormContent, City } from '@/lib/content-types';
 import { useFormSubmit } from '@/hooks/useFormSubmit';
+import { marked } from 'marked';
 
 interface DJApplicationFormProps {
   content: DJFormContent;
+  cities: City[];
 }
 
 type DJFormData = {
@@ -38,8 +40,13 @@ const initialFormData: DJFormData = {
   agreement: false,
 };
 
-export default function DJApplicationForm({ content }: DJApplicationFormProps) {
+export default function DJApplicationForm({ content, cities }: DJApplicationFormProps) {
   const [formData, setFormData] = useState<DJFormData>(initialFormData);
+  const [descriptionHtml, setDescriptionHtml] = useState('');
+
+  useEffect(() => {
+    marked.parse(content.description || '', { async: true }).then(setDescriptionHtml);
+  }, [content.description]);
 
   const { submitStatus, isSubmitting, submitForm } = useFormSubmit<DJFormData>({
     formspreeId: FORMSPREE_DJ_FORM,
@@ -65,7 +72,7 @@ export default function DJApplicationForm({ content }: DJApplicationFormProps) {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <h3 className={styles.formTitle}>{content.title}</h3>
-      <p className={styles.formDesc}>{content.description}</p>
+      <p className={styles.formDesc} dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
 
       <div className={styles.formGroup}>
         <label htmlFor="name">
@@ -138,7 +145,7 @@ export default function DJApplicationForm({ content }: DJApplicationFormProps) {
             required={content.fields.city.required}
           >
             <option value="">{content.fields.city.placeholder}</option>
-            {CITIES.map((city) => (
+            {cities.map((city) => (
               <option key={city.name} value={city.name}>
                 {city.name} - {city.month}
               </option>
@@ -152,7 +159,7 @@ export default function DJApplicationForm({ content }: DJApplicationFormProps) {
           </label>
           <select id="city2" name="city2" value={formData.city2} onChange={handleChange}>
             <option value="">{content.fields.city2.placeholder}</option>
-            {CITIES.map((city) => (
+            {cities.map((city) => (
               <option key={city.name} value={city.name}>
                 {city.name} - {city.month}
               </option>

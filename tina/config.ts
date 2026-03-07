@@ -38,17 +38,14 @@ export default defineConfig({
           {
             type: 'string',
             name: 'title',
-            label: 'Title',
+            label: 'Tytuł',
             required: true,
           },
           {
-            type: 'string',
+            type: 'rich-text',
             name: 'subtitle',
-            label: 'Subtitle',
+            label: 'Podtytuł',
             required: true,
-            ui: {
-              component: 'textarea',
-            },
           },
           {
             type: 'string',
@@ -134,12 +131,9 @@ export default defineConfig({
                 label: 'Tytuł',
               },
               {
-                type: 'string',
+                type: 'rich-text',
                 name: 'description',
                 label: 'Opis',
-                ui: {
-                  component: 'textarea',
-                },
               },
             ],
           },
@@ -170,41 +164,6 @@ export default defineConfig({
             type: 'rich-text',
             name: 'funding',
             label: 'Informacja o dofinansowaniu',
-          },
-        ],
-      },
-      {
-        name: 'cities',
-        label: 'Miasta',
-        path: 'content/cities',
-        format: 'json',
-        fields: [
-          {
-            type: 'string',
-            name: 'name',
-            label: 'Nazwa miasta',
-            required: true,
-            isTitle: true,
-          },
-          {
-            type: 'string',
-            name: 'date',
-            label: 'Data',
-            required: true,
-          },
-          {
-            type: 'string',
-            name: 'venue',
-            label: 'Miejsce',
-            required: true,
-          },
-          {
-            type: 'string',
-            name: 'description',
-            label: 'Description',
-            ui: {
-              component: 'textarea',
-            },
           },
         ],
       },
@@ -271,12 +230,9 @@ export default defineConfig({
                     label: 'Tytuł',
                   },
                   {
-                    type: 'string',
+                    type: 'rich-text',
                     name: 'description',
                     label: 'Opis',
-                    ui: {
-                      component: 'textarea',
-                    },
                   },
                 ],
               },
@@ -319,12 +275,9 @@ export default defineConfig({
                     label: 'Tytuł',
                   },
                   {
-                    type: 'string',
+                    type: 'rich-text',
                     name: 'description',
                     label: 'Opis',
-                    ui: {
-                      component: 'textarea',
-                    },
                   },
                 ],
               },
@@ -368,6 +321,93 @@ export default defineConfig({
         ],
       },
       {
+        name: 'cities',
+        label: 'Sekcja: Miasta',
+        path: 'content/sections',
+        format: 'json',
+        ui: {
+          allowedActions: {
+            create: false,
+            delete: false,
+          },
+        },
+        match: {
+          include: 'cities',
+        },
+        fields: [
+          {
+            type: 'string',
+            name: 'title',
+            label: 'Tytuł',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'subtitle',
+            label: 'Podtytuł',
+          },
+          {
+            type: 'object',
+            name: 'cities',
+            label: 'Lista miast',
+            list: true,
+            ui: {
+              itemProps: (item) => ({
+                label: item?.name || 'Nowe miasto',
+              }),
+            },
+            fields: [
+              {
+                type: 'string',
+                name: 'name',
+                label: 'Nazwa miasta',
+                required: true,
+              },
+              {
+                type: 'string',
+                name: 'month',
+                label: 'Miesiąc',
+                required: true,
+              },
+              {
+                type: 'string',
+                name: 'venue',
+                label: 'Miejsce wydarzenia',
+                required: true,
+              },
+            ],
+          },
+          {
+            type: 'object',
+            name: 'infoCards',
+            label: 'Karty informacyjne',
+            list: true,
+            ui: {
+              itemProps: (item) => ({
+                label: item?.title || 'Nowa karta',
+              }),
+            },
+            fields: [
+              {
+                type: 'string',
+                name: 'icon',
+                label: 'Ikona',
+              },
+              {
+                type: 'string',
+                name: 'title',
+                label: 'Tytuł',
+              },
+              {
+                type: 'rich-text',
+                name: 'description',
+                label: 'Opis',
+              },
+            ],
+          },
+        ],
+      },
+      {
         name: 'formsSection',
         label: 'Sekcja: Formularze',
         path: 'content/sections',
@@ -385,13 +425,13 @@ export default defineConfig({
           {
             type: 'string',
             name: 'title',
-            label: 'Title',
+            label: 'Tytuł',
             required: true,
           },
           {
             type: 'string',
             name: 'subtitle',
-            label: 'Subtitle',
+            label: 'Podtytuł',
           },
           {
             type: 'object',
@@ -417,12 +457,12 @@ export default defineConfig({
               {
                 type: 'string',
                 name: 'title',
-                label: 'Title',
+                label: 'Tytuł',
               },
               {
                 type: 'string',
                 name: 'subtitle',
-                label: 'Subtitle',
+                label: 'Podtytuł',
               },
             ],
           },
@@ -434,12 +474,12 @@ export default defineConfig({
               {
                 type: 'string',
                 name: 'title',
-                label: 'Title',
+                label: 'Tytuł',
               },
               {
                 type: 'string',
                 name: 'text',
-                label: 'Text',
+                label: 'Tekst',
               },
             ],
           },
@@ -474,7 +514,7 @@ export default defineConfig({
               {
                 type: 'string',
                 name: 'label',
-                label: 'Label',
+                label: 'Etykieta',
               },
               {
                 type: 'string',
@@ -501,17 +541,96 @@ export default defineConfig({
         },
         fields: [
           {
+            type: 'rich-text',
+            name: 'description',
+            label: 'Opis',
+          },
+          {
+            type: 'object',
+            name: 'organizers',
+            label: 'Organizatorzy',
+            fields: [
+              {
+                type: 'string',
+                name: 'title',
+                label: 'Tytuł',
+              },
+              {
+                type: 'object',
+                name: 'main',
+                label: 'Organizator główny',
+                fields: [
+                  { type: 'string', name: 'name', label: 'Nazwa' },
+                  { type: 'string', name: 'address', label: 'Adres' },
+                  { type: 'string', name: 'nip', label: 'NIP' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'partner',
+                label: 'Partner',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'string', name: 'name', label: 'Nazwa' },
+                  { type: 'string', name: 'address', label: 'Adres' },
+                  { type: 'string', name: 'nip', label: 'NIP' },
+                ],
+              },
+            ],
+          },
+          {
+            type: 'object',
+            name: 'contact',
+            label: 'Kontakt',
+            fields: [
+              {
+                type: 'string',
+                name: 'title',
+                label: 'Tytuł',
+              },
+              {
+                type: 'string',
+                name: 'gdprLabel',
+                label: 'Etykieta RODO',
+              },
+            ],
+          },
+          {
+            type: 'object',
+            name: 'documents',
+            label: 'Dokumenty',
+            fields: [
+              {
+                type: 'string',
+                name: 'title',
+                label: 'Tytuł',
+              },
+              {
+                type: 'object',
+                name: 'links',
+                label: 'Linki',
+                list: true,
+                ui: {
+                  itemProps: (item) => ({
+                    label: item?.label || 'Nowy link',
+                  }),
+                },
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'string', name: 'href', label: 'Link' },
+                ],
+              },
+            ],
+          },
+          {
             type: 'string',
             name: 'copyright',
             label: 'Tekst copyright',
           },
           {
-            type: 'string',
+            type: 'rich-text',
             name: 'fundingNote',
             label: 'Informacja o dofinansowaniu',
-            ui: {
-              component: 'textarea',
-            },
           },
         ],
       },
@@ -533,21 +652,125 @@ export default defineConfig({
           {
             type: 'string',
             name: 'title',
-            label: 'Title',
+            label: 'Tytuł',
             required: true,
           },
           {
-            type: 'string',
+            type: 'rich-text',
             name: 'description',
-            label: 'Description',
-            ui: {
-              component: 'textarea',
-            },
+            label: 'Opis',
+          },
+          {
+            type: 'object',
+            name: 'fields',
+            label: 'Pola formularza',
+            fields: [
+              {
+                type: 'object',
+                name: 'name',
+                label: 'Pole: Imię i nazwisko',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'artistName',
+                label: 'Pole: Pseudonim artystyczny',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'email',
+                label: 'Pole: Email',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'phone',
+                label: 'Pole: Telefon',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'city',
+                label: 'Pole: Preferowane miasto (1. wybór)',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'string', name: 'placeholder', label: 'Placeholder' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'city2',
+                label: 'Pole: Preferowane miasto (2. wybór)',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'string', name: 'placeholder', label: 'Placeholder' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'soundcloudLink',
+                label: 'Pole: Link do nagrania',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'string', name: 'placeholder', label: 'Placeholder' },
+                  { type: 'string', name: 'hint', label: 'Podpowiedź' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'experience',
+                label: 'Pole: Doświadczenie',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  {
+                    type: 'string',
+                    name: 'placeholder',
+                    label: 'Placeholder',
+                    ui: { component: 'textarea' },
+                  },
+                  { type: 'number', name: 'rows', label: 'Liczba wierszy' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'description',
+                label: 'Pole: Opis stylu muzycznego',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  {
+                    type: 'string',
+                    name: 'placeholder',
+                    label: 'Placeholder',
+                    ui: { component: 'textarea' },
+                  },
+                  { type: 'number', name: 'maxLength', label: 'Maksymalna długość' },
+                  { type: 'number', name: 'rows', label: 'Liczba wierszy' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+            ],
           },
           {
             type: 'object',
             name: 'agreement',
-            label: 'Agreement Text',
+            label: 'Tekst zgody',
             fields: [
               {
                 type: 'string',
@@ -638,16 +861,115 @@ export default defineConfig({
           {
             type: 'string',
             name: 'title',
-            label: 'Title',
+            label: 'Tytuł',
             required: true,
           },
           {
-            type: 'string',
+            type: 'rich-text',
             name: 'description',
-            label: 'Description',
-            ui: {
-              component: 'textarea',
-            },
+            label: 'Opis',
+          },
+          {
+            type: 'object',
+            name: 'fields',
+            label: 'Pola formularza',
+            fields: [
+              {
+                type: 'object',
+                name: 'name',
+                label: 'Pole: Imię i nazwisko',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'email',
+                label: 'Pole: Email',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'phone',
+                label: 'Pole: Telefon',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'city',
+                label: 'Pole: Miasto wydarzenia',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'string', name: 'placeholder', label: 'Placeholder' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'role',
+                label: 'Pole: Kim jesteś w branży?',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  { type: 'string', name: 'placeholder', label: 'Placeholder' },
+                  { type: 'string', name: 'hint', label: 'Podpowiedź' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                  {
+                    type: 'object',
+                    name: 'options',
+                    label: 'Opcje do wyboru',
+                    list: true,
+                    ui: {
+                      itemProps: (item) => ({
+                        label: item?.label || 'Nowa opcja',
+                      }),
+                    },
+                    fields: [
+                      { type: 'string', name: 'value', label: 'Wartość' },
+                      { type: 'string', name: 'label', label: 'Etykieta' },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'experience',
+                label: 'Pole: Doświadczenie w branży',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  {
+                    type: 'string',
+                    name: 'placeholder',
+                    label: 'Placeholder',
+                    ui: { component: 'textarea' },
+                  },
+                  { type: 'number', name: 'rows', label: 'Liczba wierszy' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'motivation',
+                label: 'Pole: Motywacja',
+                fields: [
+                  { type: 'string', name: 'label', label: 'Etykieta' },
+                  {
+                    type: 'string',
+                    name: 'placeholder',
+                    label: 'Placeholder',
+                    ui: { component: 'textarea' },
+                  },
+                  { type: 'number', name: 'rows', label: 'Liczba wierszy' },
+                  { type: 'boolean', name: 'required', label: 'Wymagane' },
+                ],
+              },
+            ],
           },
           {
             type: 'object',

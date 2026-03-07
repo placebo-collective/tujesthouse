@@ -8,7 +8,6 @@ export default async function AboutSection() {
 
   if (!content) return null;
 
-  // Parse markdown to HTML
   const introHtml = await marked.parse(content.intro || '', { async: true });
   const fundingHtml = await marked.parse(content.funding || '', { async: true });
 

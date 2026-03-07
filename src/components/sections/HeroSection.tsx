@@ -1,15 +1,18 @@
 import styles from './HeroSection.module.scss';
 import { getHeroContent } from '@/lib/tina';
+import { marked } from 'marked';
 
 export default async function HeroSection() {
   const content = await getHeroContent();
+
+  const subtitleHtml = await marked.parse(content.subtitle || '', { async: true });
 
   return (
     <section className={styles.hero}>
       <div className="container">
         <div className={styles.content}>
           <h1 className={styles.title}>{content.title}</h1>
-          <p className={styles.subtitle}>{content.subtitle}</p>
+          <p className={styles.subtitle} dangerouslySetInnerHTML={{ __html: subtitleHtml }} />
           <p className={styles.dates}>{content.dates}</p>
           <div className={styles.cta}>
             <a href={content.cta.primaryLink} className={styles.btnPrimary}>

@@ -5,7 +5,7 @@ import styles from './FormsSection.module.scss';
 import DJApplicationForm from '../forms/DJApplicationForm';
 import WorkshopRegistrationForm from '../forms/WorkshopRegistrationForm';
 import { CONTACT_EMAIL } from '../../lib/constants';
-import type { FormTab, DJFormContent, WorkshopFormContent } from '@/lib/content-types';
+import type { FormTab, DJFormContent, WorkshopFormContent, City } from '@/lib/content-types';
 
 interface FormsSectionProps {
   title: string;
@@ -17,6 +17,7 @@ interface FormsSectionProps {
   };
   djFormContent: DJFormContent;
   workshopFormContent: WorkshopFormContent;
+  cities: City[];
 }
 
 export default function FormsSection({
@@ -26,6 +27,7 @@ export default function FormsSection({
   contact,
   djFormContent,
   workshopFormContent,
+  cities,
 }: FormsSectionProps) {
   const [activeTab, setActiveTab] = useState<'dj' | 'workshop'>('dj');
 
@@ -52,8 +54,10 @@ export default function FormsSection({
         </div>
 
         <div className={styles.formContainer}>
-          {activeTab === 'dj' && <DJApplicationForm content={djFormContent} />}
-          {activeTab === 'workshop' && <WorkshopRegistrationForm content={workshopFormContent} />}
+          {activeTab === 'dj' && <DJApplicationForm content={djFormContent} cities={cities} />}
+          {activeTab === 'workshop' && (
+            <WorkshopRegistrationForm content={workshopFormContent} cities={cities} />
+          )}
         </div>
 
         <div className={styles.contact}>

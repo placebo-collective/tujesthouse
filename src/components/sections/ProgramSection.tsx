@@ -1,11 +1,26 @@
 import styles from './ProgramSection.module.scss';
 import { getProgramContent } from '@/lib/tina';
 import type { ProgramItem, TargetItem } from '@/lib/content-types';
+import { marked } from 'marked';
 
 export default async function ProgramSection() {
   const content = await getProgramContent();
 
   if (!content) return null;
+
+  const dayItemsWithHtml = await Promise.all(
+    content.dayPart.items.map(async (item: ProgramItem) => ({
+      ...item,
+      descriptionHtml: await marked.parse(item.description || '', { async: true }),
+    }))
+  );
+
+  const nightItemsWithHtml = await Promise.all(
+    content.nightPart.items.map(async (item: ProgramItem) => ({
+      ...item,
+      descriptionHtml: await marked.parse(item.description || '', { async: true }),
+    }))
+  );
 
   return (
     <section id="program" className={styles.program}>
@@ -20,12 +35,12 @@ export default async function ProgramSection() {
               <h3>{content.dayPart.title}</h3>
             </div>
             <div className={styles.partContent}>
-              {content.dayPart.items.map((item: ProgramItem, index: number) => (
+              {dayItemsWithHtml.map((item, index: number) => (
                 <div key={index} className={styles.item}>
                   <div className={styles.itemIcon}>{item.icon}</div>
                   <div>
                     <h4>{item.title}</h4>
-                    <p>{item.description}</p>
+                    <p dangerouslySetInnerHTML={{ __html: item.descriptionHtml }} />
                   </div>
                 </div>
               ))}
@@ -38,12 +53,12 @@ export default async function ProgramSection() {
               <h3>{content.nightPart.title}</h3>
             </div>
             <div className={styles.partContent}>
-              {content.nightPart.items.map((item: ProgramItem, index: number) => (
+              {nightItemsWithHtml.map((item, index: number) => (
                 <div key={index} className={styles.item}>
                   <div className={styles.itemIcon}>{item.icon}</div>
                   <div>
                     <h4>{item.title}</h4>
-                    <p>{item.description}</p>
+                    <p dangerouslySetInnerHTML={{ __html: item.descriptionHtml }} />
                   </div>
                 </div>
               ))}

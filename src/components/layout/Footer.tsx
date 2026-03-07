@@ -3,6 +3,7 @@ import styles from './Footer.module.scss';
 import { SITE_NAME, CONTACT_EMAIL, GDPR_EMAIL } from '../../lib/constants';
 import { getFooterContent } from '@/lib/tina';
 import type { FooterLink } from '@/lib/content-types';
+import { marked } from 'marked';
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
@@ -10,13 +11,19 @@ export default async function Footer() {
 
   if (!content) return null;
 
+  const descriptionHtml = await marked.parse(content.description || '', { async: true });
+  const fundingNoteHtml = await marked.parse(content.fundingNote || '', { async: true });
+
   return (
     <footer className={styles.footer}>
       <div className="container">
         <div className={styles.content}>
           <div className={styles.section}>
             <h3>{SITE_NAME}</h3>
-            <p className={styles.description}>{content.description}</p>
+            <p
+              className={styles.description}
+              dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+            />
           </div>
           <div className={styles.section}>
             <h4>{content.organizers.title}</h4>
@@ -58,7 +65,7 @@ export default async function Footer() {
           <p>
             &copy; {currentYear} {SITE_NAME}. {content.copyright}
           </p>
-          <p>{content.fundingNote}</p>
+          <p dangerouslySetInnerHTML={{ __html: fundingNoteHtml }} />
         </div>
       </div>
     </footer>

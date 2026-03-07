@@ -1,12 +1,19 @@
 import styles from './CitiesSection.module.scss';
-import { CITIES } from '../../lib/constants';
 import { getCitiesContent } from '@/lib/tina';
 import type { InfoCard } from '@/lib/content-types';
+import { marked } from 'marked';
 
 export default async function CitiesSection() {
   const content = await getCitiesContent();
 
   if (!content) return null;
+
+  const cardsWithHtml = await Promise.all(
+    content.infoCards.map(async (card: InfoCard) => ({
+      ...card,
+      descriptionHtml: await marked.parse(card.description || '', { async: true }),
+    }))
+  );
 
   return (
     <section id="miasta" className={styles.cities}>
@@ -15,7 +22,7 @@ export default async function CitiesSection() {
         <p className={styles.subtitle}>{content.subtitle}</p>
 
         <div className={styles.timeline}>
-          {CITIES.map((city, index) => (
+          {content.cities.map((city, index) => (
             <div key={city.name} className={styles.cityCard}>
               <div className={styles.number}>{index + 1}</div>
               <div className={styles.cityContent}>
@@ -28,11 +35,11 @@ export default async function CitiesSection() {
         </div>
 
         <div className={styles.info}>
-          {content.infoCards.map((card: InfoCard, index: number) => (
+          {cardsWithHtml.map((card, index: number) => (
             <div key={index} className={styles.infoCard}>
               <div className={styles.infoIcon}>{card.icon}</div>
               <h4>{card.title}</h4>
-              <p>{card.description}</p>
+              <p dangerouslySetInnerHTML={{ __html: card.descriptionHtml }} />
             </div>
           ))}
         </div>

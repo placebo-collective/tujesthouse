@@ -63,9 +63,16 @@ export interface InfoCard {
   description: string;
 }
 
+export interface City {
+  name: string;
+  month: string;
+  venue: string;
+}
+
 export interface CitiesContent {
   title: string;
   subtitle: string;
+  cities: City[];
   infoCards: InfoCard[];
 }
 

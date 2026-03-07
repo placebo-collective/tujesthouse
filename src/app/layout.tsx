@@ -111,7 +111,6 @@ export const metadata: Metadata = {
     canonical: BASE_URL,
   },
   verification: {
-    // Google: Verified via DNS (domain name provider)
     yandex: 'db21272bd99c85bb',
     other: {
       'msvalidate.01': 'C1B315B5E32DECB7024B6F4D53E3005F',
