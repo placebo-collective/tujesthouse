@@ -1,4 +1,4 @@
-import { marked } from 'marked';
+import { parseMarkdown } from '@/lib/utils/markdown';
 import styles from './MarkdownContent.module.scss';
 
 interface MarkdownContentProps {
@@ -6,10 +6,7 @@ interface MarkdownContentProps {
 }
 
 export default async function MarkdownContent({ content }: MarkdownContentProps) {
-  const htmlContent = await marked(content, {
-    breaks: true,
-    gfm: true,
-  });
+  const htmlContent = await parseMarkdown(content);
 
   return <div className={styles.markdown} dangerouslySetInnerHTML={{ __html: htmlContent }} />;
 }

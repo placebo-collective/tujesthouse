@@ -1,7 +1,7 @@
 import styles from './CitiesSection.module.scss';
 import { getCitiesContent } from '@/lib/tina';
 import type { InfoCard } from '@/lib/content-types';
-import { marked } from 'marked';
+import { parseMarkdown } from '@/lib/utils/markdown';
 
 export default async function CitiesSection() {
   const content = await getCitiesContent();
@@ -11,7 +11,7 @@ export default async function CitiesSection() {
   const cardsWithHtml = await Promise.all(
     content.infoCards.map(async (card: InfoCard) => ({
       ...card,
-      descriptionHtml: await marked.parse(card.description || '', { async: true }),
+      descriptionHtml: await parseMarkdown(card.description),
     }))
   );
 

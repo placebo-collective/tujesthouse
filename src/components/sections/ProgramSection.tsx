@@ -1,7 +1,7 @@
 import styles from './ProgramSection.module.scss';
 import { getProgramContent } from '@/lib/tina';
 import type { ProgramItem, TargetItem } from '@/lib/content-types';
-import { marked } from 'marked';
+import { parseMarkdown } from '@/lib/utils/markdown';
 
 export default async function ProgramSection() {
   const content = await getProgramContent();
@@ -11,14 +11,14 @@ export default async function ProgramSection() {
   const dayItemsWithHtml = await Promise.all(
     content.dayPart.items.map(async (item: ProgramItem) => ({
       ...item,
-      descriptionHtml: await marked.parse(item.description || '', { async: true }),
+      descriptionHtml: await parseMarkdown(item.description),
     }))
   );
 
   const nightItemsWithHtml = await Promise.all(
     content.nightPart.items.map(async (item: ProgramItem) => ({
       ...item,
-      descriptionHtml: await marked.parse(item.description || '', { async: true }),
+      descriptionHtml: await parseMarkdown(item.description),
     }))
   );
 

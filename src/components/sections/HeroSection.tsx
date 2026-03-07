@@ -1,11 +1,11 @@
 import styles from './HeroSection.module.scss';
 import { getHeroContent } from '@/lib/tina';
-import { marked } from 'marked';
+import { parseMarkdown } from '@/lib/utils/markdown';
 
 export default async function HeroSection() {
   const content = await getHeroContent();
 
-  const subtitleHtml = await marked.parse(content.subtitle || '', { async: true });
+  const subtitleHtml = await parseMarkdown(content.subtitle);
 
   return (
     <section className={styles.hero}>

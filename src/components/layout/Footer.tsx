@@ -3,7 +3,7 @@ import styles from './Footer.module.scss';
 import { SITE_NAME, CONTACT_EMAIL, GDPR_EMAIL } from '../../lib/constants';
 import { getFooterContent } from '@/lib/tina';
 import type { FooterLink } from '@/lib/content-types';
-import { marked } from 'marked';
+import { parseMarkdown } from '@/lib/utils/markdown';
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
@@ -11,8 +11,8 @@ export default async function Footer() {
 
   if (!content) return null;
 
-  const descriptionHtml = await marked.parse(content.description || '', { async: true });
-  const fundingNoteHtml = await marked.parse(content.fundingNote || '', { async: true });
+  const descriptionHtml = await parseMarkdown(content.description);
+  const fundingNoteHtml = await parseMarkdown(content.fundingNote);
 
   return (
     <footer className={styles.footer}>
