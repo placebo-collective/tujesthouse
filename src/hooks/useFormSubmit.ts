@@ -82,27 +82,37 @@ export function useFormSubmit<T = Record<string, unknown>>(
     try {
       const scriptUrl = process.env.NEXT_PUBLIC_APPS_SCRIPT_URL ?? '';
       const recaptchaToken = await getRecaptchaToken();
+      cachedToken.current = null;
 
-      const response = await fetch(scriptUrl, {
+      const fetchPromise = fetch(scriptUrl, {
         method: 'POST',
         body: JSON.stringify({ ...data, 'g-recaptcha-response': recaptchaToken, formType }),
       });
 
-      // Invalidate cached token after use
-      cachedToken.current = null;
+      setSubmitStatus('success');
+      setIsSubmitting(false);
+      onSuccess?.();
 
-      const result = await response.json().catch(() => null);
+      fetchPromise
+        .then((r) => r.json().catch(() => null))
+        .then((result) => {
+          if (!result?.success) {
+            if (process.env.NODE_ENV === 'development') {
+              console.error('Submission server error:', result);
+            }
+            setSubmitStatus('error');
+            onError?.(new Error('Form submission failed'));
+          }
+        })
+        .catch((err) => {
+          if (process.env.NODE_ENV === 'development') {
+            console.error('Submission network error:', err);
+          }
+          setSubmitStatus('error');
+          onError?.(err);
+        });
 
-      if (response.ok && result?.success) {
-        setSubmitStatus('success');
-        onSuccess?.();
-      } else {
-        if (process.env.NODE_ENV === 'development') {
-          console.error('Submission error:', response.status, result);
-        }
-        setSubmitStatus('error');
-        onError?.(new Error('Form submission failed'));
-      }
+      return;
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Form submission error:', error);
