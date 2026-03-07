@@ -1,5 +1,9 @@
 import { useState } from 'react';
 
+declare const grecaptcha: {
+  execute(siteKey: string, options: { action: string }): Promise<string>;
+};
+
 export type SubmitStatus = 'idle' | 'success' | 'error';
 
 interface UseFormSubmitOptions<T> {
@@ -27,12 +31,15 @@ export function useFormSubmit<T = Record<string, unknown>>(
     setSubmitStatus('idle');
 
     try {
+      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? '';
+      const recaptchaToken = await grecaptcha.execute(siteKey, { action: 'submit' });
+
       const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, 'g-recaptcha-response': recaptchaToken }),
       });
 
       if (response.ok) {

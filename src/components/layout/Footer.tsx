@@ -20,7 +20,7 @@ export default async function Footer() {
         <div className={styles.content}>
           <div className={styles.section}>
             <h3>{SITE_NAME}</h3>
-            <p
+            <div
               className={styles.description}
               dangerouslySetInnerHTML={{ __html: descriptionHtml }}
             />
@@ -65,7 +65,18 @@ export default async function Footer() {
           <p>
             &copy; {currentYear} {SITE_NAME}. {content.copyright}
           </p>
-          <p dangerouslySetInnerHTML={{ __html: fundingNoteHtml }} />
+          <div dangerouslySetInnerHTML={{ __html: fundingNoteHtml }} />
+          <p className={styles.recaptchaNotice}>
+            Ta strona jest chroniona przez reCAPTCHA. Obowiązują{' '}
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+              Polityka prywatności
+            </a>{' '}
+            i{' '}
+            <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">
+              Warunki korzystania
+            </a>{' '}
+            Google.
+          </p>
         </div>
       </div>
     </footer>

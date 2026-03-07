@@ -39,7 +39,7 @@ export default async function CitiesSection() {
             <div key={index} className={styles.infoCard}>
               <div className={styles.infoIcon}>{card.icon}</div>
               <h4>{card.title}</h4>
-              <p dangerouslySetInnerHTML={{ __html: card.descriptionHtml }} />
+              <div dangerouslySetInnerHTML={{ __html: card.descriptionHtml }} />
             </div>
           ))}
         </div>

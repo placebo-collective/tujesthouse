@@ -40,7 +40,7 @@ export default async function ProgramSection() {
                   <div className={styles.itemIcon}>{item.icon}</div>
                   <div>
                     <h4>{item.title}</h4>
-                    <p dangerouslySetInnerHTML={{ __html: item.descriptionHtml }} />
+                    <div dangerouslySetInnerHTML={{ __html: item.descriptionHtml }} />
                   </div>
                 </div>
               ))}
@@ -58,7 +58,7 @@ export default async function ProgramSection() {
                   <div className={styles.itemIcon}>{item.icon}</div>
                   <div>
                     <h4>{item.title}</h4>
-                    <p dangerouslySetInnerHTML={{ __html: item.descriptionHtml }} />
+                    <div dangerouslySetInnerHTML={{ __html: item.descriptionHtml }} />
                   </div>
                 </div>
               ))}

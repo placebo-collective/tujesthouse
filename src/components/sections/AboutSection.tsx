@@ -17,7 +17,7 @@ export default async function AboutSection() {
         <h2 className={styles.title}>{content.title}</h2>
 
         <div className={styles.intro}>
-          <p dangerouslySetInnerHTML={{ __html: introHtml }} />
+          <div dangerouslySetInnerHTML={{ __html: introHtml }} />
         </div>
 
         <div className={styles.grid}>
@@ -40,7 +40,7 @@ export default async function AboutSection() {
         </div>
 
         <div className={styles.funding}>
-          <p dangerouslySetInnerHTML={{ __html: fundingHtml }} />
+          <div dangerouslySetInnerHTML={{ __html: fundingHtml }} />
         </div>
       </div>
     </section>

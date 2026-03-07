@@ -12,7 +12,7 @@ export default async function HeroSection() {
       <div className="container">
         <div className={styles.content}>
           <h1 className={styles.title}>{content.title}</h1>
-          <p className={styles.subtitle} dangerouslySetInnerHTML={{ __html: subtitleHtml }} />
+          <div className={styles.subtitle} dangerouslySetInnerHTML={{ __html: subtitleHtml }} />
           <p className={styles.dates}>{content.dates}</p>
           <div className={styles.cta}>
             <a href={content.cta.primaryLink} className={styles.btnPrimary}>

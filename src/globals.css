@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.grecaptcha-badge {
+  visibility: hidden !important;
+}
+
 :root,
 :root[data-theme='polish'] {
   --primary-color: #e63946;
