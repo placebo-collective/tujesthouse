@@ -143,11 +143,113 @@ Serwuje zbudowaną wersję lokalnie do testowania.
 
 ## 🌐 Deployment
 
+### GitHub Pages (Production)
+
 Strona wdrożona na **GitHub Pages**:
 
-- URL: https://tujesthouse.pl
-- Branch: wyeksportowany statyczny build z `out/`
-- CNAME: Skonfigurowany dla niestandardowej domeny
+- **URL**: https://tujesthouse.pl
+- **Platform**: GitHub Pages (Static Export)
+- **Branch**: Automatyczne wdrożenie z branch `main`
+- **CNAME**: Skonfigurowany dla niestandardowej domeny
+
+### CI/CD Pipeline
+
+Projekt używa GitHub Actions do automatycznego testowania i wdrożenia. Pipeline zawiera:
+
+#### 1. **Quality Checks** (uruchamia się na każdym PR i push)
+   - TypeScript type checking
+   - ESLint linting
+   - Prettier formatting check
+   - JSON validation (wszystkie pliki w `content/`)
+   - Dependency audit
+
+#### 2. **Build** (uruchamia się po przejściu testów)
+   - Instalacja zależności
+   - Budowanie Tina CMS (jeśli skonfigurowane)
+   - Budowanie aplikacji Next.js
+   - Walidacja build output
+   - Upload artefaktów
+
+#### 3. **Deploy** (tylko na branch `main`)
+   - Wdrożenie na GitHub Pages
+   - Generowanie deployment summary
+
+#### 4. **Lighthouse Audit** (po wdrożeniu na `main`)
+   - Automatyczna analiza wydajności
+   - Raport dostępności i SEO
+   - Best practices check
+
+### Konfiguracja GitHub Secrets
+
+Aby w pełni wykorzystać pipeline CI/CD, skonfiguruj następujące sekrety w GitHub:
+
+**Settings → Secrets and variables → Actions → New repository secret**
+
+| Secret Name                    | Opis                                           | Wymagane      |
+| ------------------------------ | ---------------------------------------------- | ------------- |
+| `NEXT_PUBLIC_TINA_CLIENT_ID`   | Tina Cloud Client ID (dla produkcji)          | Opcjonalne¹   |
+| `TINA_TOKEN`                   | Tina Cloud Token (dla produkcji)              | Opcjonalne¹   |
+
+¹ *Wymagane tylko jeśli używasz Tina Cloud w produkcji. W trybie lokalnym (obecna konfiguracja) nie są potrzebne.*
+
+### Wdrożenie manualne
+
+1. **Budowanie lokalnie**:
+   ```bash
+   npm run build:gh-pages
+   ```
+
+2. **Testowanie lokalnie**:
+   ```bash
+   npm run preview
+   ```
+
+3. **Push do main**:
+   ```bash
+   git push origin main
+   ```
+
+Pipeline automatycznie:
+- Uruchomi wszystkie testy
+- Zbuduje aplikację
+- Wdroży na GitHub Pages
+
+### Branch Strategy
+
+- **`main`** - Production branch (auto-deploy)
+- **`feature/*`** - Feature branches (CI checks only, no deploy)
+- **Pull Requests** - Uruchamia wszystkie quality checks
+
+### Monitoring Deployments
+
+1. **GitHub Actions Tab** - Zobacz statusy wszystkich workflow
+2. **Environments → github-pages** - Historia wdrożeń
+3. **Actions Summary** - Deployment URL i szczegóły po każdym wdrożeniu
+
+### Troubleshooting Deployments
+
+**Problem**: Build fails z błędem TypeScript
+```bash
+# Lokalnie uruchom sprawdzenie typów:
+npx tsc --noEmit
+```
+
+**Problem**: ESLint errors w CI
+```bash
+# Lokalnie napraw ESLint:
+npm run lint
+```
+
+**Problem**: JSON validation errors
+```bash
+# Sprawdź poprawność JSON:
+node -e "JSON.parse(require('fs').readFileSync('content/pages/your-file.json', 'utf8'))"
+```
+
+**Problem**: Build succeeds but pages not updating
+- Sprawdź GitHub Pages settings (Settings → Pages)
+- Upewnij się że Source jest ustawiony na "GitHub Actions"
+- Zweryfikuj że CNAME file istnieje w `out/`
 
 ## 📚 Scripts Reference
 
