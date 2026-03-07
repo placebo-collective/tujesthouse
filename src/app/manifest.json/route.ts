@@ -12,20 +12,39 @@ export async function GET() {
     description: SITE_DESCRIPTION,
     icons: [
       {
-        src: settings.favicon,
-        sizes: '64x64 32x32 24x24 16x16',
-        type: 'image/x-icon',
+        src: '/icon-192.png',
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icon-512-maskable.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
       },
     ],
     start_url: '/',
+    scope: '/',
     display: 'standalone',
+    orientation: 'portrait-primary',
     theme_color: settings.theme.primaryColor,
-    background_color: '#ffffff',
+    background_color: settings.theme.darkBg,
+    categories: ['music', 'entertainment', 'lifestyle'],
+    lang: 'pl',
+    dir: 'ltr',
   };
 
   return new Response(JSON.stringify(manifest), {
     headers: {
       'Content-Type': 'application/json',
+      'Cache-Control': 'public, max-age=31536000, immutable',
     },
   });
 }

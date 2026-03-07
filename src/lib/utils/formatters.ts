@@ -1,12 +1,5 @@
-/**
- * Formatting utility functions
- */
-
 export function formatPhoneNumber(phone: string): string {
-  // Remove all spaces and dashes
   const cleaned = phone.replace(/[\s-]/g, '');
-
-  // Format as XXX XXX XXX or +48 XXX XXX XXX
   if (cleaned.startsWith('+48')) {
     const number = cleaned.slice(3);
     return `+48 ${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6)}`;

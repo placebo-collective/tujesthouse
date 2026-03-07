@@ -1,14 +1,9 @@
-/**
- * Validation utility functions for forms
- */
-
 export function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
 export function isValidPhone(phone: string): boolean {
-  // Polish phone number format
   const phoneRegex = /^(\+48)?[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{3}$/;
   return phoneRegex.test(phone.trim());
 }

@@ -43,7 +43,9 @@ export function useFormSubmit<T = Record<string, unknown>>(
         onError?.(new Error('Form submission failed'));
       }
     } catch (error) {
-      console.error('Form submission error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Form submission error:', error);
+      }
       setSubmitStatus('error');
       onError?.(error as Error);
     } finally {

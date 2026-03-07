@@ -1,7 +1,3 @@
-/**
- * Common form-related types
- */
-
 export type FormFieldType = 'text' | 'email' | 'tel' | 'url' | 'textarea' | 'select' | 'checkbox';
 
 export interface BaseFormField {
