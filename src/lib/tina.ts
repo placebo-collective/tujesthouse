@@ -9,6 +9,7 @@ import type {
   ArtistFormContent,
   WorkshopFormContent,
   SiteSettings,
+  LegalPageContent,
 } from './content-types';
 import { loadContent } from './utils/content-loader';
 
@@ -84,4 +85,12 @@ const settingsFallback: SiteSettings = {
 export async function getSiteSettings(): Promise<SiteSettings> {
   const content = await loadContent<SiteSettings>('layout/settings.json', settingsFallback);
   return content ?? settingsFallback;
+}
+
+export async function getPrivacyPolicyContent(): Promise<LegalPageContent | null> {
+  return loadContent<LegalPageContent>('pages/privacy-policy.json');
+}
+
+export async function getTermsAndConditionsContent(): Promise<LegalPageContent | null> {
+  return loadContent<LegalPageContent>('pages/terms-and-conditions.json');
 }

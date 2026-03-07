@@ -1182,6 +1182,96 @@ export default defineConfig({
           },
         ],
       },
+      {
+        name: 'privacyPolicy',
+        label: 'Polityka Prywatności',
+        path: 'content/pages',
+        format: 'json',
+        ui: {
+          allowedActions: {
+            create: false,
+            delete: false,
+          },
+        },
+        match: {
+          include: 'privacy-policy',
+        },
+        fields: [
+          {
+            type: 'string',
+            name: 'title',
+            label: 'Tytuł strony',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'metaDescription',
+            label: 'Meta opis (SEO)',
+            required: true,
+            ui: {
+              component: 'textarea',
+            },
+          },
+          {
+            type: 'string',
+            name: 'lastUpdated',
+            label: 'Data ostatniej aktualizacji',
+            required: true,
+          },
+          {
+            type: 'rich-text',
+            name: 'content',
+            label: 'Treść polityki prywatności',
+            required: true,
+            description: 'Pełna treść polityki prywatności (wspiera formatowanie Markdown)',
+          },
+        ],
+      },
+      {
+        name: 'termsAndConditions',
+        label: 'Regulamin',
+        path: 'content/pages',
+        format: 'json',
+        ui: {
+          allowedActions: {
+            create: false,
+            delete: false,
+          },
+        },
+        match: {
+          include: 'terms-and-conditions',
+        },
+        fields: [
+          {
+            type: 'string',
+            name: 'title',
+            label: 'Tytuł strony',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'metaDescription',
+            label: 'Meta opis (SEO)',
+            required: true,
+            ui: {
+              component: 'textarea',
+            },
+          },
+          {
+            type: 'string',
+            name: 'lastUpdated',
+            label: 'Data ostatniej aktualizacji',
+            required: true,
+          },
+          {
+            type: 'rich-text',
+            name: 'content',
+            label: 'Treść regulaminu',
+            required: true,
+            description: 'Pełna treść regulaminu (wspiera formatowanie Markdown)',
+          },
+        ],
+      },
     ],
   },
 });

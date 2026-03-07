@@ -216,3 +216,10 @@ export interface SiteSettings {
   favicon: string;
   theme: ThemeColors;
 }
+
+export interface LegalPageContent {
+  title: string;
+  metaDescription: string;
+  lastUpdated: string;
+  content: string;
+}
