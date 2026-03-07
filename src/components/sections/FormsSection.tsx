@@ -4,49 +4,62 @@ import { useState } from 'react';
 import styles from './FormsSection.module.scss';
 import DJApplicationForm from '../forms/DJApplicationForm';
 import WorkshopRegistrationForm from '../forms/WorkshopRegistrationForm';
-import { CONTACT_EMAIL, GDPR_EMAIL } from '../../lib/constants';
+import { CONTACT_EMAIL } from '../../lib/constants';
+import type { FormTab, DJFormContent, WorkshopFormContent } from '@/lib/content-types';
 
-export default function FormsSection() {
+interface FormsSectionProps {
+  title: string;
+  subtitle: string;
+  tabs: FormTab[];
+  contact: {
+    title: string;
+    text: string;
+  };
+  djFormContent: DJFormContent;
+  workshopFormContent: WorkshopFormContent;
+}
+
+export default function FormsSection({
+  title,
+  subtitle,
+  tabs,
+  contact,
+  djFormContent,
+  workshopFormContent,
+}: FormsSectionProps) {
   const [activeTab, setActiveTab] = useState<'dj' | 'workshop'>('dj');
 
   return (
     <section id="formularze" className={styles.forms}>
       <div className="container">
-        <h2 className={styles.title}>Dołącz do nas!</h2>
-        <p className={styles.subtitle}>Wybierz odpowiedni formularz i weź udział w projekcie</p>
+        <h2 className={styles.title}>{title}</h2>
+        <p className={styles.subtitle}>{subtitle}</p>
 
         <div className={styles.tabs}>
-          <button
-            className={`${styles.tab} ${activeTab === 'dj' ? styles.active : ''}`}
-            onClick={() => setActiveTab('dj')}
-          >
-            <span className={styles.tabIcon}>🎧</span>
-            <span className={styles.tabText}>
-              <strong>Dla artystów</strong>
-              <small>Zgłoś się do open call</small>
-            </span>
-          </button>
-          <button
-            className={`${styles.tab} ${activeTab === 'workshop' ? styles.active : ''}`}
-            onClick={() => setActiveTab('workshop')}
-          >
-            <span className={styles.tabIcon}>📚</span>
-            <span className={styles.tabText}>
-              <strong>Dla uczestników</strong>
-              <small>Zapisz się na warsztaty</small>
-            </span>
-          </button>
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              className={`${styles.tab} ${activeTab === tab.id ? styles.active : ''}`}
+              onClick={() => setActiveTab(tab.id as 'dj' | 'workshop')}
+            >
+              <span className={styles.tabIcon}>{tab.icon}</span>
+              <span className={styles.tabText}>
+                <strong>{tab.title}</strong>
+                <small>{tab.subtitle}</small>
+              </span>
+            </button>
+          ))}
         </div>
 
         <div className={styles.formContainer}>
-          {activeTab === 'dj' && <DJApplicationForm />}
-          {activeTab === 'workshop' && <WorkshopRegistrationForm />}
+          {activeTab === 'dj' && <DJApplicationForm content={djFormContent} />}
+          {activeTab === 'workshop' && <WorkshopRegistrationForm content={workshopFormContent} />}
         </div>
 
         <div className={styles.contact}>
-          <h3>Masz pytania?</h3>
+          <h3>{contact.title}</h3>
           <p>
-            Skontaktuj się z nami: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+            {contact.text} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           </p>
         </div>
       </div>

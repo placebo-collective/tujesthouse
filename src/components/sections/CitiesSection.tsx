@@ -1,12 +1,18 @@
 import styles from './CitiesSection.module.scss';
 import { CITIES } from '../../lib/constants';
+import { getCitiesContent } from '@/lib/tina';
+import type { InfoCard } from '@/lib/content-types';
 
-export default function CitiesSection() {
+export default async function CitiesSection() {
+  const content = await getCitiesContent();
+
+  if (!content) return null;
+
   return (
     <section id="miasta" className={styles.cities}>
       <div className="container">
-        <h2 className={styles.title}>Trasa po Polsce</h2>
-        <p className={styles.subtitle}>Pięć miast, pięć wydarzeń, jedna społeczność</p>
+        <h2 className={styles.title}>{content.title}</h2>
+        <p className={styles.subtitle}>{content.subtitle}</p>
 
         <div className={styles.timeline}>
           {CITIES.map((city, index) => (
@@ -22,30 +28,13 @@ export default function CitiesSection() {
         </div>
 
         <div className={styles.info}>
-          <div className={styles.infoCard}>
-            <div className={styles.infoIcon}>📍</div>
-            <h4>Dostępność</h4>
-            <p>
-              Wszystkie wydarzenia odbywają się w lokalach łatwo dostępnych komunikacją publiczną.
-              Dokładne informacje o dostępności każdego obiektu będą podane przed wydarzeniem.
-            </p>
-          </div>
-          <div className={styles.infoCard}>
-            <div className={styles.infoIcon}>🎟️</div>
-            <h4>Wstęp bezpłatny</h4>
-            <p>
-              Udział na podstawie rejestracji, limit miejsc zależny od pojemności obiektu w danym
-              mieście
-            </p>
-          </div>
-          <div className={styles.infoCard}>
-            <div className={styles.infoIcon}>♿</div>
-            <h4>Dostępność dla wszystkich</h4>
-            <p>
-              Wszystkie wydarzenia odbywają się w dostępnych lokalach. Dbamy o bezpieczeństwo,
-              komfort i inkluzywność uczestników.
-            </p>
-          </div>
+          {content.infoCards.map((card: InfoCard, index: number) => (
+            <div key={index} className={styles.infoCard}>
+              <div className={styles.infoIcon}>{card.icon}</div>
+              <h4>{card.title}</h4>
+              <p>{card.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

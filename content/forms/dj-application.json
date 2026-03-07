@@ -1,0 +1,67 @@
+{
+  "title": "Zgłoszenie artysty",
+  "description": "Wypełnij formularz, aby wziąć udział w otwartym naborze wykonawców. Wybierzemy 4–6 artystów w każdym mieście do prezentacji artystycznej. Nabory są transparentne i oparte o jasne kryteria.",
+  "fields": {
+    "name": {
+      "label": "Imię i nazwisko",
+      "required": true
+    },
+    "artistName": {
+      "label": "Pseudonim artystyczny",
+      "required": true
+    },
+    "email": {
+      "label": "Email",
+      "required": true
+    },
+    "phone": {
+      "label": "Telefon",
+      "required": true
+    },
+    "city": {
+      "label": "Preferowane miasto (1. wybór)",
+      "placeholder": "Wybierz miasto",
+      "required": true
+    },
+    "city2": {
+      "label": "Preferowane miasto (2. wybór)",
+      "placeholder": "Wybierz miasto (opcjonalnie)",
+      "required": false
+    },
+    "soundcloudLink": {
+      "label": "Link do nagrania zgłoszeniowego (30-60 min)",
+      "placeholder": "https://soundcloud.com/...",
+      "hint": "SoundCloud, YouTube lub Google Drive (dostęp bezpłatny)",
+      "required": true
+    },
+    "experience": {
+      "label": "Dotychczasowe doświadczenie",
+      "placeholder": "Opisz swoje dotychczasowe doświadczenie jako artysta...",
+      "rows": 4,
+      "required": true
+    },
+    "description": {
+      "label": "Opis Twojego stylu muzycznego (max 800 znaków)",
+      "placeholder": "Opisz swój styl muzyczny, inspiracje, kierunek...",
+      "maxLength": 800,
+      "rows": 5,
+      "required": true
+    }
+  },
+  "agreement": {
+    "text": "Oświadczam, że posiadam prawa do wykorzystanych materiałów w nagraniu zgłoszeniowym oraz akceptuję",
+    "regulaminLink": "regulamin",
+    "consentText": ". Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji naboru zgodnie z",
+    "privacyLink": "polityką prywatności"
+  },
+  "gdprInfo": {
+    "title": "Informacja RODO:",
+    "text": "Administratorem Twoich danych osobowych jest Tomasz Bursztyński Software Development. Masz prawo dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia oraz wniesienia sprzeciwu. Możesz również wycofać zgodę w dowolnym momencie. W celu realizacji swoich praw lub zgłoszenia usunięcia danych skontaktuj się z nami:"
+  },
+  "messages": {
+    "success": "✓ Dziękujemy za zgłoszenie! Skontaktujemy się z Tobą w najbliższym czasie.",
+    "error": "✗ Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie.",
+    "submitting": "Wysyłanie...",
+    "submit": "Wyślij zgłoszenie"
+  }
+}

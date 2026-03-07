@@ -32,7 +32,7 @@ export default function RegulaminPage() {
           <ol>
             <li>
               Niniejszy regulamin określa zasady korzystania z serwisu internetowego dostępnego pod
-              adresem tujesthouse.pl (dalej: „Serwis").
+              adresem tujesthouse.pl (dalej: &ldquo;Serwis&rdquo;).
             </li>
             <li>
               Właścicielem i administratorem Serwisu jest:
@@ -49,9 +49,9 @@ export default function RegulaminPage() {
             </li>
             <li>Korzystanie z Serwisu oznacza akceptację postanowień niniejszego Regulaminu.</li>
             <li>
-              Serwis jest przeznaczony do prezentacji informacji o projekcie kulturalnym „Tu Jest
-              House" oraz umożliwienia rejestracji na wydarzenia i zgłaszania się artystów do open
-              call.
+              Serwis jest przeznaczony do prezentacji informacji o projekcie kulturalnym &ldquo;Tu
+              Jest House&rdquo; oraz umożliwienia rejestracji na wydarzenia i zgłaszania się
+              artystów do open call.
             </li>
           </ol>
         </section>

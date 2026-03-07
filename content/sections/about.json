@@ -1,0 +1,40 @@
+{
+  "title": "O projekcie",
+  "intro": "<strong>Tu Jest House</strong> to cykl pięciu wydarzeń kulturowych łączących edukację, muzykę elektroniczną i rozwój kompetencji w obszarze kultury klubowej. Projekt realizowany w pięciu miastach Polski (maj–wrzesień 2026) zwiększa uczestnictwo w kulturze, wspiera młodych twórców sceny muzycznej i buduje współpracę między miastami poprzez podnoszenie kompetencji osób realizujących wydarzenia kulturalne.",
+  "cards": [
+    {
+      "icon": "📚",
+      "title": "Edukacja",
+      "description": "Warsztaty kompetencyjne dla organizatorów wydarzeń, twórców i menedżerów kultury. Praktyczna wiedza o współpracy, standardach jakości i prawach autorskich. Każdy warsztat dostarcza konkretne narzędzia do wykorzystania w pracy. Panel dyskusyjny i spotkania sieciujące."
+    },
+    {
+      "icon": "🎵",
+      "title": "Muzyka",
+      "description": "Publiczna prezentacja młodych artystów wyłonionych w transparentnym, otwartym naborze. W każdym mieście wystąpi 4–6 wykonawców. Wszystkie występy są profesjonalnie rejestrowane i udostępniane na wolnej licencji."
+    },
+    {
+      "icon": "🤝",
+      "title": "Współpraca",
+      "description": "Budowanie sieci kontaktów między organizatorami, twórcami i uczestnikami kultury w różnych miastach. Wymiana doświadczeń i tworzenie standardów dobrej praktyki."
+    }
+  ],
+  "highlights": [
+    {
+      "number": "5",
+      "label": "Miast"
+    },
+    {
+      "number": "10",
+      "label": "Warsztatów"
+    },
+    {
+      "number": "5",
+      "label": "Paneli"
+    },
+    {
+      "number": "25+",
+      "label": "artystów"
+    }
+  ],
+  "funding": "Projekt aplikuje o dofinansowanie w ramach programu <strong>„Kultura – Interwencje 2026"</strong> <strong>Narodowego Centrum Kultury</strong>."
+}

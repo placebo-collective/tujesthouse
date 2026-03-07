@@ -5,37 +5,46 @@ import Link from 'next/link';
 import styles from './WorkshopRegistrationForm.module.scss';
 import Checkbox from './Checkbox';
 import { CITIES, FORMSPREE_WORKSHOP_FORM, GDPR_EMAIL } from '../../lib/constants';
+import type { WorkshopFormContent } from '@/lib/content-types';
+import { useFormSubmit } from '@/hooks/useFormSubmit';
 
-export default function WorkshopRegistrationForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    city: '',
-    role: [] as string[],
-    experience: '',
-    motivation: '',
-    agreement: false,
-  });
+interface WorkshopRegistrationFormProps {
+  content: WorkshopFormContent;
+}
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+type WorkshopFormData = {
+  name: string;
+  email: string;
+  phone: string;
+  city: string;
+  role: string[];
+  experience: string;
+  motivation: string;
+  agreement: boolean;
+};
+
+const initialFormData: WorkshopFormData = {
+  name: '',
+  email: '',
+  phone: '',
+  city: '',
+  role: [],
+  experience: '',
+  motivation: '',
+  agreement: false,
+};
+
+export default function WorkshopRegistrationForm({ content }: WorkshopRegistrationFormProps) {
+  const [formData, setFormData] = useState<WorkshopFormData>(initialFormData);
   const [roleSearchTerm, setRoleSearchTerm] = useState('');
   const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
 
-  const roleOptions = [
-    { value: 'dj', label: 'DJ' },
-    { value: 'producent', label: 'Producent muzyczny' },
-    { value: 'organizator', label: 'Organizator wydarzeń' },
-    { value: 'technik', label: 'Realizator / Technik' },
-    { value: 'promotor', label: 'Komunikacja / Promocja' },
-    { value: 'kurator', label: 'Kurator / Manager' },
-    { value: 'entuzjasta', label: 'Miłośnik kultury klubowej' },
-    { value: 'student', label: 'Student / Osoba ucząca się' },
-    { value: 'inne', label: 'Inne' },
-  ];
+  const { submitStatus, isSubmitting, submitForm } = useFormSubmit<WorkshopFormData>({
+    formspreeId: FORMSPREE_WORKSHOP_FORM,
+    onSuccess: () => setFormData(initialFormData),
+  });
 
-  const filteredRoleOptions = roleOptions.filter((option) =>
+  const filteredRoleOptions = (content.fields.role.options || []).filter((option) =>
     option.label.toLowerCase().includes(roleSearchTerm.toLowerCase())
   );
 
@@ -69,92 +78,70 @@ export default function WorkshopRegistrationForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
-    try {
-      const response = await fetch(`https://formspree.io/f/${FORMSPREE_WORKSHOP_FORM}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          city: '',
-          role: [],
-          experience: '',
-          motivation: '',
-          agreement: false,
-        });
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
+    await submitForm(formData);
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <h3 className={styles.formTitle}>Rejestracja na warsztaty</h3>
-      <p className={styles.formDesc}>
-        Zapisz się na część dzienną wydarzenia - dwa warsztaty kompetencyjne, panel dyskusyjny i
-        spotkanie sieciujące. Bezpłatny udział na podstawie rejestracji. Miejsca ograniczone!
-      </p>
+      <h3 className={styles.formTitle}>{content.title}</h3>
+      <p className={styles.formDesc}>{content.description}</p>
 
       <div className={styles.formGroup}>
-        <label htmlFor="name">Imię i nazwisko *</label>
+        <label htmlFor="name">
+          {content.fields.name.label} {content.fields.name.required && '*'}
+        </label>
         <input
           type="text"
           id="name"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          required
+          required={content.fields.name.required}
         />
       </div>
 
       <div className={styles.formRow}>
         <div className={styles.formGroup}>
-          <label htmlFor="email">Email *</label>
+          <label htmlFor="email">
+            {content.fields.email.label} {content.fields.email.required && '*'}
+          </label>
           <input
             type="email"
             id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            required
+            required={content.fields.email.required}
           />
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="phone">Telefon *</label>
+          <label htmlFor="phone">
+            {content.fields.phone.label} {content.fields.phone.required && '*'}
+          </label>
           <input
             type="tel"
             id="phone"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            required
+            required={content.fields.phone.required}
           />
         </div>
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="city">Miasto wydarzenia *</label>
-        <select id="city" name="city" value={formData.city} onChange={handleChange} required>
-          <option value="">Wybierz miasto</option>
+        <label htmlFor="city">
+          {content.fields.city.label} {content.fields.city.required && '*'}
+        </label>
+        <select
+          id="city"
+          name="city"
+          value={formData.city}
+          onChange={handleChange}
+          required={content.fields.city.required}
+        >
+          <option value="">{content.fields.city.placeholder}</option>
           {CITIES.map((city) => (
             <option key={city.name} value={city.name}>
               {city.name}
@@ -164,13 +151,16 @@ export default function WorkshopRegistrationForm() {
       </div>
 
       <div className={styles.formGroup}>
-        <label>Kim jesteś w branży kulturalnej? (możesz wybrać kilka opcji) *</label>
+        <label>
+          {content.fields.role.label} {content.fields.role.required && '*'}
+        </label>
 
-        {/* Selected roles as tags */}
         {formData.role.length > 0 && (
           <div className={styles.selectedRoles}>
             {formData.role.map((roleValue) => {
-              const roleOption = roleOptions.find((opt) => opt.value === roleValue);
+              const roleOption = (content.fields.role.options || []).find(
+                (opt) => opt.value === roleValue
+              );
               return (
                 <span key={roleValue} className={styles.roleTag}>
                   {roleOption?.label}
@@ -188,19 +178,17 @@ export default function WorkshopRegistrationForm() {
           </div>
         )}
 
-        {/* Search input */}
         <div className={styles.multiSelectWrapper}>
           <input
             type="text"
             className={styles.searchInput}
-            placeholder="Wyszukaj i wybierz role..."
+            placeholder={content.fields.role.placeholder}
             value={roleSearchTerm}
             onChange={(e) => setRoleSearchTerm(e.target.value)}
             onFocus={() => setIsRoleDropdownOpen(true)}
             onBlur={() => setTimeout(() => setIsRoleDropdownOpen(false), 200)}
           />
 
-          {/* Dropdown with options */}
           {isRoleDropdownOpen && filteredRoleOptions.length > 0 && (
             <div className={styles.optionsDropdown}>
               {filteredRoleOptions.map((option) => (
@@ -222,75 +210,69 @@ export default function WorkshopRegistrationForm() {
         </div>
 
         {formData.role.length === 0 && (
-          <small style={{ color: '#999' }}>Wybierz przynajmniej jedną opcję</small>
+          <small style={{ color: '#999' }}>{content.fields.role.hint}</small>
         )}
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="experience">Doświadczenie w branży *</label>
+        <label htmlFor="experience">
+          {content.fields.experience.label} {content.fields.experience.required && '*'}
+        </label>
         <textarea
           id="experience"
           name="experience"
           value={formData.experience}
           onChange={handleChange}
-          rows={4}
-          placeholder="Opisz swoje doświadczenie w branży kulturalnej / muzycznej..."
-          required
+          rows={content.fields.experience.rows}
+          placeholder={content.fields.experience.placeholder}
+          required={content.fields.experience.required}
         />
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="motivation">Co chcesz zyskać dzięki udziałowi w warsztatach? *</label>
+        <label htmlFor="motivation">
+          {content.fields.motivation.label} {content.fields.motivation.required && '*'}
+        </label>
         <textarea
           id="motivation"
           name="motivation"
           value={formData.motivation}
           onChange={handleChange}
-          rows={4}
-          placeholder="Opisz swoją motywację i oczekiwania..."
-          required
+          rows={content.fields.motivation.rows}
+          placeholder={content.fields.motivation.placeholder}
+          required={content.fields.motivation.required}
         />
       </div>
 
       <div className={styles.formGroup}>
         <Checkbox name="agreement" checked={formData.agreement} onChange={handleChange} required>
-          Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji rejestracji na
-          wydarzenie oraz na kontakt w sprawach organizacyjnych zgodnie z{' '}
+          {content.agreement.text}{' '}
           <Link href="/polityka-prywatnosci" target="_blank">
-            polityką prywatności
+            {content.agreement.privacyLink}
           </Link>
-          . Rozumiem, że wstęp na wydarzenie jest bezpłatny, a miejsca są ograniczone. *
+          {content.agreement.additionalText} *
         </Checkbox>
       </div>
 
       <div className={styles.gdprInfo}>
         <p>
-          <strong>Informacja RODO:</strong> Administratorem Twoich danych osobowych jest Tomasz
-          Bursztyński Software Development. Masz prawo dostępu do swoich danych, ich sprostowania,
-          usunięcia, ograniczenia przetwarzania, przenoszenia oraz wniesienia sprzeciwu. Możesz
-          również wycofać zgodę w dowolnym momencie. W celu realizacji swoich praw lub zgłoszenia
-          usunięcia danych skontaktuj się z nami: <a href={`mailto:${GDPR_EMAIL}`}>{GDPR_EMAIL}</a>
+          <strong>{content.gdprInfo.title}</strong> {content.gdprInfo.text}{' '}
+          <a href={`mailto:${GDPR_EMAIL}`}>{GDPR_EMAIL}</a>
         </p>
       </div>
 
       {submitStatus === 'success' && (
-        <div className={styles.success}>
-          ✓ Dziękujemy za rejestrację! Potwierdzenie otrzymasz na podany adres email.
-        </div>
+        <div className={styles.success}>{content.messages.success}</div>
       )}
 
-      {submitStatus === 'error' && (
-        <div className={styles.error}>
-          ✗ Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie.
-        </div>
-      )}
+      {submitStatus === 'error' && <div className={styles.error}>{content.messages.error}</div>}
 
       <button
         type="submit"
         className={styles.submitBtn}
         disabled={isSubmitting || formData.role.length === 0}
       >
-        {isSubmitting ? 'Wysyłanie...' : 'Zapisz się na warsztaty'}
+        {isSubmitting ? content.messages.submitting : content.messages.submit}
       </button>
     </form>
   );

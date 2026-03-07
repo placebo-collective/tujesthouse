@@ -4,20 +4,23 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "next dev",
+    "dev:tina": "tinacms dev -c \"next dev\"",
     "build": "next build",
     "build:gh-pages": "next build && cp CNAME out/ && cp .nojekyll out/",
     "start": "npx serve@latest out -s",
     "preview": "npx serve@latest out -s",
-    "lint": "eslint . --ext .ts,.tsx --fix && npx tsc --noEmit",
+    "lint": "eslint . --fix && npx tsc --noEmit",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
     "prepush": "npx tsc && npm run lint && npm run format"
   },
   "dependencies": {
+    "@tinacms/cli": "^2.1.9",
     "next": "^16.1.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "sass": "^1.97.3",
-    "sass-embedded": "^1.97.3"
+    "sass-embedded": "^1.97.3",
+    "tinacms": "^3.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",

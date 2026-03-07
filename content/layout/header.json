@@ -1,0 +1,20 @@
+{
+  "menu": [
+    {
+      "label": "O projekcie",
+      "href": "/#o-projekcie"
+    },
+    {
+      "label": "Program",
+      "href": "/#program"
+    },
+    {
+      "label": "Miasta",
+      "href": "/#miasta"
+    },
+    {
+      "label": "Dołącz do nas",
+      "href": "/#formularze"
+    }
+  ]
+}

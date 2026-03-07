@@ -5,6 +5,7 @@ import ProgramSection from '../components/sections/ProgramSection';
 import CitiesSection from '../components/sections/CitiesSection';
 import FormsSection from '../components/sections/FormsSection';
 import { SITE_NAME, SITE_DESCRIPTION } from '../lib/constants';
+import { getFormsContent, getDJFormContent, getWorkshopFormContent } from '@/lib/tina';
 
 export const metadata: Metadata = {
   title: SITE_NAME,
@@ -14,14 +15,27 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const formsContent = await getFormsContent();
+  const djFormContent = await getDJFormContent();
+  const workshopFormContent = await getWorkshopFormContent();
+
   return (
     <>
       <HeroSection />
       <AboutSection />
       <ProgramSection />
       <CitiesSection />
-      <FormsSection />
+      {formsContent && djFormContent && workshopFormContent && (
+        <FormsSection
+          title={formsContent.title}
+          subtitle={formsContent.subtitle}
+          tabs={formsContent.tabs}
+          contact={formsContent.contact}
+          djFormContent={djFormContent}
+          workshopFormContent={workshopFormContent}
+        />
+      )}
     </>
   );
 }

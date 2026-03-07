@@ -5,23 +5,46 @@ import Link from 'next/link';
 import styles from './DJApplicationForm.module.scss';
 import Checkbox from './Checkbox';
 import { CITIES, FORMSPREE_DJ_FORM, GDPR_EMAIL } from '../../lib/constants';
+import type { DJFormContent } from '@/lib/content-types';
+import { useFormSubmit } from '@/hooks/useFormSubmit';
 
-export default function DJApplicationForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    artistName: '',
-    city: '',
-    city2: '',
-    soundcloudLink: '',
-    description: '',
-    experience: '',
-    agreement: false,
+interface DJApplicationFormProps {
+  content: DJFormContent;
+}
+
+type DJFormData = {
+  name: string;
+  email: string;
+  phone: string;
+  artistName: string;
+  city: string;
+  city2: string;
+  soundcloudLink: string;
+  description: string;
+  experience: string;
+  agreement: boolean;
+};
+
+const initialFormData: DJFormData = {
+  name: '',
+  email: '',
+  phone: '',
+  artistName: '',
+  city: '',
+  city2: '',
+  soundcloudLink: '',
+  description: '',
+  experience: '',
+  agreement: false,
+};
+
+export default function DJApplicationForm({ content }: DJApplicationFormProps) {
+  const [formData, setFormData] = useState<DJFormData>(initialFormData);
+
+  const { submitStatus, isSubmitting, submitForm } = useFormSubmit<DJFormData>({
+    formspreeId: FORMSPREE_DJ_FORM,
+    onSuccess: () => setFormData(initialFormData),
   });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -36,108 +59,85 @@ export default function DJApplicationForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
-    try {
-      const response = await fetch(`https://formspree.io/f/${FORMSPREE_DJ_FORM}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          artistName: '',
-          city: '',
-          city2: '',
-          soundcloudLink: '',
-          description: '',
-          experience: '',
-          agreement: false,
-        });
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
+    await submitForm(formData);
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <h3 className={styles.formTitle}>Zgłoszenie artysty</h3>
-      <p className={styles.formDesc}>
-        Wypełnij formularz, aby wziąć udział w otwartym naborze wykonawców. Wybierzemy 4–6
-        artystów w każdym mieście do prezentacji artystycznej. Nabory są transparentne i oparte o
-        jasne kryteria.
-      </p>
+      <h3 className={styles.formTitle}>{content.title}</h3>
+      <p className={styles.formDesc}>{content.description}</p>
 
       <div className={styles.formGroup}>
-        <label htmlFor="name">Imię i nazwisko *</label>
+        <label htmlFor="name">
+          {content.fields.name.label} {content.fields.name.required && '*'}
+        </label>
         <input
           type="text"
           id="name"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          required
+          required={content.fields.name.required}
         />
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="artistName">Pseudonim artystyczny *</label>
+        <label htmlFor="artistName">
+          {content.fields.artistName.label} {content.fields.artistName.required && '*'}
+        </label>
         <input
           type="text"
           id="artistName"
           name="artistName"
           value={formData.artistName}
           onChange={handleChange}
-          required
+          required={content.fields.artistName.required}
         />
       </div>
 
       <div className={styles.formRow}>
         <div className={styles.formGroup}>
-          <label htmlFor="email">Email *</label>
+          <label htmlFor="email">
+            {content.fields.email.label} {content.fields.email.required && '*'}
+          </label>
           <input
             type="email"
             id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            required
+            required={content.fields.email.required}
           />
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="phone">Telefon *</label>
+          <label htmlFor="phone">
+            {content.fields.phone.label} {content.fields.phone.required && '*'}
+          </label>
           <input
             type="tel"
             id="phone"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            required
+            required={content.fields.phone.required}
           />
         </div>
       </div>
 
       <div className={styles.formRow}>
         <div className={styles.formGroup}>
-          <label htmlFor="city">Preferowane miasto (1. wybór) *</label>
-          <select id="city" name="city" value={formData.city} onChange={handleChange} required>
-            <option value="">Wybierz miasto</option>
+          <label htmlFor="city">
+            {content.fields.city.label} {content.fields.city.required && '*'}
+          </label>
+          <select
+            id="city"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            required={content.fields.city.required}
+          >
+            <option value="">{content.fields.city.placeholder}</option>
             {CITIES.map((city) => (
               <option key={city.name} value={city.name}>
                 {city.name} - {city.month}
@@ -147,9 +147,11 @@ export default function DJApplicationForm() {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="city2">Preferowane miasto (2. wybór)</label>
+          <label htmlFor="city2">
+            {content.fields.city2.label} {content.fields.city2.required && '*'}
+          </label>
           <select id="city2" name="city2" value={formData.city2} onChange={handleChange}>
-            <option value="">Wybierz miasto (opcjonalnie)</option>
+            <option value="">{content.fields.city2.placeholder}</option>
             {CITIES.map((city) => (
               <option key={city.name} value={city.name}>
                 {city.name} - {city.month}
@@ -160,57 +162,64 @@ export default function DJApplicationForm() {
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="soundcloudLink">Link do nagrania zgłoszeniowego (30-60 min) *</label>
+        <label htmlFor="soundcloudLink">
+          {content.fields.soundcloudLink.label} {content.fields.soundcloudLink.required && '*'}
+        </label>
         <input
           type="url"
           id="soundcloudLink"
           name="soundcloudLink"
           value={formData.soundcloudLink}
           onChange={handleChange}
-          placeholder="https://soundcloud.com/..."
-          required
+          placeholder={content.fields.soundcloudLink.placeholder}
+          required={content.fields.soundcloudLink.required}
         />
-        <small>SoundCloud, YouTube lub Google Drive (dostęp bezpłatny)</small>
+        <small>{content.fields.soundcloudLink.hint}</small>
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="experience">Dotychczasowe doświadczenie *</label>
+        <label htmlFor="experience">
+          {content.fields.experience.label} {content.fields.experience.required && '*'}
+        </label>
         <textarea
           id="experience"
           name="experience"
           value={formData.experience}
           onChange={handleChange}
-          rows={4}
-          placeholder="Opisz swoje dotychczasowe doświadczenie jako artysta..."
-          required
+          rows={content.fields.experience.rows}
+          placeholder={content.fields.experience.placeholder}
+          required={content.fields.experience.required}
         />
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="description">Opis Twojego stylu muzycznego (max 800 znaków) *</label>
+        <label htmlFor="description">
+          {content.fields.description.label} {content.fields.description.required && '*'}
+        </label>
         <textarea
           id="description"
           name="description"
           value={formData.description}
           onChange={handleChange}
-          rows={5}
-          maxLength={800}
-          placeholder="Opisz swój styl muzyczny, inspiracje, kierunek..."
-          required
+          rows={content.fields.description.rows}
+          maxLength={content.fields.description.maxLength}
+          placeholder={content.fields.description.placeholder}
+          required={content.fields.description.required}
         />
-        <small>{formData.description.length}/800 znaków</small>
+        <small>
+          {formData.description.length}/{content.fields.description.maxLength} znaków
+        </small>
       </div>
 
       <div className={styles.formGroup}>
         <Checkbox name="agreement" checked={formData.agreement} onChange={handleChange} required>
-          Oświadczam, że posiadam prawa do wykorzystanych materiałów w nagraniu zgłoszeniowym oraz
-          akceptuję{' '}
+          {content.agreement.text}{' '}
           <Link href="/regulamin" target="_blank">
-            regulamin
+            {content.agreement.regulaminLink}
           </Link>
-          . Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji naboru zgodnie z{' '}
+          {content.agreement.consentText}{' '}
           <Link href="/polityka-prywatnosci" target="_blank">
-            polityką prywatności
+            {content.agreement.privacyLink}
           </Link>
           . *
         </Checkbox>
@@ -218,28 +227,19 @@ export default function DJApplicationForm() {
 
       <div className={styles.gdprInfo}>
         <p>
-          <strong>Informacja RODO:</strong> Administratorem Twoich danych osobowych jest Tomasz
-          Bursztyński Software Development. Masz prawo dostępu do swoich danych, ich sprostowania,
-          usunięcia, ograniczenia przetwarzania, przenoszenia oraz wniesienia sprzeciwu. Możesz
-          również wycofać zgodę w dowolnym momencie. W celu realizacji swoich praw lub zgłoszenia
-          usunięcia danych skontaktuj się z nami: <a href={`mailto:${GDPR_EMAIL}`}>{GDPR_EMAIL}</a>
+          <strong>{content.gdprInfo.title}</strong> {content.gdprInfo.text}{' '}
+          <a href={`mailto:${GDPR_EMAIL}`}>{GDPR_EMAIL}</a>
         </p>
       </div>
 
       {submitStatus === 'success' && (
-        <div className={styles.success}>
-          ✓ Dziękujemy za zgłoszenie! Skontaktujemy się z Tobą w najbliższym czasie.
-        </div>
+        <div className={styles.success}>{content.messages.success}</div>
       )}
 
-      {submitStatus === 'error' && (
-        <div className={styles.error}>
-          ✗ Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie.
-        </div>
-      )}
+      {submitStatus === 'error' && <div className={styles.error}>{content.messages.error}</div>}
 
       <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
-        {isSubmitting ? 'Wysyłanie...' : 'Wyślij zgłoszenie'}
+        {isSubmitting ? content.messages.submitting : content.messages.submit}
       </button>
     </form>
   );

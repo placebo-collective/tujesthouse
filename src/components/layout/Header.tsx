@@ -1,8 +1,14 @@
 import Link from 'next/link';
 import styles from './Header.module.scss';
 import { SITE_NAME } from '../../lib/constants';
+import { getHeaderContent } from '@/lib/tina';
+import type { MenuItem } from '@/lib/content-types';
 
-export default function Header() {
+export default async function Header() {
+  const content = await getHeaderContent();
+
+  if (!content) return null;
+
   return (
     <header className={styles.header}>
       <div className="container">
@@ -13,18 +19,11 @@ export default function Header() {
             </Link>
           </div>
           <ul className={styles.menu}>
-            <li>
-              <a href="/#o-projekcie">O projekcie</a>
-            </li>
-            <li>
-              <a href="/#program">Program</a>
-            </li>
-            <li>
-              <a href="/#miasta">Miasta</a>
-            </li>
-            <li>
-              <a href="/#formularze">Dołącz do nas</a>
-            </li>
+            {content.menu.map((item: MenuItem, index: number) => (
+              <li key={index}>
+                <Link href={item.href}>{item.label}</Link>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>

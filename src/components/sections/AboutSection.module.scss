@@ -10,7 +10,8 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg,
+    background: linear-gradient(
+      90deg,
       transparent 0%,
       var(--primary-color) 20%,
       var(--accent-gold) 50%,
@@ -102,9 +103,25 @@
   margin-bottom: 60px;
   padding: 40px 0;
   border-top: 3px solid transparent;
-  border-image: linear-gradient(90deg, transparent, var(--primary-color), var(--accent-gold), var(--primary-color), transparent) 1;
+  border-image: linear-gradient(
+      90deg,
+      transparent,
+      var(--primary-color),
+      var(--accent-gold),
+      var(--primary-color),
+      transparent
+    )
+    1;
   border-bottom: 3px solid transparent;
-  border-image: linear-gradient(90deg, transparent, var(--primary-color), var(--accent-gold), var(--primary-color), transparent) 1;
+  border-image: linear-gradient(
+      90deg,
+      transparent,
+      var(--primary-color),
+      var(--accent-gold),
+      var(--primary-color),
+      transparent
+    )
+    1;
 }
 
 .highlight {

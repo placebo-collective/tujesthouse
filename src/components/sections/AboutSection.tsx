@@ -1,78 +1,42 @@
 import styles from './AboutSection.module.scss';
+import { getAboutContent } from '@/lib/tina';
+import type { AboutCard, AboutHighlight } from '@/lib/content-types';
 
-export default function AboutSection() {
+export default async function AboutSection() {
+  const content = await getAboutContent();
+
+  if (!content) return null;
+
   return (
     <section id="o-projekcie" className={styles.about}>
       <div className="container">
-        <h2 className={styles.title}>O projekcie</h2>
+        <h2 className={styles.title}>{content.title}</h2>
 
         <div className={styles.intro}>
-          <p>
-            <strong>Tu Jest House</strong> to cykl pięciu wydarzeń kulturowych łączących edukację,
-            muzykę elektroniczną i rozwój kompetencji w obszarze kultury klubowej. Projekt
-            realizowany w pięciu miastach Polski (maj–wrzesień 2026) zwiększa uczestnictwo w
-            kulturze, wspiera młodych twórców sceny muzycznej i buduje współpracę między miastami
-            poprzez podnoszenie kompetencji osób realizujących wydarzenia kulturalne.
-          </p>
+          <p dangerouslySetInnerHTML={{ __html: content.intro }} />
         </div>
 
         <div className={styles.grid}>
-          <div className={styles.card}>
-            <div className={styles.icon}>📚</div>
-            <h3>Edukacja</h3>
-            <p>
-              Warsztaty kompetencyjne dla organizatorów wydarzeń, twórców i menedżerów kultury.
-              Praktyczna wiedza o współpracy, standardach jakości i prawach autorskich. Każdy warsztat
-              dostarcza konkretne narzędzia do wykorzystania w pracy. Panel dyskusyjny i spotkania
-              sieciujące.
-            </p>
-          </div>
-
-          <div className={styles.card}>
-            <div className={styles.icon}>🎵</div>
-            <h3>Muzyka</h3>
-            <p>
-              Publiczna prezentacja młodych artystów wyłonionych w transparentnym, otwartym naborze.
-              W każdym mieście wystąpi 4–6 wykonawców. Wszystkie występy są profesjonalnie
-              rejestrowane i udostępniane na wolnej licencji.
-            </p>
-          </div>
-
-          <div className={styles.card}>
-            <div className={styles.icon}>🤝</div>
-            <h3>Współpraca</h3>
-            <p>
-              Budowanie sieci kontaktów między organizatorami, twórcami i uczestnikami kultury w
-              różnych miastach. Wymiana doświadczeń i tworzenie standardów dobrej praktyki.
-            </p>
-          </div>
+          {content.cards.map((card: AboutCard, index: number) => (
+            <div key={index} className={styles.card}>
+              <div className={styles.icon}>{card.icon}</div>
+              <h3>{card.title}</h3>
+              <p>{card.description}</p>
+            </div>
+          ))}
         </div>
 
         <div className={styles.highlights}>
-          <div className={styles.highlight}>
-            <span className={styles.number}>5</span>
-            <span className={styles.label}>Miast</span>
-          </div>
-          <div className={styles.highlight}>
-            <span className={styles.number}>10</span>
-            <span className={styles.label}>Warsztatów</span>
-          </div>
-          <div className={styles.highlight}>
-            <span className={styles.number}>5</span>
-            <span className={styles.label}>Paneli</span>
-          </div>
-          <div className={styles.highlight}>
-            <span className={styles.number}>25+</span>
-            <span className={styles.label}>artystów</span>
-          </div>
+          {content.highlights.map((highlight: AboutHighlight, index: number) => (
+            <div key={index} className={styles.highlight}>
+              <span className={styles.number}>{highlight.number}</span>
+              <span className={styles.label}>{highlight.label}</span>
+            </div>
+          ))}
         </div>
 
         <div className={styles.funding}>
-          <p>
-            Projekt aplikuje o dofinansowanie w ramach programu{' '}
-            <strong>„Kultura – Interwencje 2026"</strong>{' '}
-            <strong>Narodowego Centrum Kultury</strong>.
-          </p>
+          <p dangerouslySetInnerHTML={{ __html: content.funding }} />
         </div>
       </div>
     </section>

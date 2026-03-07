@@ -1,21 +1,22 @@
 import styles from './HeroSection.module.scss';
+import { getHeroContent } from '@/lib/tina';
 
-export default function HeroSection() {
+export default async function HeroSection() {
+  const content = await getHeroContent();
+
   return (
     <section className={styles.hero}>
       <div className="container">
         <div className={styles.content}>
-          <h1 className={styles.title}>Tu Jest House</h1>
-          <p className={styles.subtitle}>
-            Cykl wydarzeń kulturowych łączących edukację i muzykę elektroniczną
-          </p>
-          <p className={styles.dates}>Maj – Wrzesień 2026 | 5 miast w Polsce</p>
+          <h1 className={styles.title}>{content.title}</h1>
+          <p className={styles.subtitle}>{content.subtitle}</p>
+          <p className={styles.dates}>{content.dates}</p>
           <div className={styles.cta}>
-            <a href="#formularze" className={styles.btnPrimary}>
-              Zgłoś się jako artysta
+            <a href={content.cta.primaryLink} className={styles.btnPrimary}>
+              {content.cta.primaryText}
             </a>
-            <a href="#formularze" className={styles.btnSecondary}>
-              Zapisz się na warsztaty
+            <a href={content.cta.secondaryLink} className={styles.btnSecondary}>
+              {content.cta.secondaryText}
             </a>
           </div>
         </div>

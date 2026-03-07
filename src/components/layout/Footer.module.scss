@@ -13,9 +13,10 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, 
-      var(--primary-color) 0%, 
-      var(--accent-gold) 50%, 
+    background: linear-gradient(
+      90deg,
+      var(--primary-color) 0%,
+      var(--accent-gold) 50%,
       var(--primary-color) 100%
     );
   }

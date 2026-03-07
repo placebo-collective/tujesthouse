@@ -32,7 +32,7 @@ export default function PolitykaPrywatnosciPage() {
           <ol>
             <li>
               Niniejsza Polityka Prywatności określa zasady przetwarzania i ochrony danych osobowych
-              Użytkowników serwisu tujesthouse.pl (dalej: „Serwis").
+              Użytkowników serwisu tujesthouse.pl (dalej: &ldquo;Serwis&rdquo;).
             </li>
             <li>
               Administratorem danych osobowych jest:
@@ -47,7 +47,7 @@ export default function PolitykaPrywatnosciPage() {
               <br />
               Email: {GDPR_EMAIL}
               <br />
-              (dalej: „Administrator")
+              (dalej: &ldquo;Administrator&rdquo;)
             </li>
             <li>
               Ochrona danych osobowych odbywa się zgodnie z Rozporządzeniem Parlamentu Europejskiego
@@ -112,7 +112,7 @@ export default function PolitykaPrywatnosciPage() {
             <li>
               <strong>Dane z formularza artystów:</strong>
               <ul>
-                <li>Umożliwienie udziału w open call projektu „Tu Jest House"</li>
+                <li>Umożliwienie udziału w open call projektu &ldquo;Tu Jest House&rdquo;</li>
                 <li>Kontakt w sprawie wyboru do występu</li>
                 <li>Organizacja wydarzeń w ramach projektu</li>
                 <li>Dokumentacja realizacji projektu</li>
@@ -161,7 +161,7 @@ export default function PolitykaPrywatnosciPage() {
           <ol>
             <li>
               Dane osobowe zbierane poprzez formularze będą przechowywane przez okres niezbędny do
-              realizacji projektu „Tu Jest House".
+              realizacji projektu &ldquo;Tu Jest House&rdquo;.
             </li>
             <li>
               Maksymalny okres przechowywania danych: do 31 grudnia 2027 roku lub do czasu wycofania
@@ -260,7 +260,8 @@ export default function PolitykaPrywatnosciPage() {
               uzupełnienia niekompletnych danych.
             </li>
             <li>
-              <strong>Usunięcia danych</strong> („prawo do bycia zapomnianym") – w przypadku, gdy:
+              <strong>Usunięcia danych</strong> (&ldquo;prawo do bycia zapomnianym&rdquo;) – w
+              przypadku, gdy:
               <ul>
                 <li>dane nie są już niezbędne do celów, dla których zostały zebrane;</li>
                 <li>osoba wycofała zgodę, a nie ma innej podstawy prawnej przetwarzania;</li>

@@ -5,11 +5,11 @@
 /* Theme System - Switch between original and Polish-inspired themes */
 /* Default theme: Polish (data-theme="polish" or no attribute) */
 :root,
-:root[data-theme="polish"] {
+:root[data-theme='polish'] {
   /* Polish-inspired color palette */
-  --primary-color: #E63946; /* Brighter crimson red for better readability */
-  --secondary-color: #A41623; /* Medium burgundy - lighter than before */
-  --accent-gold: #FFD700; /* Brighter gold for better contrast */
+  --primary-color: #e63946; /* Brighter crimson red for better readability */
+  --secondary-color: #a41623; /* Medium burgundy - lighter than before */
+  --accent-gold: #ffd700; /* Brighter gold for better contrast */
   --dark-bg: #1a1a1a; /* Slightly lighter black */
   --dark-bg-2: #2d2d2d; /* Medium gray for better readability */
   --light-bg: #f5f5f5; /* Off-white */
@@ -21,7 +21,7 @@
 }
 
 /* Original theme (orange/blue) - Set data-theme="original" on <html> to use */
-:root[data-theme="original"] {
+:root[data-theme='original'] {
   --primary-color: #ff6b35; /* Vibrant orange */
   --secondary-color: #004e89; /* Deep blue */
   --accent-gold: #f7931e; /* Orange accent (replaces gold) */

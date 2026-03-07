@@ -1,0 +1,21 @@
+{
+  "title": "Trasa po Polsce",
+  "subtitle": "Pięć miast, pięć wydarzeń, jedna społeczność",
+  "infoCards": [
+    {
+      "icon": "📍",
+      "title": "Dostępność",
+      "description": "Wszystkie wydarzenia odbywają się w lokalach łatwo dostępnych komunikacją publiczną. Dokładne informacje o dostępności każdego obiektu będą podane przed wydarzeniem."
+    },
+    {
+      "icon": "🎟️",
+      "title": "Wstęp bezpłatny",
+      "description": "Udział na podstawie rejestracji, limit miejsc zależny od pojemności obiektu w danym mieście"
+    },
+    {
+      "icon": "♿",
+      "title": "Dostępność dla wszystkich",
+      "description": "Wszystkie wydarzenia odbywają się w dostępnych lokalach. Dbamy o bezpieczeństwo, komfort i inkluzywność uczestników."
+    }
+  ]
+}
