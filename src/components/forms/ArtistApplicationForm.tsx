@@ -8,7 +8,7 @@ import FormField from './FormField';
 import FormTextArea from './FormTextArea';
 import FormSelect from './FormSelect';
 import FormRow from './FormRow';
-import { FORMSPREE_ARTIST_FORM, GDPR_EMAIL } from '../../lib/constants';
+import { GDPR_EMAIL } from '../../lib/constants';
 import type { ArtistFormContent, City } from '@/lib/content-types';
 import { useFormSubmit } from '@/hooks/useFormSubmit';
 import { parseMarkdown } from '@/lib/utils/markdown';
@@ -53,7 +53,7 @@ export default function ArtistApplicationForm({ content, cities }: ArtistApplica
   }, [content.description]);
 
   const { submitStatus, isSubmitting, submitForm } = useFormSubmit<ArtistFormData>({
-    formspreeId: FORMSPREE_ARTIST_FORM,
+    formType: 'artist',
     onSuccess: () => setFormData(initialFormData),
   });
 

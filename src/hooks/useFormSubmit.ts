@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 declare const grecaptcha: {
   ready(callback: () => void): void;
@@ -7,8 +7,10 @@ declare const grecaptcha: {
 
 export type SubmitStatus = 'idle' | 'success' | 'error';
 
+export type FormType = 'artist' | 'workshop';
+
 interface UseFormSubmitOptions<T> {
-  formspreeId: string;
+  formType: FormType;
   onSuccess?: () => void;
   onError?: (error: Error) => void;
 }
@@ -20,48 +22,97 @@ interface UseFormSubmitReturn<T> {
   resetStatus: () => void;
 }
 
+const RECAPTCHA_TOKEN_TTL_MS = 90_000; // tokens expire at 2min; refresh at 1.5min
+
 export function useFormSubmit<T = Record<string, unknown>>(
   options: UseFormSubmitOptions<T>
 ): UseFormSubmitReturn<T> {
-  const { formspreeId, onSuccess, onError } = options;
+  const { formType, onSuccess, onError } = options;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle');
+
+  const cachedToken = useRef<string | null>(null);
+  const tokenGeneratedAt = useRef<number>(0);
+
+  const getRecaptchaToken = (): Promise<string> => {
+    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? '';
+    const age = Date.now() - tokenGeneratedAt.current;
+
+    if (cachedToken.current && age < RECAPTCHA_TOKEN_TTL_MS) {
+      return Promise.resolve(cachedToken.current);
+    }
+
+    return new Promise<string>((resolve, reject) => {
+      if (typeof grecaptcha === 'undefined') {
+        reject(new Error('reCAPTCHA not loaded'));
+        return;
+      }
+      grecaptcha.ready(() => {
+        grecaptcha
+          .execute(siteKey, { action: 'submit' })
+          .then((token) => {
+            cachedToken.current = token;
+            tokenGeneratedAt.current = Date.now();
+            resolve(token);
+          })
+          .catch(reject);
+      });
+    });
+  };
+
+  useEffect(() => {
+    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? '';
+    const scriptUrl = process.env.NEXT_PUBLIC_APPS_SCRIPT_URL ?? '';
+
+    // Pre-generate reCAPTCHA token so it's ready at submit time
+    if (siteKey) {
+      getRecaptchaToken().catch(() => {});
+    }
+
+    // Warm up Apps Script to reduce cold start latency
+    if (scriptUrl) {
+      fetch(scriptUrl, { method: 'GET' }).catch(() => {});
+    }
+  }, []);
 
   const submitForm = async (data: T) => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
-      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? '';
-      const recaptchaToken = await new Promise<string>((resolve, reject) => {
-        if (typeof grecaptcha === 'undefined') {
-          reject(new Error('reCAPTCHA not loaded'));
-          return;
-        }
-        grecaptcha.ready(() => {
-          grecaptcha.execute(siteKey, { action: 'submit' }).then(resolve).catch(reject);
-        });
-      });
+      const scriptUrl = process.env.NEXT_PUBLIC_APPS_SCRIPT_URL ?? '';
+      const recaptchaToken = await getRecaptchaToken();
+      cachedToken.current = null;
 
-      const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
+      const fetchPromise = fetch(scriptUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...data, 'g-recaptcha-response': recaptchaToken }),
+        body: JSON.stringify({ ...data, 'g-recaptcha-response': recaptchaToken, formType }),
       });
 
-      if (response.ok) {
-        setSubmitStatus('success');
-        onSuccess?.();
-      } else {
-        if (process.env.NODE_ENV === 'development') {
-          const body = await response.json().catch(() => null);
-          console.error('Formspree error:', response.status, body);
-        }
-        setSubmitStatus('error');
-        onError?.(new Error('Form submission failed'));
-      }
+      setSubmitStatus('success');
+      setIsSubmitting(false);
+      onSuccess?.();
+
+      fetchPromise
+        .then((r) => r.json().catch(() => null))
+        .then((result) => {
+          if (!result?.success) {
+            if (process.env.NODE_ENV === 'development') {
+              console.error('Submission server error:', result);
+            }
+            setSubmitStatus('error');
+            onError?.(new Error('Form submission failed'));
+          }
+        })
+        .catch((err) => {
+          if (process.env.NODE_ENV === 'development') {
+            console.error('Submission network error:', err);
+          }
+          setSubmitStatus('error');
+          onError?.(err);
+        });
+
+      return;
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Form submission error:', error);
