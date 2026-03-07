@@ -1,6 +1,8 @@
 import { getSiteSettings } from '@/lib/tina';
 import { BASE_URL, SITE_DESCRIPTION } from '@/lib/constants';
 
+export const dynamic = 'force-static';
+
 export async function GET() {
   const settings = await getSiteSettings();
 
