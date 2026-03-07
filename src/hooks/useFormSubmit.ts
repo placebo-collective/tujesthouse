@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 declare const grecaptcha: {
+  ready(callback: () => void): void;
   execute(siteKey: string, options: { action: string }): Promise<string>;
 };
 
@@ -32,7 +33,15 @@ export function useFormSubmit<T = Record<string, unknown>>(
 
     try {
       const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? '';
-      const recaptchaToken = await grecaptcha.execute(siteKey, { action: 'submit' });
+      const recaptchaToken = await new Promise<string>((resolve, reject) => {
+        if (typeof grecaptcha === 'undefined') {
+          reject(new Error('reCAPTCHA not loaded'));
+          return;
+        }
+        grecaptcha.ready(() => {
+          grecaptcha.execute(siteKey, { action: 'submit' }).then(resolve).catch(reject);
+        });
+      });
 
       const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
         method: 'POST',
@@ -46,6 +55,10 @@ export function useFormSubmit<T = Record<string, unknown>>(
         setSubmitStatus('success');
         onSuccess?.();
       } else {
+        if (process.env.NODE_ENV === 'development') {
+          const body = await response.json().catch(() => null);
+          console.error('Formspree error:', response.status, body);
+        }
         setSubmitStatus('error');
         onError?.(new Error('Form submission failed'));
       }
