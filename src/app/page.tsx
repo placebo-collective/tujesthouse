@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import HeroSection from '../components/sections/HeroSection';
 import AboutSection from '../components/sections/AboutSection';
-import ProgramSection from '../components/sections/ProgramSection';
-import CitiesSection from '../components/sections/CitiesSection';
-import FormsSection from '../components/sections/FormsSection';
 import { SITE_NAME, SITE_DESCRIPTION } from '../lib/constants';
 import {
   getFormsContent,
@@ -11,6 +9,10 @@ import {
   getWorkshopFormContent,
   getCitiesContent,
 } from '@/lib/tina';
+
+const ProgramSection = dynamic(() => import('../components/sections/ProgramSection'));
+const CitiesSection = dynamic(() => import('../components/sections/CitiesSection'));
+const FormsSection = dynamic(() => import('../components/sections/FormsSection'));
 
 export const metadata: Metadata = {
   title: SITE_NAME,
