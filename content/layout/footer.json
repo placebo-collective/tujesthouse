@@ -1,0 +1,36 @@
+{
+  "description": "Cykl wydarzeń kulturowych łączących edukację, muzykę elektroniczną i rozwój sceny klubowej w Polsce.",
+  "organizers": {
+    "title": "Organizatorzy",
+    "main": {
+      "name": "Tomasz Bursztyński Software Development",
+      "address": "Polna 10/14 m.23, 00-625 Warszawa",
+      "nip": "7011072260"
+    },
+    "partner": {
+      "label": "Partner:",
+      "name": "Instytut Dźwięku Karol Murawski",
+      "address": "ul. Krótka 7, 05-230 Kobyłka",
+      "nip": "7221567281"
+    }
+  },
+  "contact": {
+    "title": "Kontakt",
+    "gdprLabel": "Sprawy RODO i ochrony danych osobowych:"
+  },
+  "documents": {
+    "title": "Dokumenty",
+    "links": [
+      {
+        "label": "Regulamin",
+        "href": "/regulamin"
+      },
+      {
+        "label": "Polityka Prywatności",
+        "href": "/polityka-prywatnosci"
+      }
+    ]
+  },
+  "copyright": "Wszystkie prawa zastrzeżone.",
+  "fundingNote": "Projekt aplikuje o dofinansowanie w ramach programu \\\"Kultura – Interwencje 2026\\\" Narodowego Centrum Kultury"
+}

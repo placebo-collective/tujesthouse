@@ -1,0 +1,67 @@
+{
+  "title": "Rejestracja na warsztaty",
+  "description": "Zapisz się na część dzienną wydarzenia - dwa warsztaty kompetencyjne, panel dyskusyjny i spotkanie sieciujące. Bezpłatny udział na podstawie rejestracji. Miejsca ograniczone!",
+  "fields": {
+    "name": {
+      "label": "Imię i nazwisko",
+      "required": true
+    },
+    "email": {
+      "label": "Email",
+      "required": true
+    },
+    "phone": {
+      "label": "Telefon",
+      "required": true
+    },
+    "city": {
+      "label": "Miasto wydarzenia",
+      "placeholder": "Wybierz miasto",
+      "required": true
+    },
+    "role": {
+      "label": "Kim jesteś w branży kulturalnej? (możesz wybrać kilka opcji)",
+      "placeholder": "Wyszukaj i wybierz role...",
+      "hint": "Wybierz przynajmniej jedną opcję",
+      "required": true,
+      "options": [
+        { "value": "dj", "label": "DJ" },
+        { "value": "producent", "label": "Producent muzyczny" },
+        { "value": "organizator", "label": "Organizator wydarzeń" },
+        { "value": "technik", "label": "Realizator / Technik" },
+        { "value": "promotor", "label": "Komunikacja / Promocja" },
+        { "value": "kurator", "label": "Kurator / Manager" },
+        { "value": "entuzjasta", "label": "Miłośnik kultury klubowej" },
+        { "value": "student", "label": "Student / Osoba ucząca się" },
+        { "value": "inne", "label": "Inne" }
+      ]
+    },
+    "experience": {
+      "label": "Doświadczenie w branży",
+      "placeholder": "Opisz swoje doświadczenie w branży kulturalnej / muzycznej...",
+      "rows": 4,
+      "required": true
+    },
+    "motivation": {
+      "label": "Co chcesz zyskać dzięki udziałowi w warsztatach?",
+      "placeholder": "Opisz swoją motywację i oczekiwania...",
+      "rows": 4,
+      "required": true
+    }
+  },
+  "agreement": {
+    "text": "Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji rejestracji na wydarzenie oraz na kontakt w sprawach organizacyjnych zgodnie z",
+    "privacyLink": "polityką prywatności",
+    "additionalText": ". Rozumiem, że wstęp na wydarzenie jest bezpłatny, a miejsca są ograniczone."
+  },
+  "gdprInfo": {
+    "title": "Informacja RODO:",
+    "text": "Administratorem Twoich danych osobowych jest Tomasz Bursztyński Software Development. Masz prawo dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia oraz wniesienia sprzeciwu. Możesz również wycofać zgodę w dowolnym momencie. W celu realizacji swoich praw lub zgłoszenia usunięcia danych skontaktuj się z nami:"
+  },
+  "messages": {
+    "success": "✓ Dziękujemy za rejestrację! Potwierdzenie otrzymasz na podany adres email.",
+    "error": "✗ Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie.",
+    "submitting": "Wysyłanie...",
+    "submit": "Zapisz się na warsztaty"
+  }
+}

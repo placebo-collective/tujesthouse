@@ -1,9 +1,18 @@
 import Link from 'next/link';
 import styles from './Footer.module.scss';
 import { SITE_NAME, CONTACT_EMAIL, GDPR_EMAIL } from '../../lib/constants';
+import { getFooterContent } from '@/lib/tina';
+import type { FooterLink } from '@/lib/content-types';
+import { marked } from 'marked';
 
-export default function Footer() {
+export default async function Footer() {
   const currentYear = new Date().getFullYear();
+  const content = await getFooterContent();
+
+  if (!content) return null;
+
+  const descriptionHtml = await marked.parse(content.description || '', { async: true });
+  const fundingNoteHtml = await marked.parse(content.fundingNote || '', { async: true });
 
   return (
     <footer className={styles.footer}>
@@ -11,56 +20,52 @@ export default function Footer() {
         <div className={styles.content}>
           <div className={styles.section}>
             <h3>{SITE_NAME}</h3>
-            <p className={styles.description}>
-              Cykl wydarzeń kulturowych łączących edukację, muzykę elektroniczną i rozwój sceny
-              klubowej w Polsce.
-            </p>
+            <p
+              className={styles.description}
+              dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+            />
           </div>
           <div className={styles.section}>
-            <h4>Organizatorzy</h4>
+            <h4>{content.organizers.title}</h4>
             <p>
-              <strong>Tomasz Bursztyński Software Development</strong>
+              <strong>{content.organizers.main.name}</strong>
             </p>
-            <p>Polna 10/14 m.23, 00-625 Warszawa</p>
-            <p>NIP: 7011072260</p>
+            <p>{content.organizers.main.address}</p>
+            <p>NIP: {content.organizers.main.nip}</p>
             <br />
             <p>
-              Partner: <strong>Instytut Dźwięku Karol Murawski</strong>
+              {content.organizers.partner.label} <strong>{content.organizers.partner.name}</strong>
             </p>
-            <p>ul. Krótka 7, 05-230 Kobyłka</p>
-            <p>NIP: 7221567281</p>
+            <p>{content.organizers.partner.address}</p>
+            <p>NIP: {content.organizers.partner.nip}</p>
           </div>
           <div className={styles.section}>
-            <h4>Kontakt</h4>
+            <h4>{content.contact.title}</h4>
             <p>
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </p>
             <p className={styles.gdprContact}>
-              Sprawy RODO i ochrony danych osobowych:
+              {content.contact.gdprLabel}
               <br />
               <a href={`mailto:${GDPR_EMAIL}`}>{GDPR_EMAIL}</a>
             </p>
           </div>
           <div className={styles.section}>
-            <h4>Dokumenty</h4>
+            <h4>{content.documents.title}</h4>
             <ul className={styles.links}>
-              <li>
-                <Link href="/regulamin">Regulamin</Link>
-              </li>
-              <li>
-                <Link href="/polityka-prywatnosci">Polityka Prywatności</Link>
-              </li>
+              {content.documents.links.map((link: FooterLink, index: number) => (
+                <li key={index}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
         <div className={styles.bottom}>
           <p>
-            &copy; {currentYear} {SITE_NAME}. Wszystkie prawa zastrzeżone.
+            &copy; {currentYear} {SITE_NAME}. {content.copyright}
           </p>
-          <p>
-            Projekt aplikuje o dofinansowanie w ramach programu „Kultura – Interwencje 2026”{' '}
-            Narodowego Centrum Kultury
-          </p>{' '}
+          <p dangerouslySetInnerHTML={{ __html: fundingNoteHtml }} />
         </div>
       </div>
     </footer>

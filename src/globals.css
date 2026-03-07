@@ -2,36 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Theme System - Switch between original and Polish-inspired themes */
-/* Default theme: Polish (data-theme="polish" or no attribute) */
 :root,
-:root[data-theme="polish"] {
-  /* Polish-inspired color palette */
-  --primary-color: #E63946; /* Brighter crimson red for better readability */
-  --secondary-color: #A41623; /* Medium burgundy - lighter than before */
-  --accent-gold: #FFD700; /* Brighter gold for better contrast */
-  --dark-bg: #1a1a1a; /* Slightly lighter black */
-  --dark-bg-2: #2d2d2d; /* Medium gray for better readability */
-  --light-bg: #f5f5f5; /* Off-white */
+:root[data-theme='polish'] {
+  --primary-color: #e63946;
+  --secondary-color: #a41623;
+  --accent-gold: #ffd700;
+  --dark-bg: #1a1a1a;
+  --dark-bg-2: #2d2d2d;
+  --light-bg: #f5f5f5;
   --text-dark: #2d2d2d;
   --text-light: #ffffff;
-  --border-color: rgba(230, 57, 70, 0.2); /* Subtle red tint */
-  --nav-bg-start: rgba(42, 16, 20, 0.97); /* Burgundy gradient for Polish theme */
+  --border-color: rgba(230, 57, 70, 0.2);
+  --nav-bg-start: rgba(42, 16, 20, 0.97);
   --nav-bg-end: rgba(26, 10, 12, 0.97);
 }
 
-/* Original theme (orange/blue) - Set data-theme="original" on <html> to use */
-:root[data-theme="original"] {
-  --primary-color: #ff6b35; /* Vibrant orange */
-  --secondary-color: #004e89; /* Deep blue */
-  --accent-gold: #f7931e; /* Orange accent (replaces gold) */
-  --dark-bg: #0a0a0a; /* Deep black */
-  --dark-bg-2: #1a1a1a; /* Slightly lighter black */
-  --light-bg: #f5f5f5; /* Off-white */
+:root[data-theme='original'] {
+  --primary-color: #ff6b35;
+  --secondary-color: #004e89;
+  --accent-gold: #f7931e;
+  --dark-bg: #0a0a0a;
+  --dark-bg-2: #1a1a1a;
+  --light-bg: #f5f5f5;
   --text-dark: #2d2d2d;
   --text-light: #ffffff;
-  --border-color: rgba(255, 107, 53, 0.2); /* Subtle orange tint */
-  --nav-bg-start: rgba(26, 26, 26, 0.95); /* Neutral dark gray for original theme */
+  --border-color: rgba(255, 107, 53, 0.2);
+  --nav-bg-start: rgba(26, 26, 26, 0.95);
   --nav-bg-end: rgba(20, 20, 20, 0.95);
 }
 
@@ -43,7 +39,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* Account for sticky header height */
+  scroll-padding-top: 80px;
 }
 
 @media (max-width: 768px) {

@@ -1,6 +1,9 @@
-import { BASE_URL, SITE_NAME, SITE_DESCRIPTION, CONTACT_EMAIL, CITIES } from '../../lib/constants';
+import { BASE_URL, SITE_NAME, SITE_DESCRIPTION, CONTACT_EMAIL } from '../../lib/constants';
+import { getCitiesContent } from '@/lib/tina';
 
-export default function StructuredData() {
+export default async function StructuredData() {
+  const citiesContent = await getCitiesContent();
+  const cities = citiesContent?.cities || [];
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -10,11 +13,7 @@ export default function StructuredData() {
     email: CONTACT_EMAIL,
     foundingDate: '2026',
     logo: `${BASE_URL}/logo.png`,
-    sameAs: [
-      // Add social media links when available
-      // 'https://www.facebook.com/tujesthouse',
-      // 'https://www.instagram.com/tujesthouse',
-    ],
+    sameAs: [],
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Polna 10/14 m.23',
@@ -36,7 +35,7 @@ export default function StructuredData() {
       name: SITE_NAME,
       url: BASE_URL,
     },
-    location: CITIES.map((city) => ({
+    location: cities.map((city) => ({
       '@type': 'Place',
       name: city.venue,
       address: {

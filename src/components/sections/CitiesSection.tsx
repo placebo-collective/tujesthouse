@@ -1,15 +1,28 @@
 import styles from './CitiesSection.module.scss';
-import { CITIES } from '../../lib/constants';
+import { getCitiesContent } from '@/lib/tina';
+import type { InfoCard } from '@/lib/content-types';
+import { marked } from 'marked';
 
-export default function CitiesSection() {
+export default async function CitiesSection() {
+  const content = await getCitiesContent();
+
+  if (!content) return null;
+
+  const cardsWithHtml = await Promise.all(
+    content.infoCards.map(async (card: InfoCard) => ({
+      ...card,
+      descriptionHtml: await marked.parse(card.description || '', { async: true }),
+    }))
+  );
+
   return (
     <section id="miasta" className={styles.cities}>
       <div className="container">
-        <h2 className={styles.title}>Trasa po Polsce</h2>
-        <p className={styles.subtitle}>Pięć miast, pięć wydarzeń, jedna społeczność</p>
+        <h2 className={styles.title}>{content.title}</h2>
+        <p className={styles.subtitle}>{content.subtitle}</p>
 
         <div className={styles.timeline}>
-          {CITIES.map((city, index) => (
+          {content.cities.map((city, index) => (
             <div key={city.name} className={styles.cityCard}>
               <div className={styles.number}>{index + 1}</div>
               <div className={styles.cityContent}>
@@ -22,30 +35,13 @@ export default function CitiesSection() {
         </div>
 
         <div className={styles.info}>
-          <div className={styles.infoCard}>
-            <div className={styles.infoIcon}>📍</div>
-            <h4>Dostępność</h4>
-            <p>
-              Wszystkie wydarzenia odbywają się w lokalach łatwo dostępnych komunikacją publiczną.
-              Dokładne informacje o dostępności każdego obiektu będą podane przed wydarzeniem.
-            </p>
-          </div>
-          <div className={styles.infoCard}>
-            <div className={styles.infoIcon}>🎟️</div>
-            <h4>Wstęp bezpłatny</h4>
-            <p>
-              Udział na podstawie rejestracji, limit miejsc zależny od pojemności obiektu w danym
-              mieście
-            </p>
-          </div>
-          <div className={styles.infoCard}>
-            <div className={styles.infoIcon}>♿</div>
-            <h4>Dostępność dla wszystkich</h4>
-            <p>
-              Wszystkie wydarzenia odbywają się w dostępnych lokalach. Dbamy o bezpieczeństwo,
-              komfort i inkluzywność uczestników.
-            </p>
-          </div>
+          {cardsWithHtml.map((card, index: number) => (
+            <div key={index} className={styles.infoCard}>
+              <div className={styles.infoIcon}>{card.icon}</div>
+              <h4>{card.title}</h4>
+              <p dangerouslySetInnerHTML={{ __html: card.descriptionHtml }} />
+            </div>
+          ))}
         </div>
       </div>
     </section>

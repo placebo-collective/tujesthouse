@@ -1,0 +1,22 @@
+{
+  "title": "Dołącz do nas!",
+  "subtitle": "Wybierz odpowiedni formularz i weź udział w projekcie",
+  "tabs": [
+    {
+      "id": "artist",
+      "icon": "🎧",
+      "title": "Dla artystów",
+      "subtitle": "Zgłoś się do open call"
+    },
+    {
+      "id": "workshop",
+      "icon": "📚",
+      "title": "Dla uczestników",
+      "subtitle": "Zapisz się na warsztaty"
+    }
+  ],
+  "contact": {
+    "title": "Masz pytania?",
+    "text": "Skontaktuj się z nami:"
+  }
+}

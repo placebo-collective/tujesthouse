@@ -28,10 +28,6 @@ yarn-error.log*
 # env files
 .env
 .env*.local
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
 
 # vercel
 .vercel
@@ -39,6 +35,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Tina CMS
+.tina/__generated__
+tina/__generated__
 
 # IDEs
 .idea/

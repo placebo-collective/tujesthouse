@@ -1,4 +1,4 @@
-@import './SharedForm.module.scss';
+@use './SharedForm.module.scss';
 
 .submitBtn {
   background: var(--primary-color);

@@ -4,37 +4,49 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "next dev",
+    "dev:tina": "tinacms dev -c \"next dev\"",
     "build": "next build",
     "build:gh-pages": "next build && cp CNAME out/ && cp .nojekyll out/",
     "start": "npx serve@latest out -s",
     "preview": "npx serve@latest out -s",
-    "lint": "eslint . --ext .ts,.tsx --fix && npx tsc --noEmit",
+    "lint": "eslint . --fix && npx tsc --noEmit",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
-    "prepush": "npx tsc && npm run lint && npm run format"
+    "prepush": "npx tsc && npm run lint && npm run format",
+    "check-updates": "npm outdated",
+    "update:patch": "npm update",
+    "update:interactive": "npx npm-check-updates --interactive --format group"
   },
   "dependencies": {
+    "@tinacms/cli": "^2.1.9",
+    "marked": "^17.0.4",
     "next": "^16.1.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "sass": "^1.97.3",
-    "sass-embedded": "^1.97.3"
+    "sass-embedded": "^1.97.3",
+    "tinacms": "^3.6.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.29.0",
+    "@eslint/js": "^9.39.4",
     "@svgr/webpack": "^8.1.0",
-    "@tailwindcss/postcss": "^4.1.18",
-    "@types/node": "25.0.3",
+    "@types/node": "^25.3.5",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
-    "autoprefixer": "^10.4.23",
-    "dotenv": "^17.2.3",
-    "eslint": "^9.29.0",
+    "eslint": "^9.39.4",
     "eslint-config-next": "^16.1.0",
-    "globals": "^16.2.0",
-    "postcss": "^8.5.6",
+    "globals": "^17.4.0",
     "prettier": "^3.7.4",
-    "tailwindcss": "^4.1.18",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.34.1"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1"
+  },
+  "overrides": {
+    "dompurify": "^3.3.2",
+    "mermaid": "^11.12.3",
+    "esbuild": "^0.27.3",
+    "react-router": "^7.13.1",
+    "react-router-dom": "^7.13.1",
+    "vite": "^7.3.1",
+    "@headlessui/react": "^2.2.9",
+    "react-final-form": "^7.0.0"
   }
 }

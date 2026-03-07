@@ -1,0 +1,67 @@
+{
+  "title": "Program wydarzenia",
+  "subtitle": "Każde wydarzenie składa się z części dziennej (edukacyjnej) i nocnej (artystycznej)",
+  "dayPart": {
+    "badge": "Część dzienna",
+    "title": "Edukacja i networking",
+    "items": [
+      {
+        "icon": "🎓",
+        "title": "Warsztaty kompetencyjne",
+        "description": "Dwa warsztaty w każdym mieście prowadzone przez ekspertów branżowych. Poruszamy tematy współpracy w sektorze kultury, standardów jakości, praw autorskich i budowania programów kulturalnych. Każdy uczestnik otrzymuje konkretne narzędzia do wykorzystania: listy kontrolne, wzory dokumentów, standardy współpracy."
+      },
+      {
+        "icon": "💬",
+        "title": "Panel dyskusyjny",
+        "description": "Moderowana dyskusja z udziałem ekspertów branżowych i przedstawicieli lokalnej sceny. Rozmawiamy o równości szans, przejrzystych zasadach doboru programu oraz dobrych praktykach w selekcji i współpracy. Każdy panel moderowany przez Sebastianę Swenta i Tomasza Bursztyńskiego."
+      },
+      {
+        "icon": "🤝",
+        "title": "Spotkanie sieciujące",
+        "description": "Ustrukturyzowana wymiana doświadczeń i kontaktów zawodowych między uczestnikami z różnych miast. Budowanie trwałej sieci współpracy międzymiastowej i lokalnej."
+      }
+    ]
+  },
+  "nightPart": {
+    "badge": "Część nocna",
+    "title": "Prezentacja artystyczna",
+    "items": [
+      {
+        "icon": "🎧",
+        "title": "Showcase artystów",
+        "description": "Występy 4–6 wykonawców wyłonionych w otwartym, transparentnym naborze. Każdy artysta prezentuje swój autorski set w profesjonalnych warunkach technicznych. Okazja do odkrywania nowych talentów lokalnej sceny muzyki elektronicznej."
+      },
+      {
+        "icon": "📹",
+        "title": "Dokumentacja audio-wideo",
+        "description": "Wszystkie występy są profesjonalnie rejestrowane. Materiały udostępniane bezpłatnie na licencji Creative Commons (CC BY-NC-SA 4.0) w celach dokumentacyjnych i edukacyjnych."
+      },
+      {
+        "icon": "🎪",
+        "title": "Wstęp wolny",
+        "description": "Bezpłatny wstęp dla wszystkich zainteresowanych muzyki elektronicznej. Udział na podstawie rejestracji, limit miejsc zależny od pojemności obiektu."
+      }
+    ]
+  },
+  "target": {
+    "title": "Dla kogo?",
+    "items": [
+      {
+        "title": "Młodzi twórcy",
+        "description": "Artyści muzyczni na etapie rozwoju, osoby debiutujące na scenie"
+      },
+      {
+        "title": "Organizatorzy",
+        "description": "Osoby współtworzące wydarzenia kulturalne (produkcja, technika, komunikacja)"
+      },
+      {
+        "title": "Miłośnicy kultury",
+        "description": "Uczestnicy zainteresowani świadomym odbiorem kultury klubowej"
+      },
+      {
+        "title": "Lokalne środowiska",
+        "description": "Osoby aktywne w lokalnych scenach kulturalnych"
+      }
+    ]
+  }
+}
