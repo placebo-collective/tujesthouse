@@ -1,6 +1,6 @@
 {
   "siteName": "Tu Jest House",
-  "useLogo": true,
+  "useLogo": false,
   "logo": "/logo.svg",
   "favicon": "/favicon.svg",
   "theme": {
