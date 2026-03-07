@@ -251,18 +251,68 @@ node -e "JSON.parse(require('fs').readFileSync('content/pages/your-file.json', '
 - Upewnij się że Source jest ustawiony na "GitHub Actions"
 - Zweryfikuj że CNAME file istnieje w `out/`
 
+## � Automated Dependency Management
+
+Projekt używa **Dependabot** do automatycznego zarządzania aktualizacjami zależności.
+
+### Jak to działa
+
+- **Dependabot** automatycznie sprawdza aktualizacje co tydzień (poniedziałki, 9:00)
+- Tworzy Pull Requesty dla dostępnych aktualizacji
+- Grupuje aktualizacje: Production deps i Development deps osobno
+- Aktualizacje bezpieczeństwa otrzymują osobne PRy o wysokim priorytecie
+
+### Konfiguracja
+
+Plik `.github/dependabot.yml` zarządza:
+- **Harmonogram**: Tygodniowe sprawdzanie (poniedziałki)
+- **Grupowanie**: Minor/patch w grupach, major osobno
+- **Monitorowanie**: npm packages + GitHub Actions
+
+### Sprawdzanie aktualizacji ręcznie
+
+```bash
+# Szybkie sprawdzenie outdated packages
+npm run check-updates
+
+# Aktualizacja patch/minor versions (bezpieczne)
+npm run update:patch
+
+# Interaktywny wybór aktualizacji (zalecane)
+npm run update:interactive
+```
+
+### GitHub Actions Workflow
+
+Dodatkowy workflow automatycznie:
+- Uruchamia się co tydzień w poniedziałki o 9:00
+- Sprawdza wszystkie outdated packages
+- Wykonuje security audit
+- Generuje raport w Actions Summary
+- Można uruchomić ręcznie z zakładki Actions
+
+### Best Practices
+
+1. **Review Pull Requests od Dependabot** - Sprawdź changelog przed merge
+2. **Testuj lokalnie** - Pobierz PR branch i przetestuj: `npm run prepush && npm run build:gh-pages`
+3. **Security Updates** - Merge natychmiast (oddzielne PRy)
+4. **Major Updates** - Sprawdź breaking changes w dokumentacji
+
 ## 📚 Scripts Reference
 
-| Script              | Opis                                             |
-| ------------------- | ------------------------------------------------ |
-| `dev`               | Uruchamia serwer deweloperski Next.js            |
-| `dev:tina`          | Uruchamia Next.js z interfejsem Tina CMS         |
-| `build`             | Buduje aplikację Next.js                         |
-| `build:gh-pages`    | Buduje z konfiguracją dla GitHub Pages           |
-| `start` / `preview` | Serwuje zbudowaną wersję lokalnie                |
-| `lint`              | Sprawdza i naprawia problemy ESLint + TypeScript |
-| `format`            | Formatuje kod za pomocą Prettier                 |
-| `prepush`           | Uruchamia wszystkie sprawdzenia przed commitem   |
+| Script                | Opis                                             |
+| --------------------- | ------------------------------------------------ |
+| `dev`                 | Uruchamia serwer deweloperski Next.js            |
+| `dev:tina`            | Uruchamia Next.js z interfejsem Tina CMS         |
+| `build`               | Buduje aplikację Next.js                         |
+| `build:gh-pages`      | Buduje z konfiguracją dla GitHub Pages           |
+| `start` / `preview`   | Serwuje zbudowaną wersję lokalnie                |
+| `lint`                | Sprawdza i naprawia problemy ESLint + TypeScript |
+| `format`              | Formatuje kod za pomocą Prettier                 |
+| `prepush`             | Uruchamia wszystkie sprawdzenia przed commitem   |
+| `check-updates`       | Sprawdza dostępne aktualizacje pakietów          |
+| `update:patch`        | Aktualizuje patch/minor versions                 |
+| `update:interactive`  | Interaktywny wybór aktualizacji                  |
 
 ## 💡 Key Features
 
